@@ -61,12 +61,17 @@ console.log(JSON.stringify(params))
       // below, if you're using a catch-all route.
       // res.status(200).send(renderToString(<RouterContext {...renderProps} />))
       page = renderFullPage(
-        renderToString(<Provider ><RoutingContext {...renderProps} location={location} /></Provider>),
+        renderToString(
+          <Provider >
+            <RoutingContext {...renderProps} location={location} />
+          </Provider>
+        ),
+        // Pass initial info to the page with window.__INITIAL_STATE__ =
         {hola:'hi'}
       )
 
       response.writeHead(200, {'Content-Type': 'text/html'})
-      response.end(page);
+      response.end(page, () => {console.log('yupi!!')});
       // res.status(200).send(page);
     } else {
       // res.status(404).send('Not found')
