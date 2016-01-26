@@ -1,5 +1,6 @@
 import React from 'react'
 import { renderToString } from 'react-dom/server'
+import Express from 'express'
 
 // Check react-router doc: RoutingContext and RouterContext
 // import { match, RouterContext } from 'react-router'
@@ -15,11 +16,8 @@ import { createStore } from 'redux'
 // Load Provider component.
 import { Provider } from 'react-redux';
 
-//Lets require/import the HTTP module
-var http = require('http');
-
-//Lets define a port we want to listen to
-const PORT = 8009;
+const app = Express()
+const PORT = 8009
 
 function renderFullPage(html, initialState) {
   return `
@@ -39,15 +37,14 @@ function renderFullPage(html, initialState) {
     `
 }
 
-//Create a server
-//var server = http.createServer(serve);
-http.createServer( (request, response) => {
-  let req = request,
-      res = response,
+// We are going to fill these out in the sections to follow
+function handleRender(req, res) {
+  let request = req,
+      response = res,
       params = qs.parse(req.query),
       page = '';
 
-// console.log(Object.keys(req))
+console.log(JSON.stringify(params))
   // let history = createMemoryHistory();
   // // let store = configureStore();
 
@@ -63,22 +60,26 @@ http.createServer( (request, response) => {
       // your "not found" component or route respectively, and send a 404 as
       // below, if you're using a catch-all route.
       // res.status(200).send(renderToString(<RouterContext {...renderProps} />))
-      page = renderFullPage(renderToString(<Provider store={}><RoutingContext {...renderProps} location={location} /></Provider>), {hola:'hi'})
-        // '<!DOCTYPE html><html><head></head><body>' +
-        // // renderToString(<RouterContext {...renderProps} />) +
-        // renderToString(<RoutingContext {...renderProps} location={location} />) +
-        // '</body></html>';
+      page = renderFullPage(
+        renderToString(<Provider ><RoutingContext {...renderProps} location={location} /></Provider>),
+        {hola:'hi'}
+      )
 
       response.writeHead(200, {'Content-Type': 'text/html'})
       response.end(page);
-
+      // res.status(200).send(page);
     } else {
       // res.status(404).send('Not found')
       response.writeHead(404, {'Content-Type': 'text/plain'})
       response.end('Not found');
     }
-  })
-}).listen(PORT, function(){
+  });
+}
+
+// This is fired every time the server side receives a request
+app.use(handleRender)
+
+app.listen(PORT, function() {
     //Callback triggered when server is successfully listening. Hurray!
     console.log("Server listening on: http://localhost:%s", PORT);
-});
+})

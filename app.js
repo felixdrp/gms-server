@@ -11,6 +11,10 @@ var _react2 = _interopRequireDefault(_react);
 
 var _server = require('react-dom/server');
 
+var _express = require('express');
+
+var _express2 = _interopRequireDefault(_express);
+
 var _reactRouter = require('react-router');
 
 var _createMemoryHistory = require('history/lib/createMemoryHistory');
@@ -25,6 +29,8 @@ var _qs = require('qs');
 
 var _qs2 = _interopRequireDefault(_qs);
 
+var _redux = require('redux');
+
 var _reactRedux = require('react-redux');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -32,25 +38,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var history = require('history');
 // Load Provider component.
 
-//Lets require/import the HTTP module
-var http = require('http');
-
-//Lets define a port we want to listen to
+var app = (0, _express2.default)();
 var PORT = 8009;
 
 function renderFullPage(html, initialState) {
   return '\n    <!doctype html>\n    <html>\n      <head>\n        <title>Glasgow Memories Server</title>\n      </head>\n      <body>\n        <div id="root">' + html + '</div>\n        <script>\n          window.__INITIAL_STATE__ = ' + JSON.stringify(initialState) + '\n        </script>\n        <script src="/static/bundle.js"></script>\n      </body>\n    </html>\n    ';
 }
 
-//Create a server
-//var server = http.createServer(serve);
-http.createServer(function (request, response) {
-  var req = request,
-      res = response,
+// We are going to fill these out in the sections to follow
+function handleRender(req, res) {
+  var request = req,
+      response = res,
       params = _qs2.default.parse(req.query),
       page = '';
 
-  // console.log(Object.keys(req))
+  console.log(JSON.stringify(params));
   // let history = createMemoryHistory();
   // // let store = configureStore();
 
@@ -71,20 +73,22 @@ http.createServer(function (request, response) {
         null,
         _react2.default.createElement(_reactRouter.RoutingContext, _extends({}, renderProps, { location: location }))
       )), { hola: 'hi' });
-      // '<!DOCTYPE html><html><head></head><body>' +
-      // // renderToString(<RouterContext {...renderProps} />) +
-      // renderToString(<RoutingContext {...renderProps} location={location} />) +
-      // '</body></html>';
 
       response.writeHead(200, { 'Content-Type': 'text/html' });
       response.end(page);
+      // res.status(200).send(page);
     } else {
-      // res.status(404).send('Not found')
-      response.writeHead(404, { 'Content-Type': 'text/plain' });
-      response.end('Not found');
-    }
+        // res.status(404).send('Not found')
+        response.writeHead(404, { 'Content-Type': 'text/plain' });
+        response.end('Not found');
+      }
   });
-}).listen(PORT, function () {
+}
+
+// This is fired every time the server side receives a request
+app.use(handleRender);
+
+app.listen(PORT, function () {
   //Callback triggered when server is successfully listening. Hurray!
   console.log("Server listening on: http://localhost:%s", PORT);
 });
