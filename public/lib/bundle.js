@@ -1,0 +1,1 @@
+console.error("Error: Cannot find module './reducers' from '/home/sephir/nodejs/gms-server'");

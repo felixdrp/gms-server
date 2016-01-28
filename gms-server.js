@@ -5,6 +5,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 // Check react-router doc: RoutingContext and RouterContext
 // import { match, RouterContext } from 'react-router'
 
+// import { browserHistory, Router, Route, IndexRoute, Link } from 'react-router'
+
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -42,7 +44,7 @@ var app = (0, _express2.default)();
 var PORT = 8009;
 
 function renderFullPage(html, initialState) {
-  return '\n    <!doctype html>\n    <html>\n      <head>\n        <title>Glasgow Memories Server</title>\n      </head>\n      <body>\n        <div id="root">' + html + '</div>\n        <script>\n          window.__INITIAL_STATE__ = ' + JSON.stringify(initialState) + '\n        </script>\n        <script src="/static/bundle.js"></script>\n      </body>\n    </html>\n    ';
+  return '\n    <!doctype html>\n    <html>\n      <head>\n        <title>Glasgow Memories Server</title>\n      </head>\n      <body>\n        <div id="root">' + html + '</div>\n        <script>\n          window.__INITIAL_STATE__ = ' + JSON.stringify(initialState) + '\n        </script>\n        <script src="/lib/bundle.js"></script>\n      </body>\n    </html>\n    ';
 }
 
 // We are going to fill these out in the sections to follow
@@ -53,8 +55,6 @@ function handleRender(req, res) {
       page = '';
 
   console.log(JSON.stringify(params));
-  // let history = createMemoryHistory();
-  // // let store = configureStore();
 
   var location = history.createLocation(req.url);
 
@@ -90,6 +90,8 @@ function handleRender(req, res) {
 }
 
 // This is fired every time the server side receives a request
+// app.use('/static', Express.static('public'));
+app.use(_express2.default.static('public'));
 app.use(handleRender);
 
 app.listen(PORT, function () {

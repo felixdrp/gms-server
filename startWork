@@ -16,7 +16,7 @@ byobu-tmux split-window  -v
 # Select 1st pane cd and venv
 byobu-tmux select-pane -t 0
 byobu-tmux send-keys "cd ." C-m
-byobu-tmux send-keys "nodemon app.js" C-m
+byobu-tmux send-keys "nodemon gms-server.js" C-m
 #byobu-tmux send-keys "clear" C-m
 
 # Same with 2nd pane

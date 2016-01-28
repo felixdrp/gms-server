@@ -5,7 +5,7 @@ import Express from 'express'
 // Check react-router doc: RoutingContext and RouterContext
 // import { match, RouterContext } from 'react-router'
 import { match, RoutingContext } from 'react-router'
-import { browserHistory, Router, Route, IndexRoute, Link } from 'react-router'
+// import { browserHistory, Router, Route, IndexRoute, Link } from 'react-router'
 import createMemoryHistory from 'history/lib/createMemoryHistory';
 const history = require('history');
 
@@ -31,7 +31,7 @@ function renderFullPage(html, initialState) {
         <script>
           window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}
         </script>
-        <script src="/static/bundle.js"></script>
+        <script src="/lib/bundle.js"></script>
       </body>
     </html>
     `
@@ -45,8 +45,6 @@ function handleRender(req, res) {
       page = '';
 
 console.log(JSON.stringify(params))
-  // let history = createMemoryHistory();
-  // // let store = configureStore();
 
   let location = history.createLocation(req.url);
 
@@ -82,6 +80,8 @@ console.log(JSON.stringify(params))
 }
 
 // This is fired every time the server side receives a request
+// app.use('/static', Express.static('public'));
+app.use(Express.static('public'));
 app.use(handleRender)
 
 app.listen(PORT, function() {
