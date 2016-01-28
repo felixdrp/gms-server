@@ -3,6 +3,8 @@
 ## Intall modules & tools
 
 ```
+apt-get install byobu siege
+// Install package.json modules.
 npm install
 npm install -g nodemon
 npm install -g browserify
@@ -38,4 +40,14 @@ Benchmark the server:
 
 ```
 siege -t60S http://localhost:8009
+```
+
+## Start to work.
+
+Execute the script 'startWork' to run the Development environment.
+It run the server, compile the code and compile the bundle.js for the clients.
+It uses byobu to run the script in 3 panes:
+
+```
+./startWork
 ```

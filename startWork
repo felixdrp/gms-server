@@ -29,7 +29,8 @@ byobu-tmux send-keys "gulp watch" C-m
 #browserify -t [ babelify --optional es7.asyncFunctions --optional runtime ] -g reactify --debug ./src/main.js -o public/lib/bundle.js
 
 # Watch for browserify
-$WATCHIFY = "watchify -t [ babelify --optional es7.asyncFunctions --optional runtime ] -g reactify --debug ./src/main.js -o public/lib/bundle.js"
+#$WATCHIFY = "watchify -t [ babelify --optional es7.asyncFunctions --optional runtime ] -g reactify --debug ./src/main.js -o public/lib/bundle.js"
+$WATCHIFY = "watchify --debug ./gms-client.js -o public/lib/bundle.js"
 
 byobu-tmux select-pane -t 2
 byobu-tmux send-keys "cd ." C-m
