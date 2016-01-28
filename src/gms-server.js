@@ -9,7 +9,7 @@ import { match, RoutingContext } from 'react-router'
 import createMemoryHistory from 'history/lib/createMemoryHistory';
 const history = require('history');
 
-import routes from './routes';
+import Routes from './routes';
 
 import qs from 'qs'
 import { createStore } from 'redux'
@@ -18,6 +18,7 @@ import { Provider } from 'react-redux';
 
 const app = Express()
 const PORT = 8009
+const routes = Routes( createMemoryHistory() );
 
 function renderFullPage(html, initialState) {
   return `

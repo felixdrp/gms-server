@@ -4,8 +4,9 @@ import { browserHistory, Router, Route, IndexRoute } from 'react-router'
 import App from './components/app-component'
 import Two from './components/two-component'
 
-var routes = (
-  <Router history={browserHistory}>
+// Assign the history: 
+var routes = (history) => (
+  <Router history={history}>
     <Route path="/" component={App}>
       <Route path="foo" component={Two} />
     </Route>
@@ -13,6 +14,3 @@ var routes = (
 )
 
 export default routes
-// module.exports = {
-//   routes
-// }

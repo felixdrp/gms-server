@@ -38,6 +38,8 @@ On change compile:
 watchify --debug gms-client.js -o ./public/lib/bundle.js
 ```
 
+Remove the '--debug' parameter to compile for production.
+
 Benchmark the server:
 
 ```sh
@@ -50,10 +52,9 @@ Execute the script 'startWork' to run the Development environment.
 It run the server, compile the code and compile the bundle.js for the clients.
 It uses byobu to run the script in 3 panes.<br>
 
-* Shift + Arrow keys to move from pane.
-* Shift + F11 to full screen.
-
-
 ```sh
 ./startWork
 ```
+
+* ```Shift + Arrow``` keys to move from pane.
+* ```Shift + F11``` to full screen.

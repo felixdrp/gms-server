@@ -1,1 +1,1 @@
-console.error("Error: Cannot find module './reducers' from '/home/sephir/nodejs/gms-server'");
+console.error("Error: Cannot find module './reducers' from '/home/rp/nodejs/gms-server'");

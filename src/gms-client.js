@@ -6,10 +6,12 @@ import { Provider } from 'react-redux'
 import todoApp from './reducers'
 
 import { browserHistory, Router, Route, IndexRoute, Link } from 'react-router'
-import routes from './routes';
+import Routes from './routes';
 import { createHashHistory } from 'history/lib/createHashHistory'
 
+const routes = Routes( createHashHistory() );
 
+console.log(routes)
 // Grab the state from a global injected into server-generated HTML
 const initialState = window.__INITIAL_STATE__
 
@@ -19,9 +21,8 @@ let store = createStore(todoApp);
 // Create Redux store with initial state
 // const store = createStore(counterApp, initialState)
 
-// store={store}
 render(
-  <Provider store={{}}>
+  <Provider store={store}>
     routes
   </Provider>,
   document.getElementById('root')

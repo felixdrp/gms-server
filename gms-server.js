@@ -42,6 +42,7 @@ var history = require('history');
 
 var app = (0, _express2.default)();
 var PORT = 8009;
+var routes = (0, _routes2.default)((0, _createMemoryHistory2.default)());
 
 function renderFullPage(html, initialState) {
   return '\n    <!doctype html>\n    <html>\n      <head>\n        <title>Glasgow Memories Server</title>\n      </head>\n      <body>\n        <div id="root">' + html + '</div>\n        <script>\n          window.__INITIAL_STATE__ = ' + JSON.stringify(initialState) + '\n        </script>\n        <script src="/lib/bundle.js"></script>\n      </body>\n    </html>\n    ';
@@ -58,7 +59,7 @@ function handleRender(req, res) {
 
   var location = history.createLocation(req.url);
 
-  (0, _reactRouter.match)({ routes: _routes2.default, location: req.url }, function (error, redirectLocation, renderProps) {
+  (0, _reactRouter.match)({ routes: routes, location: req.url }, function (error, redirectLocation, renderProps) {
     if (error) {
       res.status(500).send(error.message);
     } else if (redirectLocation) {

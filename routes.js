@@ -20,17 +20,17 @@ var _twoComponent2 = _interopRequireDefault(_twoComponent);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var routes = _react2.default.createElement(
-  _reactRouter.Router,
-  { history: _reactRouter.browserHistory },
-  _react2.default.createElement(
-    _reactRouter.Route,
-    { path: '/', component: _appComponent2.default },
-    _react2.default.createElement(_reactRouter.Route, { path: 'foo', component: _twoComponent2.default })
-  )
-);
+// Assign the history:
+var routes = function routes(history) {
+  return _react2.default.createElement(
+    _reactRouter.Router,
+    { history: history },
+    _react2.default.createElement(
+      _reactRouter.Route,
+      { path: '/', component: _appComponent2.default },
+      _react2.default.createElement(_reactRouter.Route, { path: 'foo', component: _twoComponent2.default })
+    )
+  );
+};
 
 exports.default = routes;
-// module.exports = {
-//   routes
-// }

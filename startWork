@@ -6,7 +6,7 @@
 
 SESSION=$USER
 
-# -2: forces 256 colors, 
+# -2: forces 256 colors,
 byobu-tmux -2 new-session -d -s $SESSION
 
 # dev window
@@ -29,17 +29,16 @@ byobu-tmux send-keys "gulp watch" C-m
 #browserify -t [ babelify --optional es7.asyncFunctions --optional runtime ] -g reactify --debug ./src/main.js -o public/lib/bundle.js
 
 # Watch for browserify
-#$WATCHIFY = "watchify -t [ babelify --optional es7.asyncFunctions --optional runtime ] -g reactify --debug ./src/main.js -o public/lib/bundle.js"
-$WATCHIFY = "watchify --debug ./gms-client.js -o public/lib/bundle.js"
+# "watchify -t [ babelify --optional es7.asyncFunctions --optional runtime ] -g reactify --debug ./src/main.js -o public/lib/bundle.js"
 
 byobu-tmux select-pane -t 2
 byobu-tmux send-keys "cd ." C-m
-byobu-tmux send-keys $WATCHIFY C-m
+byobu-tmux send-keys "watchify --debug ./gms-client.js -o public/lib/bundle.js" C-m
 
 byobu-tmux select-layout even-vertical
 
 # Runserver window next
-#byobu-tmux new-window -t $SESSION:1 -n 'Runserver' 
+#byobu-tmux new-window -t $SESSION:1 -n 'Runserver'
 #byobu-tmux send-keys "cd /path/to/workingdir" C-m
 #byobu-tmux send-keys 'source venv/bin/activate' C-m
 
@@ -50,4 +49,3 @@ byobu-tmux select-window -t $SESSION:0
 # Attach to the session you just created
 # (flip between windows with alt -left and right)
 byobu-tmux -2 attach-session -t $SESSION
-
