@@ -2,27 +2,27 @@
 
 ## Table of Contents
 
-  l.[Install tools](#install-tools)
-  l.[Use development tools](#use-development-tools)
-  l.[Start to work](#start-to-work)
+  - [Install tools](#install-tools)
+  - [Use development tools](#use-development-tools)
+  - [Start to work](#start-to-work)
 
 ## Install tools
 
   It's important to use tools that to helps us to automate the development process.
   We use:
 
-    - [NodeJs](https://nodejs.org)
-    - [byobu](http://byobu.co/)
-    - [nodemon](http://nodemon.io/)
-    - [browserify](http://browserify.org/)
-    - [watchify](https://github.com/substack/watchify)
+  * [NodeJs](https://nodejs.org)
+  * [byobu](http://byobu.co/)
+  * [nodemon](http://nodemon.io/)
+  * [browserify](http://browserify.org/)
+  * [watchify](https://github.com/substack/watchify)
 
 ### Install nodeJs
 
   The project use [nodeJs](https://nodejs.org). To install nodeJs please follow one of the next options:
 
-   * [Potion 1](https://nodejs.org/en/download/package-manager/)
-   * [Potion 2](https://github.com/creationix/nvm)
+   * [Option 1](https://nodejs.org/en/download/package-manager/)
+   * [Option 2](https://github.com/creationix/nvm)
 
 ### Install Development tools
 
