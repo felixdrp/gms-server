@@ -2,9 +2,9 @@
 
 ## Table of Contents
 
-  - [Install tools](#install-tools)
-  - [Use development tools](#use-development-tools)
-  - [Start to work](#start-to-work)
+  + [Install tools](#install-tools)
+  + [Use development tools](#use-development-tools)
+  + [Start to work](#start-to-work)
 
 ## Install tools
 
@@ -38,6 +38,8 @@
     npm install -g watchify
   ```
 
+**[⬆ back to top](#table-of-contents)**
+
 ## Use development tools
 
   Re-Run the application on file change:
@@ -58,18 +60,24 @@
   ```sh
     browserify --debug gms-client.js -o ./public/lib/bundle.js
   ```
-  On change compile:
+  Automate on file change compile:
   ```sh
     watchify --debug gms-client.js -o ./public/lib/bundle.js
   ```
 
   Please, remove the '--debug' parameter to compile for production.
 
+### Access to development server:
+
+  Go to the local url: ```http://localhost:8009/```
+
   Benchmark the server:
 
   ```sh
     siege -t60S http://localhost:8009
   ```
+
+**[⬆ back to top](#table-of-contents)**
 
 ## Start to work
 
@@ -84,3 +92,5 @@
    * ```Shift + Arrow``` keys to move across pane.
    * ```Shift + F11``` to full a pane.
    * ```Ctrl + F11``` to close a pane.
+
+**[⬆ back to top](#table-of-contents)**
