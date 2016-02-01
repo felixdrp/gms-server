@@ -12,7 +12,6 @@ We are piloting with 100 Autographer units to capture lifelogs of user experienc
 
 It is expected that in the nearby future, digitally active participants will capture personal experiences using lifeloggers and/or with smartphone apps and will share their experience through avenues like GMS.
 
-Other Guides
+Project Guides:
  - [Install and Development](InstallAndDevelopment.md)
  - [System Architecture](SystemArchitecture.md)
- 
