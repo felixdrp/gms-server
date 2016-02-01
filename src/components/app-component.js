@@ -27,6 +27,7 @@ styles.activeLink = {
 
 const App = React.createClass({
   render() {
+    let props = this.props;
     return (
       <div>
         <h4>GMS</h4>
@@ -40,8 +41,8 @@ const App = React.createClass({
           </div>
 
           <div style={{margin: 20}}>
-            {this.props.children}
-            {this.props.location.pathname}
+            {props.children}
+            {props.location.pathname}
           </div>
         </div>
       </div>

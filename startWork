@@ -16,7 +16,7 @@ byobu-tmux split-window  -v
 # Select 1st pane cd and venv
 byobu-tmux select-pane -t 0
 byobu-tmux send-keys "cd ." C-m
-byobu-tmux send-keys "nodemon gms-server.js" C-m
+byobu-tmux send-keys "nodemon ./build/gms-server.js" C-m
 #byobu-tmux send-keys "clear" C-m
 
 # Same with 2nd pane
@@ -33,7 +33,7 @@ byobu-tmux send-keys "gulp watch" C-m
 
 byobu-tmux select-pane -t 2
 byobu-tmux send-keys "cd ." C-m
-byobu-tmux send-keys "watchify --debug ./gms-client.js -o public/lib/bundle.js" C-m
+byobu-tmux send-keys "watchify --debug ./build/gms-client.js -o public/lib/bundle.js" C-m
 
 byobu-tmux select-layout even-vertical
 

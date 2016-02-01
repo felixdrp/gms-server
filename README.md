@@ -1,60 +1,18 @@
-# gms-server
+# GMS
 
-## Intall modules & tools
+Glasgow Memories Server (GMS) is a 12 months project, part of an ongoing ESRC funded Urban Big Data Centre (UBDC) project, which archives 12 months publicly available data about the Glasgow city from multiple sources, which includes (but is not limited to):
 
-```sh
-apt-get install byobu siege
-# Install package.json modules.
-npm install
+* online news archives;
+* social media posts from Twitter;
+* user blogs from Tumblr;
+* photographs from image sharing websites such as Flickr, and
+* data from wearable sensors like Autographer and GPS devices.
 
-# Install Development tools
-npm install -g nodemon
-npm install -g browserify
-npm install -g watchify
-```
+We are piloting with 100 Autographer units to capture lifelogs of user experiences about the Greater Glasgow area on a daily basis for around 12 months. This is a unique multi-modal data set about a city and encodes experiences from multiple user perspectives and has enormous potential in exploiting for public benefit.
 
-## Development tools
+It is expected that in the nearby future, digitally active participants will capture personal experiences using lifeloggers and/or with smartphone apps and will share their experience through avenues like GMS.
 
-Re-Run the application on file change:
-
-```sh
-nodemon gms-server.js
-```
-
-Compiles the Js code. Thanks BabelJs!!!
-
-```sh
-gulp watch
-```
-
-Compile the client code:
-
-For debug:
-```sh
-browserify --debug gms-client.js -o ./public/lib/bundle.js
-```
-On change compile:
-```sh
-watchify --debug gms-client.js -o ./public/lib/bundle.js
-```
-
-Remove the '--debug' parameter to compile for production.
-
-Benchmark the server:
-
-```sh
-siege -t60S http://localhost:8009
-```
-
-## Start to work.
-
-Execute the script 'startWork' to run the Development environment.
-It run the server, compile the code and compile the bundle.js for the clients.
-It uses byobu to run the script in 3 panes.<br>
-
-```sh
-./startWork
-```
-
-* ```Shift + Arrow``` keys to move from pane.
-* ```Shift + F11``` to full screen.
+Other Guides
+ - [Install and Development](InstallAndDevelopment.md)
+ - [System Architecture](SystemArchitecture.md)
+ 

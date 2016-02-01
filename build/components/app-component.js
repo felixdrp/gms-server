@@ -39,6 +39,7 @@ styles.activeLink = _extends({}, styles.link, {
 var App = _react2.default.createClass({
   displayName: 'App',
   render: function render() {
+    var props = this.props;
     return _react2.default.createElement(
       'div',
       null,
@@ -79,8 +80,8 @@ var App = _react2.default.createClass({
         _react2.default.createElement(
           'div',
           { style: { margin: 20 } },
-          this.props.children,
-          this.props.location.pathname
+          props.children,
+          props.location.pathname
         )
       )
     );
@@ -89,3 +90,4 @@ var App = _react2.default.createClass({
 // <li style={styles.link}><Link to="/grades" activeStyle={styles.activeLink}>Grades</Link></li>
 // <li style={styles.link}><Link to="/messages" activeStyle={styles.activeLink}>Messages</Link></li>
 exports.default = App;
+//# sourceMappingURL=app-component.js.map

@@ -35,10 +35,16 @@ var _redux = require('redux');
 
 var _reactRedux = require('react-redux');
 
+var _reducer = require('./reducers/reducer-1');
+
+var _reducer2 = _interopRequireDefault(_reducer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var history = require('history');
 // Load Provider component.
+
+var store = (0, _redux.createStore)(_reducer2.default);
 
 var app = (0, _express2.default)();
 var PORT = 8009;
@@ -53,11 +59,10 @@ function handleRender(req, res) {
   var request = req,
       response = res,
       params = _qs2.default.parse(req.query),
-      page = '';
+      page = '',
+      location = history.createLocation(req.url);
 
   console.log(JSON.stringify(params));
-
-  var location = history.createLocation(req.url);
 
   (0, _reactRouter.match)({ routes: routes, location: req.url }, function (error, redirectLocation, renderProps) {
     if (error) {
@@ -71,11 +76,14 @@ function handleRender(req, res) {
       // res.status(200).send(renderToString(<RouterContext {...renderProps} />))
       page = renderFullPage((0, _server.renderToString)(_react2.default.createElement(
         _reactRedux.Provider,
-        null,
+        { store: store },
         _react2.default.createElement(_reactRouter.RoutingContext, _extends({}, renderProps, { location: location }))
       )),
       // Pass initial info to the page with window.__INITIAL_STATE__ =
-      { hola: 'hi' });
+      {
+        location: location,
+        hola: 'hi'
+      });
 
       response.writeHead(200, { 'Content-Type': 'text/html' });
       response.end(page, function () {
@@ -99,3 +107,4 @@ app.listen(PORT, function () {
   //Callback triggered when server is successfully listening. Hurray!
   console.log("Server listening on: http://localhost:%s", PORT);
 });
+//# sourceMappingURL=gms-server.js.map

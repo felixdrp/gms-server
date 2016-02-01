@@ -16,6 +16,10 @@ import { createStore } from 'redux'
 // Load Provider component.
 import { Provider } from 'react-redux';
 
+import counter from './reducers/reducer-1'
+
+const store = createStore(counter)
+
 const app = Express()
 const PORT = 8009
 const routes = Routes( createMemoryHistory() );
@@ -43,11 +47,10 @@ function handleRender(req, res) {
   let request = req,
       response = res,
       params = qs.parse(req.query),
-      page = '';
+      page = '',
+      location = history.createLocation(req.url);
 
 console.log(JSON.stringify(params))
-
-  let location = history.createLocation(req.url);
 
   match({ routes, location: req.url }, (error, redirectLocation, renderProps) => {
     if (error) {
@@ -61,12 +64,15 @@ console.log(JSON.stringify(params))
       // res.status(200).send(renderToString(<RouterContext {...renderProps} />))
       page = renderFullPage(
         renderToString(
-          <Provider >
+          <Provider store={store}>
             <RoutingContext {...renderProps} location={location} />
           </Provider>
         ),
         // Pass initial info to the page with window.__INITIAL_STATE__ =
-        {hola:'hi'}
+        {
+          location,
+          hola:'hi',
+        }
       )
 
       response.writeHead(200, {'Content-Type': 'text/html'})

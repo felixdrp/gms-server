@@ -34,3 +34,4 @@ var routes = function routes(history) {
 };
 
 exports.default = routes;
+//# sourceMappingURL=routes.js.map

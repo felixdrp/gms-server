@@ -21,3 +21,4 @@ var Two = function Two(_ref) {
 };
 
 exports.default = Two;
+//# sourceMappingURL=two-component.js.map
