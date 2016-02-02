@@ -10,13 +10,17 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouter = require('react-router');
 
-var _appComponent = require('./components/app-component');
+var _appContainer = require('./components/app-container');
 
-var _appComponent2 = _interopRequireDefault(_appComponent);
+var _appContainer2 = _interopRequireDefault(_appContainer);
 
 var _twoComponent = require('./components/two-component');
 
 var _twoComponent2 = _interopRequireDefault(_twoComponent);
+
+var _dashboardComponent = require('./components/dashboard-component');
+
+var _dashboardComponent2 = _interopRequireDefault(_dashboardComponent);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -27,8 +31,9 @@ var routes = function routes(history) {
     { history: history },
     _react2.default.createElement(
       _reactRouter.Route,
-      { path: '/', component: _appComponent2.default },
-      _react2.default.createElement(_reactRouter.Route, { path: 'foo', component: _twoComponent2.default })
+      { path: '/', component: _appContainer2.default },
+      _react2.default.createElement(_reactRouter.IndexRoute, { component: _dashboardComponent2.default }),
+      _react2.default.createElement(_reactRouter.Route, { path: 'collections', component: _twoComponent2.default })
     )
   );
 };

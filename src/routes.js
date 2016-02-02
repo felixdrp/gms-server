@@ -1,14 +1,16 @@
 import React from 'react'
 import { browserHistory, Router, Route, IndexRoute } from 'react-router'
 
-import App from './components/app-component'
+import AppContainer from './components/app-container'
 import Two from './components/two-component'
+import Dashboard from './components/dashboard-component'
 
-// Assign the history: 
+// Assign the history:
 var routes = (history) => (
   <Router history={history}>
-    <Route path="/" component={App}>
-      <Route path="foo" component={Two} />
+    <Route path="/" component={AppContainer}>
+      <IndexRoute component={Dashboard} />
+      <Route path="collections" component={Two} />
     </Route>
   </Router>
 )
