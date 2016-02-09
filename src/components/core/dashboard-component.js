@@ -28,7 +28,7 @@ styles.activeLink = {
 var Dashboard = React.createClass({
   statics: {
     customMethod: function(foo) {
-      console.log(this);
+      console.log(this.props);
       return foo === 'bar';
     }
   },
@@ -42,20 +42,36 @@ var Dashboard = React.createClass({
 
         <div className="main-viewport">
 
-          <div style={{display: 'flex', flexDirection: 'row'}}>
-            <div style={{ }}>
-              <h4>GMS</h4>
-              <form action="search">
-                <input type="text" name="q" />
-                <button value="Search" name="bt-search" type="submit">
-                  Search
-                </button>
-              </form>
-            </div>
+          <div style={{display: 'flex', flexDirection: 'column'}}>
 
             <div style={{margin: 20}}>
               {props.location.pathname}
               {props.children}
+            </div>
+
+            <div style={{ }}>
+              <h1>GMS</h1>
+              <form action="search">
+                <div style={{
+                    height: 38,
+                    overflowX: 'hidden',
+                    overflowY: 'hidden',
+                    verticalAlign: 'top',
+                    whiteSpace: 'nowrap',
+                    lineHeight: 0,
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  <div style={{position: 'relative',lineHeight: 0,whiteSpace: 'nowrap'}}>
+                    <div id="search-query" style={{display: 'inline-block'}}>
+                      <input type="text" name="q" />
+                    </div>
+                    <button value="Search" name="bt-search" type="submit">
+                      Search
+                    </button>
+                  </div>
+                </div>
+              </form>
             </div>
 
           </div>

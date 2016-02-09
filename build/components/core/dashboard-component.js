@@ -45,7 +45,7 @@ var Dashboard = _react2.default.createClass({
 
   statics: {
     customMethod: function customMethod(foo) {
-      console.log(this);
+      console.log(this.props);
       return foo === 'bar';
     }
   },
@@ -64,31 +64,52 @@ var Dashboard = _react2.default.createClass({
         { className: 'main-viewport' },
         _react2.default.createElement(
           'div',
-          { style: { display: 'flex', flexDirection: 'row' } },
+          { style: { display: 'flex', flexDirection: 'column' } },
+          _react2.default.createElement(
+            'div',
+            { style: { margin: 20 } },
+            props.location.pathname,
+            props.children
+          ),
           _react2.default.createElement(
             'div',
             { style: {} },
             _react2.default.createElement(
-              'h4',
+              'h1',
               null,
               'GMS'
             ),
             _react2.default.createElement(
               'form',
               { action: 'search' },
-              _react2.default.createElement('input', { type: 'text', name: 'q' }),
               _react2.default.createElement(
-                'button',
-                { value: 'Search', name: 'bt-search', type: 'submit' },
-                'Search'
+                'div',
+                { style: {
+                    height: 38,
+                    overflowX: 'hidden',
+                    overflowY: 'hidden',
+                    verticalAlign: 'top',
+                    whiteSpace: 'nowrap',
+                    lineHeight: 0,
+                    whiteSpace: 'nowrap'
+                  }
+                },
+                _react2.default.createElement(
+                  'div',
+                  { style: { position: 'relative', lineHeight: 0, whiteSpace: 'nowrap' } },
+                  _react2.default.createElement(
+                    'div',
+                    { id: 'search-query', style: { display: 'inline-block' } },
+                    _react2.default.createElement('input', { type: 'text', name: 'q' })
+                  ),
+                  _react2.default.createElement(
+                    'button',
+                    { value: 'Search', name: 'bt-search', type: 'submit' },
+                    'Search'
+                  )
+                )
               )
             )
-          ),
-          _react2.default.createElement(
-            'div',
-            { style: { margin: 20 } },
-            props.location.pathname,
-            props.children
           )
         )
       ),
