@@ -30,6 +30,7 @@ function renderFullPage(html, initialState) {
     <html>
       <head>
         <title>Glasgow Memories Server</title>
+        <link rel="stylesheet" type="text/css" href="css/app.css">
       </head>
       <body>
         <div id="root">${html}</div>
@@ -39,29 +40,29 @@ function renderFullPage(html, initialState) {
         <script src="/lib/bundle.js"></script>
       </body>
     </html>
-    `
+  `
 }
 
 // We are going to fill these out in the sections to follow
-function handleRender(req, res) {
-  let request = req,
-      response = res,
-      params = qs.parse(req.query),
+function handleRender(request, response) {
+  let params = qs.parse(request.query),
       page = '',
-      location = history.createLocation(req.url);
+      location = history.createLocation(request.url);
 
-console.log(JSON.stringify(params))
+  console.log(JSON.stringify(params))
 
-  match({ routes, location: req.url }, (error, redirectLocation, renderProps) => {
+  match({ routes, location: request.url }, (error, redirectLocation, renderProps) => {
     if (error) {
-      res.status(500).send(error.message)
+      response.status(500).send(error.message)
     } else if (redirectLocation) {
-      res.redirect(302, redirectLocation.pathname + redirectLocation.search)
+      response.redirect(302, redirectLocation.pathname + redirectLocation.search)
     } else if (renderProps) {
       // You can also check renderProps.components or renderProps.routes for
       // your "not found" component or route respectively, and send a 404 as
       // below, if you're using a catch-all route.
       // res.status(200).send(renderToString(<RouterContext {...renderProps} />))
+      // debugger
+      renderProps.components[2].customMethod('barquito');
       page = renderFullPage(
         renderToString(
           <Provider store={store}>
@@ -76,7 +77,7 @@ console.log(JSON.stringify(params))
       )
 
       response.writeHead(200, {'Content-Type': 'text/html'})
-      response.end(page, () => {console.log('yupi!!')});
+      response.end(page, () => {console.log('yahoo!!')});
       // res.status(200).send(page);
     } else {
       // res.status(404).send('Not found')

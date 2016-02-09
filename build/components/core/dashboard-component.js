@@ -12,9 +12,9 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouter = require('react-router');
 
-var _twoComponent = require('./two-component');
+var _topHeaderMenuContainer = require('./top-header-menu-container');
 
-var _twoComponent2 = _interopRequireDefault(_twoComponent);
+var _topHeaderMenuContainer2 = _interopRequireDefault(_topHeaderMenuContainer);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -57,11 +57,7 @@ var Dashboard = _react2.default.createClass({
       _react2.default.createElement(
         'div',
         { className: 'main-header' },
-        _react2.default.createElement(
-          'h4',
-          null,
-          'GMS'
-        )
+        _react2.default.createElement(_topHeaderMenuContainer2.default, this.props)
       ),
       _react2.default.createElement(
         'div',
@@ -73,25 +69,18 @@ var Dashboard = _react2.default.createClass({
             'div',
             { style: {} },
             _react2.default.createElement(
-              'ul',
+              'h4',
               null,
+              'GMS'
+            ),
+            _react2.default.createElement(
+              'form',
+              { action: 'search' },
+              _react2.default.createElement('input', { type: 'text', name: 'q' }),
               _react2.default.createElement(
-                'li',
-                { style: styles.link },
-                _react2.default.createElement(
-                  _reactRouter.Link,
-                  { to: '/' },
-                  'Home'
-                )
-              ),
-              _react2.default.createElement(
-                'li',
-                { style: styles.link },
-                _react2.default.createElement(
-                  _reactRouter.Link,
-                  { to: '/collections', activeStyle: styles.activeLink },
-                  'Collections'
-                )
+                'button',
+                { value: 'Search', name: 'bt-search', type: 'submit' },
+                'Search'
               )
             )
           ),
@@ -99,7 +88,6 @@ var Dashboard = _react2.default.createClass({
             'div',
             { style: { margin: 20 } },
             props.location.pathname,
-            _react2.default.createElement(_twoComponent2.default, this.props),
             props.children
           )
         )

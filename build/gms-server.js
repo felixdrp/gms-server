@@ -51,29 +51,29 @@ var PORT = 8009;
 var routes = (0, _routes2.default)((0, _createMemoryHistory2.default)());
 
 function renderFullPage(html, initialState) {
-  return '\n    <!doctype html>\n    <html>\n      <head>\n        <title>Glasgow Memories Server</title>\n      </head>\n      <body>\n        <div id="root">' + html + '</div>\n        <script>\n          window.__INITIAL_STATE__ = ' + JSON.stringify(initialState) + '\n        </script>\n        <script src="/lib/bundle.js"></script>\n      </body>\n    </html>\n    ';
+  return '\n    <!doctype html>\n    <html>\n      <head>\n        <title>Glasgow Memories Server</title>\n        <link rel="stylesheet" type="text/css" href="css/app.css">\n      </head>\n      <body>\n        <div id="root">' + html + '</div>\n        <script>\n          window.__INITIAL_STATE__ = ' + JSON.stringify(initialState) + '\n        </script>\n        <script src="/lib/bundle.js"></script>\n      </body>\n    </html>\n  ';
 }
 
 // We are going to fill these out in the sections to follow
-function handleRender(req, res) {
-  var request = req,
-      response = res,
-      params = _qs2.default.parse(req.query),
+function handleRender(request, response) {
+  var params = _qs2.default.parse(request.query),
       page = '',
-      location = history.createLocation(req.url);
+      location = history.createLocation(request.url);
 
   console.log(JSON.stringify(params));
 
-  (0, _reactRouter.match)({ routes: routes, location: req.url }, function (error, redirectLocation, renderProps) {
+  (0, _reactRouter.match)({ routes: routes, location: request.url }, function (error, redirectLocation, renderProps) {
     if (error) {
-      res.status(500).send(error.message);
+      response.status(500).send(error.message);
     } else if (redirectLocation) {
-      res.redirect(302, redirectLocation.pathname + redirectLocation.search);
+      response.redirect(302, redirectLocation.pathname + redirectLocation.search);
     } else if (renderProps) {
       // You can also check renderProps.components or renderProps.routes for
       // your "not found" component or route respectively, and send a 404 as
       // below, if you're using a catch-all route.
       // res.status(200).send(renderToString(<RouterContext {...renderProps} />))
+      // debugger
+      renderProps.components[2].customMethod('barquito');
       page = renderFullPage((0, _server.renderToString)(_react2.default.createElement(
         _reactRedux.Provider,
         { store: store },
@@ -87,7 +87,7 @@ function handleRender(req, res) {
 
       response.writeHead(200, { 'Content-Type': 'text/html' });
       response.end(page, function () {
-        console.log('yupi!!');
+        console.log('yahoo!!');
       });
       // res.status(200).send(page);
     } else {
