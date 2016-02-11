@@ -16,9 +16,9 @@ The objective is to make a system modular and scalable.
 
 ### Web
 
-l. Server Web. ('Isomorphic')
-l. Client Web. ('Isomorphic')
-l. GraphQL. provides data to server and client.('Isomorphic').
++ Server. ('Isomorphic')
++ Client. ('Isomorphic')
++ GraphQL Server. Provides data to server and client.('Isomorphic').
 
 ### Data
 
