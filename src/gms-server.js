@@ -61,7 +61,9 @@ function handleRender(request, response) {
       // your "not found" component or route respectively, and send a 404 as
       // below, if you're using a catch-all route.
       // res.status(200).send(renderToString(<RouterContext {...renderProps} />))
+
       // debugger
+      // call a component static function
       renderProps.components[2].customMethod('barquito');
       page = renderFullPage(
         renderToString(

@@ -14,7 +14,16 @@ var AppContainer = function AppContainer(props) {
   return _react2.default.createElement(
     "div",
     { id: "maincontainer" },
+
+    // https://github.com/rackt/react-router/blob/master/examples/passing-props-to-children/app.js
     props.children
+    // && React.cloneElement(
+    //    props.children,
+    //    {
+    //      ...props
+    //    }
+    //  )
+
   );
 };
 

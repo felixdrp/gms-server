@@ -7,6 +7,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 // import { browserHistory, Router, Route, IndexRoute, Link } from 'react-router'
 
+
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -44,6 +45,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var history = require('history');
 // Load Provider component.
 
+
 var store = (0, _redux.createStore)(_reducer2.default);
 
 var app = (0, _express2.default)();
@@ -72,7 +74,9 @@ function handleRender(request, response) {
       // your "not found" component or route respectively, and send a 404 as
       // below, if you're using a catch-all route.
       // res.status(200).send(renderToString(<RouterContext {...renderProps} />))
+
       // debugger
+      // call a component static function
       renderProps.components[2].customMethod('barquito');
       page = renderFullPage((0, _server.renderToString)(_react2.default.createElement(
         _reactRedux.Provider,
