@@ -64,16 +64,15 @@ var Dashboard = _react2.default.createClass({
         { className: 'main-viewport' },
         _react2.default.createElement(
           'div',
-          { style: { display: 'flex', flexDirection: 'column' } },
+          { style: { display: 'flex', flexDirection: 'column', justifyContent: 'center', flex: '1 100%' } },
           _react2.default.createElement(
             'div',
             { style: { margin: 20 } },
-            props.location.pathname,
-            props.children
+            props.location.pathname
           ),
           _react2.default.createElement(
             'div',
-            { style: {} },
+            { className: 'center' },
             _react2.default.createElement(
               'h1',
               null,

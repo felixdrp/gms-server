@@ -42,14 +42,13 @@ var Dashboard = React.createClass({
 
         <div className="main-viewport">
 
-          <div style={{display: 'flex', flexDirection: 'column'}}>
+          <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', flex: '1 100%'}}>
 
             <div style={{margin: 20}}>
               {props.location.pathname}
-              {props.children}
             </div>
 
-            <div style={{ }}>
+            <div className="center" >
               <h1>GMS</h1>
               <form action="search">
                 <div style={{
