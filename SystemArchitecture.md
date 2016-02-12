@@ -8,6 +8,7 @@ The objective is to make a system modular and scalable.
 + [NodeJS](https://nodejs.org/)
 + [Express](http://expressjs.com/)
 + [React](https://facebook.github.io/react/)
++ [React-router](https://github.com/reactjs/react-router)
 + [Redux](http://redux.js.org/)
 + [GraphQL](http://graphql.org/)
 + [BabelJS](https://babeljs.io/)
