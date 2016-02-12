@@ -82,7 +82,7 @@
 
   Go to the local url: [http://localhost:8009/](http://localhost:8009/)
 
-  Benchmark the server:
+###  Benchmark the server:
 
   ```sh
     siege -t60S http://localhost:8009
