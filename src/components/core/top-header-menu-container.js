@@ -14,6 +14,7 @@ var TopHeaderMenuContainer = React.createClass({
     return (
       <div id="top-header-menu-container">
         <ul style={{listStyleType: 'none'}}>
+          <li className="top-header-menu">{props.location.pathname}</li>
           <li className="top-header-menu"><Link to="/" >Home</Link></li>
           <li className="top-header-menu">
             <Link

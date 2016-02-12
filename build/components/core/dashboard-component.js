@@ -67,11 +67,6 @@ var Dashboard = _react2.default.createClass({
           { style: { display: 'flex', flexDirection: 'column', justifyContent: 'center', flex: '1 100%' } },
           _react2.default.createElement(
             'div',
-            { style: { margin: 20 } },
-            props.location.pathname
-          ),
-          _react2.default.createElement(
-            'div',
             { className: 'center' },
             _react2.default.createElement(
               'h1',
@@ -84,7 +79,8 @@ var Dashboard = _react2.default.createClass({
               _react2.default.createElement(
                 'div',
                 { style: {
-                    height: 38,
+                    position: 'relative',
+                    height: 40,
                     overflowX: 'hidden',
                     overflowY: 'hidden',
                     verticalAlign: 'top',
@@ -98,12 +94,27 @@ var Dashboard = _react2.default.createClass({
                   { style: { position: 'relative', lineHeight: 0, whiteSpace: 'nowrap' } },
                   _react2.default.createElement(
                     'div',
-                    { id: 'search-query', style: { display: 'inline-block' } },
-                    _react2.default.createElement('input', { type: 'text', name: 'q' })
+                    { id: 'search-query', style: {} },
+                    _react2.default.createElement('input', {
+                      type: 'text',
+                      name: 'q',
+                      maxLength: '2048',
+                      style: {
+                        border: 'medium none',
+                        outline: 'none',
+                        padding: 0,
+                        margin: 0,
+                        height: '100%',
+                        width: '100%',
+                        fontSize: 16,
+                        fontWeight: 400,
+                        textIndent: 10
+                      }
+                    })
                   ),
                   _react2.default.createElement(
                     'button',
-                    { value: 'Search', name: 'bt-search', type: 'submit' },
+                    { value: 'Search', name: 'bt-search', type: 'submit', style: { height: 40, padding: '0 15px' } },
                     'Search'
                   )
                 )
@@ -112,7 +123,7 @@ var Dashboard = _react2.default.createClass({
           )
         )
       ),
-      _react2.default.createElement('div', { className: 'main-footer' })
+      _react2.default.createElement('div', { className: 'main-footer', style: { height: 40, padding: '0 10px' } })
     );
   }
 });

@@ -44,15 +44,13 @@ var Dashboard = React.createClass({
 
           <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', flex: '1 100%'}}>
 
-            <div style={{margin: 20}}>
-              {props.location.pathname}
-            </div>
-
             <div className="center" >
               <h1>GMS</h1>
+
               <form action="search">
                 <div style={{
-                    height: 38,
+                    position: 'relative',
+                    height: 40,
                     overflowX: 'hidden',
                     overflowY: 'hidden',
                     verticalAlign: 'top',
@@ -62,21 +60,35 @@ var Dashboard = React.createClass({
                   }}
                 >
                   <div style={{position: 'relative',lineHeight: 0,whiteSpace: 'nowrap'}}>
-                    <div id="search-query" style={{display: 'inline-block'}}>
-                      <input type="text" name="q" />
+                    <div id="search-query" style={{}}>
+                      <input
+                        type="text"
+                        name="q"
+                        maxLength="2048"
+                        style={{
+                          border: 'medium none',
+                          outline: 'none',
+                          padding: 0,
+                          margin: 0,
+                          height: '100%',
+                          width: '100%',
+                          fontSize: 16,
+                          fontWeight: 400,
+                          textIndent: 10,
+                        }}
+                      />
                     </div>
-                    <button value="Search" name="bt-search" type="submit">
+                    <button value="Search" name="bt-search" type="submit" style={{height: 40, padding: '0 15px'}}>
                       Search
                     </button>
                   </div>
                 </div>
               </form>
             </div>
-
           </div>
         </div>
 
-        <div className="main-footer">
+        <div className="main-footer" style={{height: 40, padding: '0 10px'}}>
         </div>
       </div>
     );
