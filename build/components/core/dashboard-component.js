@@ -4,8 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -17,28 +15,6 @@ var _topHeaderMenuContainer = require('./top-header-menu-container');
 var _topHeaderMenuContainer2 = _interopRequireDefault(_topHeaderMenuContainer);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var dark = 'hsl(200, 20%, 20%)';
-var light = '#777';
-var styles = {};
-
-styles.wrapper = {
-  padding: '10px 20px',
-  // overflow: 'hidden',
-  // background: dark,
-  color: light
-};
-
-styles.link = {
-  padding: 5,
-  color: light,
-  fontWeight: 200
-};
-
-styles.activeLink = _extends({}, styles.link, {
-  // background: light,
-  color: dark
-});
 
 var Dashboard = _react2.default.createClass({
   displayName: 'Dashboard',
@@ -99,17 +75,7 @@ var Dashboard = _react2.default.createClass({
                       type: 'text',
                       name: 'q',
                       maxLength: '2048',
-                      style: {
-                        border: 'medium none',
-                        outline: 'none',
-                        padding: 0,
-                        margin: 0,
-                        height: '100%',
-                        width: '100%',
-                        fontSize: 16,
-                        fontWeight: 400,
-                        textIndent: 10
-                      }
+                      style: {}
                     })
                   ),
                   _react2.default.createElement(

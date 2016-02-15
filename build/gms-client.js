@@ -62,6 +62,8 @@ var finalCreateStore = (0, _redux.compose)((0, _redux.applyMiddleware)(middlewar
 var store = finalCreateStore(reducer);
 middleware.listenForReplays(store);
 
+console.log(store.getState());
+
 (0, _reactDom.render)(_react2.default.createElement(
   _reactRedux.Provider,
   { store: store },

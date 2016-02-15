@@ -42,6 +42,8 @@ const finalCreateStore = compose(
 const store = finalCreateStore(reducer)
 middleware.listenForReplays(store)
 
+console.log(store.getState())
+
 render(
   <Provider store={store}>
     {Routes( history )}
