@@ -57,7 +57,7 @@ var Dashboard = _react2.default.createClass({
           _react2.default.createElement(
             'div',
             { style: { flex: 1, width: 600 } },
-            _react2.default.createElement(_searchCompact2.default, null)
+            _react2.default.createElement(_searchCompact2.default, this.props)
           )
         )
       ),

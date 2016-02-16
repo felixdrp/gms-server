@@ -25,7 +25,7 @@ var Dashboard = React.createClass({
             </div>
 
             <div style={{flex: 1, width: 600}}>
-              <SearchCompact />
+              <SearchCompact {...this.props} />
             </div>
           </div>
         </div>

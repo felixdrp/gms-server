@@ -29,7 +29,9 @@ var SearchCompact = _react2.default.createClass({
     var _this = this;
 
     var props = this.props;
-    var searchQueryValue = 'query';
+    var query = props.location.query;
+
+    var searchQueryValue = query && 'q' in query ? query.q : '';
 
     // props.dispatch(routeActions.push('/collections'));
 

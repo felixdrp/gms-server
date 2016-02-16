@@ -40,7 +40,7 @@ var routes = function routes(history) {
       _react2.default.createElement(_reactRouter.Route, { path: 'search', component: _searchContainer2.default }),
       _react2.default.createElement(
         _reactRouter.Route,
-        { path: 'collections', component: _dashboardComponent2.default },
+        { path: 'collections', component: _searchContainer2.default },
         _react2.default.createElement(_reactRouter.Route, { path: 'foo', component: _twoComponent2.default })
       )
     )

@@ -18,7 +18,7 @@ var SearchContainer = React.createClass({
         <div className="main-header">
           <div className="header-search-menu">
             <span className="title"><Link to="/">GMS</Link></span>
-            <SearchCompact />
+            <SearchCompact {...this.props} />
           </div>
 
           <TopHeaderMenuContainer {...this.props} />

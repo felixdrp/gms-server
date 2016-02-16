@@ -52,8 +52,10 @@ var TopHeaderMenuContainer = _react2.default.createClass({
             _reactRouter.Link,
             {
               to: '/collections',
-              activeStyle: { color: 'red' },
-              activeClassName: 'mlk'
+              activeStyle: {
+                // color: 'red'
+              },
+              activeClassName: 'active-location'
             },
             'Collections'
           )

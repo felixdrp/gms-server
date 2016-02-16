@@ -19,8 +19,10 @@ var TopHeaderMenuContainer = React.createClass({
           <li className="top-header-menu">
             <Link
               to="/collections"
-              activeStyle={{color: 'red'}}
-              activeClassName="mlk"
+              activeStyle={{
+                // color: 'red'
+              }}
+              activeClassName="active-location"
             >
               Collections
             </Link>

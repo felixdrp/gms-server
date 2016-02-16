@@ -50,7 +50,7 @@ var SearchContainer = _react2.default.createClass({
               'GMS'
             )
           ),
-          _react2.default.createElement(_searchCompact2.default, null)
+          _react2.default.createElement(_searchCompact2.default, this.props)
         ),
         _react2.default.createElement(_topHeaderMenuContainer2.default, this.props)
       ),

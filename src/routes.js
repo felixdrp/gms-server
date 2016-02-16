@@ -12,7 +12,7 @@ var routes = (history) => (
     <Route path="/" component={AppContainer}>
       <IndexRoute component={Dashboard} />
       <Route path="search" component={SearchContainer} />
-      <Route path="collections" component={Dashboard}>
+      <Route path="collections" component={SearchContainer}>
         <Route path="foo" component={Two} />
       </Route>
     </Route>
