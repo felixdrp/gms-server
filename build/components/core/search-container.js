@@ -14,10 +14,14 @@ var _topHeaderMenuContainer = require('./top-header-menu-container');
 
 var _topHeaderMenuContainer2 = _interopRequireDefault(_topHeaderMenuContainer);
 
+var _searchCompact = require('./search-compact');
+
+var _searchCompact2 = _interopRequireDefault(_searchCompact);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Dashboard = _react2.default.createClass({
-  displayName: 'Dashboard',
+var SearchContainer = _react2.default.createClass({
+  displayName: 'SearchContainer',
 
   statics: {
     customMethod: function customMethod(foo) {
@@ -34,7 +38,20 @@ var Dashboard = _react2.default.createClass({
       _react2.default.createElement(
         'div',
         { className: 'main-header' },
-        _react2.default.createElement(SearchCompact, null),
+        _react2.default.createElement(
+          'div',
+          { className: 'header-search-menu' },
+          _react2.default.createElement(
+            'span',
+            { className: 'title' },
+            _react2.default.createElement(
+              _reactRouter.Link,
+              { to: '/' },
+              'GMS'
+            )
+          ),
+          _react2.default.createElement(_searchCompact2.default, null)
+        ),
         _react2.default.createElement(_topHeaderMenuContainer2.default, this.props)
       ),
       _react2.default.createElement(
@@ -51,5 +68,13 @@ var Dashboard = _react2.default.createClass({
   }
 });
 
-exports.default = Dashboard;
+var SearchResultContainer = function SearchResultContainer(props) {
+  return _react2.default.createElement(
+    'div',
+    { id: 'searchResultContainer' },
+    props.children
+  );
+};
+
+exports.default = SearchContainer;
 //# sourceMappingURL=search-container.js.map

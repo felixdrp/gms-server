@@ -1,8 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router'
 import TopHeaderMenuContainer from './top-header-menu-container'
+import SearchCompact from './search-compact'
 
-var Dashboard = React.createClass({
+var SearchContainer = React.createClass({
   statics: {
     customMethod: function(foo) {
       console.log(this.props);
@@ -12,11 +13,14 @@ var Dashboard = React.createClass({
   render() {
     let props = this.props;
 
-
     return (
       <div id="search-page">
         <div className="main-header">
-          <SearchCompact />
+          <div className="header-search-menu">
+            <span className="title"><Link to="/">GMS</Link></span>
+            <SearchCompact />
+          </div>
+
           <TopHeaderMenuContainer {...this.props} />
         </div>
 
@@ -33,4 +37,10 @@ var Dashboard = React.createClass({
   }
 });
 
-export default Dashboard
+const SearchResultContainer = (props) => (
+ <div id="searchResultContainer">
+   {props.children}
+ </div>
+);
+
+export default SearchContainer

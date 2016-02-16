@@ -14,6 +14,10 @@ var _topHeaderMenuContainer = require('./top-header-menu-container');
 
 var _topHeaderMenuContainer2 = _interopRequireDefault(_topHeaderMenuContainer);
 
+var _searchCompact = require('./search-compact');
+
+var _searchCompact2 = _interopRequireDefault(_searchCompact);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Dashboard = _react2.default.createClass({
@@ -40,56 +44,24 @@ var Dashboard = _react2.default.createClass({
         { className: 'main-viewport' },
         _react2.default.createElement(
           'div',
-          { style: { display: 'flex', flexDirection: 'column', justifyContent: 'center', flex: '1 100%' } },
+          { style: { display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' } },
           _react2.default.createElement(
             'div',
-            { className: 'center' },
+            { className: '', style: { flex: 1 } },
             _react2.default.createElement(
               'h1',
               null,
               'GMS'
-            ),
-            _react2.default.createElement(
-              'form',
-              { action: 'search' },
-              _react2.default.createElement(
-                'div',
-                { style: {
-                    position: 'relative',
-                    height: 40,
-                    overflowX: 'hidden',
-                    overflowY: 'hidden',
-                    verticalAlign: 'top',
-                    whiteSpace: 'nowrap',
-                    lineHeight: 0,
-                    whiteSpace: 'nowrap'
-                  }
-                },
-                _react2.default.createElement(
-                  'div',
-                  { style: { position: 'relative', lineHeight: 0, whiteSpace: 'nowrap' } },
-                  _react2.default.createElement(
-                    'div',
-                    { id: 'search-query', style: {} },
-                    _react2.default.createElement('input', {
-                      type: 'text',
-                      name: 'q',
-                      maxLength: '2048',
-                      style: {}
-                    })
-                  ),
-                  _react2.default.createElement(
-                    'button',
-                    { value: 'Search', name: 'bt-search', type: 'submit', style: { height: 40, padding: '0 15px' } },
-                    'Search'
-                  )
-                )
-              )
             )
+          ),
+          _react2.default.createElement(
+            'div',
+            { style: { flex: 1, width: 600 } },
+            _react2.default.createElement(_searchCompact2.default, null)
           )
         )
       ),
-      _react2.default.createElement('div', { className: 'main-footer', style: { height: 40, padding: '0 10px' } })
+      _react2.default.createElement('div', { className: 'main-footer', style: {} })
     );
   }
 });
