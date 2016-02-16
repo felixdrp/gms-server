@@ -36,21 +36,23 @@ var _redux = require('redux');
 
 var _reactRedux = require('react-redux');
 
+var _reactRouterRedux = require('react-router-redux');
+
 var _reducer = require('./reducers/reducer-1');
 
 var _reducer2 = _interopRequireDefault(_reducer);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var history = require('history');
+var history = (0, _createMemoryHistory2.default)();
 // Load Provider component.
 
 
-var store = (0, _redux.createStore)(_reducer2.default);
+// const store = createStore(counter)
 
 var app = (0, _express2.default)();
 var PORT = 8009;
-var routes = (0, _routes2.default)((0, _createMemoryHistory2.default)());
+var routes = (0, _routes2.default)(history);
 
 function renderFullPage(html, initialState) {
   return '\n    <!doctype html>\n    <html>\n      <head>\n        <title>Glasgow Memories Server</title>\n        <link rel="stylesheet" type="text/css" href="css/app.css">\n      </head>\n      <body>\n        <div id="root">' + html + '</div>\n        <script>\n          window.__INITIAL_STATE__ = ' + JSON.stringify(initialState) + '\n        </script>\n        <script src="/lib/bundle.js"></script>\n      </body>\n    </html>\n  ';
@@ -58,13 +60,16 @@ function renderFullPage(html, initialState) {
 
 // We are going to fill these out in the sections to follow
 function handleRender(request, response) {
-  var params = _qs2.default.parse(request.query),
+  var query = _qs2.default.parse(request.query),
       page = '',
-      location = history.createLocation(request.url);
+      location = _extends({}, history.createLocation(request.url), {
+    query: query
+  });
 
-  console.log(JSON.stringify(params));
+  console.log('location: ' + JSON.stringify(location));
+  console.log('location query: ' + JSON.stringify(query));
 
-  (0, _reactRouter.match)({ routes: routes, location: request.url }, function (error, redirectLocation, renderProps) {
+  (0, _reactRouter.match)({ routes: routes, location: location }, function (error, redirectLocation, renderProps) {
     if (error) {
       response.status(500).send(error.message);
     } else if (redirectLocation) {
@@ -77,11 +82,32 @@ function handleRender(request, response) {
 
       // debugger
       // call a component static function
+
+      // create store
+      var middleware = (0, _reactRouterRedux.syncHistory)(history);
+      var reducer = (0, _redux.combineReducers)(_extends({}, _reducer2.default, {
+        routing: _reactRouterRedux.routeReducer
+      }));
+
+      // // Create Redux store with initial state
+      // // const store = createStore(counterApp, initialState)
+
+      var finalCreateStore = (0, _redux.compose)((0, _redux.applyMiddleware)(middleware)
+      // DevTools.instrument()
+      //
+      )(_redux.createStore);
+      var store = finalCreateStore(reducer);
+      middleware.listenForReplays(store);
+
+      store.dispatch(_reactRouterRedux.routeActions.push(location.pathname + location.search));
+
+      console.log('store state: ' + JSON.stringify(store.getState()));
+
       renderProps.components[2].customMethod('barquito');
       page = renderFullPage((0, _server.renderToString)(_react2.default.createElement(
         _reactRedux.Provider,
         { store: store },
-        _react2.default.createElement(_reactRouter.RoutingContext, _extends({}, renderProps, { location: location }))
+        _react2.default.createElement(_reactRouter.RoutingContext, renderProps)
       )),
       // Pass initial info to the page with window.__INITIAL_STATE__ =
       {

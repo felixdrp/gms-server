@@ -12,8 +12,9 @@ var SearchCompact = React.createClass({
   },
   render() {
     let props = this.props;
-    var { query } = props.location;
-    let searchQueryValue = (query && 'q' in query)? query.q : '';
+    // var { query } = props.location;
+    let query = '';
+    let searchQueryValue = props.location.query.q;
 
     // props.dispatch(routeActions.push('/collections'));
 
@@ -61,4 +62,11 @@ var SearchCompact = React.createClass({
   }
 });
 
-export default connect()(SearchCompact);
+function mapStateToProps(state, ownProps) {
+  return {
+    id: ownProps.params,
+    filter: ownProps.location
+  };
+}
+
+export default connect(mapStateToProps)(SearchCompact);

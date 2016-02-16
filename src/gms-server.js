@@ -7,22 +7,24 @@ import Express from 'express'
 import { match, RoutingContext } from 'react-router'
 // import { browserHistory, Router, Route, IndexRoute, Link } from 'react-router'
 import createMemoryHistory from 'history/lib/createMemoryHistory';
-const history = require('history');
+var history = createMemoryHistory();
 
 import Routes from './routes';
 
 import qs from 'qs'
-import { createStore } from 'redux'
+
+import { applyMiddleware, compose, createStore, combineReducers } from 'redux'
 // Load Provider component.
 import { Provider } from 'react-redux';
+import { syncHistory, routeReducer, routeActions } from 'react-router-redux'
 
 import counter from './reducers/reducer-1'
 
-const store = createStore(counter)
+// const store = createStore(counter)
 
 const app = Express()
 const PORT = 8009
-const routes = Routes( createMemoryHistory() );
+const routes = Routes( history );
 
 function renderFullPage(html, initialState) {
   return `
@@ -45,13 +47,17 @@ function renderFullPage(html, initialState) {
 
 // We are going to fill these out in the sections to follow
 function handleRender(request, response) {
-  let params = qs.parse(request.query),
+  let query = qs.parse(request.query),
       page = '',
-      location = history.createLocation(request.url);
+      location = {
+        ...history.createLocation(request.url),
+        query
+      };
 
-  console.log(JSON.stringify(params))
+  console.log('location: ' + JSON.stringify(location))
+  console.log('location query: ' + JSON.stringify(query))
 
-  match({ routes, location: request.url }, (error, redirectLocation, renderProps) => {
+  match({ routes, location: location }, (error, redirectLocation, renderProps) => {
     if (error) {
       response.status(500).send(error.message)
     } else if (redirectLocation) {
@@ -64,11 +70,34 @@ function handleRender(request, response) {
 
       // debugger
       // call a component static function
+
+      // create store
+      const middleware = syncHistory(history)
+      const reducer = combineReducers({
+        ...counter,
+        routing: routeReducer
+      })
+
+      // // Create Redux store with initial state
+      // // const store = createStore(counterApp, initialState)
+
+      const finalCreateStore = compose(
+        applyMiddleware(middleware)
+        // DevTools.instrument()
+        //
+      )(createStore)
+      const store = finalCreateStore(reducer)
+      middleware.listenForReplays(store)
+
+      store.dispatch(routeActions.push(location.pathname + location.search));
+
+      console.log('store state: ' + JSON.stringify(store.getState()))
+
       renderProps.components[2].customMethod('barquito');
       page = renderFullPage(
         renderToString(
           <Provider store={store}>
-            <RoutingContext {...renderProps} location={location} />
+            <RoutingContext {...renderProps} />
           </Provider>
         ),
         // Pass initial info to the page with window.__INITIAL_STATE__ =
