@@ -17,7 +17,9 @@ gulp.task('babel', function () {
             plugins: [
               // http://babeljs.io/docs/plugins/transform-object-rest-spread/
               "transform-object-rest-spread",
-              // "syntax-object-rest-spread"
+
+              // export from ES6 to use ./src/components/core/index.js
+              "transform-export-extensions",
             ]
           }
         ))

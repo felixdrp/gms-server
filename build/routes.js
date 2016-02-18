@@ -10,21 +10,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouter = require('react-router');
 
-var _appContainer = require('./components/core/app-container');
-
-var _appContainer2 = _interopRequireDefault(_appContainer);
-
-var _twoComponent = require('./components/core/two-component');
-
-var _twoComponent2 = _interopRequireDefault(_twoComponent);
-
-var _dashboardComponent = require('./components/core/dashboard-component');
-
-var _dashboardComponent2 = _interopRequireDefault(_dashboardComponent);
-
-var _searchContainer = require('./components/core/search-container');
-
-var _searchContainer2 = _interopRequireDefault(_searchContainer);
+var _core = require('./components/core');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -35,17 +21,25 @@ var routes = function routes(history) {
     { history: history },
     _react2.default.createElement(
       _reactRouter.Route,
-      { path: '/', component: _appContainer2.default },
-      _react2.default.createElement(_reactRouter.IndexRoute, { component: _dashboardComponent2.default }),
-      _react2.default.createElement(_reactRouter.Route, { path: 'search', component: _searchContainer2.default }),
+      { path: '/', component: _core.AppContainer },
+      _react2.default.createElement(_reactRouter.IndexRoute, { component: _core.Dashboard }),
       _react2.default.createElement(
         _reactRouter.Route,
-        { path: 'collections', component: _searchContainer2.default },
-        _react2.default.createElement(_reactRouter.Route, { path: 'foo', component: _twoComponent2.default })
+        { path: 'search', component: _core.CommonViewContainer },
+        _react2.default.createElement(_reactRouter.IndexRoute, { component: _core.SearchDashboard })
+      ),
+      _react2.default.createElement(
+        _reactRouter.Route,
+        { path: 'collections', component: _core.CommonViewContainer },
+        _react2.default.createElement(_reactRouter.IndexRoute, { component: _core.CollectionsDashboard }),
+        _react2.default.createElement(_reactRouter.Route, { path: 'foo', component: _core.Dashboard })
       )
     )
   );
 };
+
+// Please add new core components to /components/core/index.js
+
 
 exports.default = routes;
 //# sourceMappingURL=routes.js.map

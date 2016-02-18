@@ -31,6 +31,7 @@ function renderFullPage(html, initialState) {
     <!doctype html>
     <html>
       <head>
+        <meta charset="UTF-8">
         <title>Glasgow Memories Server</title>
         <link rel="stylesheet" type="text/css" href="css/app.css">
       </head>
@@ -89,6 +90,7 @@ function handleRender(request, response) {
       const store = finalCreateStore(reducer)
       middleware.listenForReplays(store)
 
+      // dispatch the first url location to give the url to the components.
       store.dispatch(routeActions.push(location.pathname + location.search));
 
       console.log('store state: ' + JSON.stringify(store.getState()))

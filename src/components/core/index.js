@@ -1,0 +1,5 @@
+export AppContainer from './app-container'
+export Dashboard from './dashboard-component'
+export CommonViewContainer from './common-view-container'
+export SearchDashboard from './search-dashboard-component'
+export CollectionsDashboard from './collections-dashboard-component'

@@ -28,8 +28,8 @@ var _searchCompact2 = _interopRequireDefault(_searchCompact);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var SearchContainer = _react2.default.createClass({
-  displayName: 'SearchContainer',
+var CommonViewContainer = _react2.default.createClass({
+  displayName: 'CommonViewContainer',
 
   statics: {
     customMethod: function customMethod(foo) {
@@ -43,10 +43,10 @@ var SearchContainer = _react2.default.createClass({
     var location = _extends({}, props.location, {
       query: query
     });
-    // debugger
+
     return _react2.default.createElement(
       'div',
-      { id: 'search-page' },
+      { id: 'common-view-page' },
       _react2.default.createElement(
         'div',
         { className: 'main-header' },
@@ -69,24 +69,12 @@ var SearchContainer = _react2.default.createClass({
       _react2.default.createElement(
         'div',
         { className: 'main-viewport' },
-        _react2.default.createElement(
-          'div',
-          { style: {} },
-          _react2.default.createElement(SearchResultContainer, { data: {} })
-        )
+        props.children
       ),
       _react2.default.createElement('div', { className: 'main-footer', style: { height: 40, padding: '0 10px' } })
     );
   }
 });
-
-var SearchResultContainer = function SearchResultContainer(props) {
-  return _react2.default.createElement(
-    'div',
-    { id: 'searchResultContainer' },
-    props.children
-  );
-};
 
 function mapStateToProps(state, ownProps) {
   return {
@@ -95,5 +83,5 @@ function mapStateToProps(state, ownProps) {
     location: ownProps.location
   };
 }
-exports.default = (0, _reactRedux.connect)(mapStateToProps)(SearchContainer);
-//# sourceMappingURL=search-container.js.map
+exports.default = (0, _reactRedux.connect)(mapStateToProps)(CommonViewContainer);
+//# sourceMappingURL=common-view-container.js.map

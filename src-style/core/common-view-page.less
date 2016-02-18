@@ -1,13 +1,15 @@
 @import "../constant.less";
 
-#search-page {
+@MAIN_HEADER_HEIGHT: 60px;
+
+#common-view-page {
   .main-header {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     display: block;
-    height: 60px;
+    height: @MAIN_HEADER_HEIGHT;
     box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.39);
 
     .header-search-menu {
@@ -31,10 +33,31 @@
         }
       }
 
-      #search-compact {
-        display: inline;
-
-      }
+      #search-compact { display: inline; }
     }
   }
+
+  .main-viewport {
+    margin-top: @MAIN_HEADER_HEIGHT + 15px;
+  }
+}
+
+.common-view-page-structure-dashboard {
+  position: relative;
+  width: 600px;
+  margin-top: 85px;
+  margin-left: 120px;
+}
+
+.vierport-main-list-component {
+  a {
+    color: @LOGO_MAIN_COLOR;
+    font-family: "Open Sans",sans-serif;
+    font-size: 26px;
+    font-weight: 500;
+    text-decoration: none;
+  }
+ &>div:first-child {
+   border-top: 1px;
+ }
 }

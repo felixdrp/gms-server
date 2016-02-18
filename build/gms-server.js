@@ -55,7 +55,7 @@ var PORT = 8009;
 var routes = (0, _routes2.default)(history);
 
 function renderFullPage(html, initialState) {
-  return '\n    <!doctype html>\n    <html>\n      <head>\n        <title>Glasgow Memories Server</title>\n        <link rel="stylesheet" type="text/css" href="css/app.css">\n      </head>\n      <body>\n        <div id="root">' + html + '</div>\n        <script>\n          window.__INITIAL_STATE__ = ' + JSON.stringify(initialState) + '\n        </script>\n        <script src="/lib/bundle.js"></script>\n      </body>\n    </html>\n  ';
+  return '\n    <!doctype html>\n    <html>\n      <head>\n        <meta charset="UTF-8">\n        <title>Glasgow Memories Server</title>\n        <link rel="stylesheet" type="text/css" href="css/app.css">\n      </head>\n      <body>\n        <div id="root">' + html + '</div>\n        <script>\n          window.__INITIAL_STATE__ = ' + JSON.stringify(initialState) + '\n        </script>\n        <script src="/lib/bundle.js"></script>\n      </body>\n    </html>\n  ';
 }
 
 // We are going to fill these out in the sections to follow
@@ -99,6 +99,7 @@ function handleRender(request, response) {
       var store = finalCreateStore(reducer);
       middleware.listenForReplays(store);
 
+      // dispatch the first url location to give the url to the components.
       store.dispatch(_reactRouterRedux.routeActions.push(location.pathname + location.search));
 
       console.log('store state: ' + JSON.stringify(store.getState()));

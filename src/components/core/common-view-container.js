@@ -5,7 +5,7 @@ import qs from 'qs'
 import TopHeaderMenuContainer from './top-header-menu-container'
 import SearchCompact from './search-compact'
 
-var SearchContainer = React.createClass({
+var CommonViewContainer = React.createClass({
   statics: {
     customMethod: function(foo) {
       console.log(this.props);
@@ -19,9 +19,9 @@ var SearchContainer = React.createClass({
       ...props.location,
       query
     }
-    // debugger
+
     return (
-      <div id="search-page">
+      <div id="common-view-page">
         <div className="main-header">
           <div className="header-search-menu">
             <span className="title"><Link to="/">GMS</Link></span>
@@ -32,9 +32,7 @@ var SearchContainer = React.createClass({
         </div>
 
         <div className="main-viewport">
-          <div style={{}}>
-            <SearchResultContainer data={{}} />
-          </div>
+          {props.children}
         </div>
 
         <div className="main-footer" style={{height: 40, padding: '0 10px'}}>
@@ -44,12 +42,6 @@ var SearchContainer = React.createClass({
   }
 });
 
-const SearchResultContainer = (props) => (
- <div id="searchResultContainer">
-   {props.children}
- </div>
-);
-
 function mapStateToProps(state, ownProps) {
   return {
     // if route contains params
@@ -57,4 +49,4 @@ function mapStateToProps(state, ownProps) {
     location: ownProps.location
   };
 }
-export default connect(mapStateToProps)(SearchContainer);
+export default connect(mapStateToProps)(CommonViewContainer);

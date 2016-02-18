@@ -21,7 +21,9 @@
     "redux": "^3.0.6"
   },
   "devDependencies": {
+    "babel-plugin-syntax-export-extensions": "^6.5.0",
     "babel-plugin-syntax-object-rest-spread": "^6.3.13",
+    "babel-plugin-transform-export-extensions": "^6.5.0",
     "babel-plugin-transform-object-rest-spread": "^6.3.13",
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
