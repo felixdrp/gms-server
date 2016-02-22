@@ -1,6 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router'
-// import Two from './two-component'
+
+/**
+ * Component that renders the top header menu.
+ *
+ */
 
 var TopHeaderMenuContainer = React.createClass({
   statics: {
@@ -19,6 +23,7 @@ var TopHeaderMenuContainer = React.createClass({
           <li className="top-header-menu">
             <Link
               to="/collections"
+              // On same path, Active inline-styles or CSS class.
               activeStyle={{
                 // color: 'red'
               }}

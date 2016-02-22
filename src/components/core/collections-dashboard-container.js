@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router'
 
-var CollectionsDashboard  = React.createClass({
+var CollectionsDashboardContainer = React.createClass({
   statics: {
     customMethod: function(foo) {
       return foo === 'bardoooo';
@@ -23,4 +23,4 @@ var CollectionsDashboard  = React.createClass({
   }
 });
 
-export default CollectionsDashboard
+export default CollectionsDashboardContainer

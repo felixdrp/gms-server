@@ -28,6 +28,11 @@ var _searchCompact2 = _interopRequireDefault(_searchCompact);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * Component that renders the common view. The top header and the bottom foot.
+ *
+ */
+
 var CommonViewContainer = _react2.default.createClass({
   displayName: 'CommonViewContainer',
 

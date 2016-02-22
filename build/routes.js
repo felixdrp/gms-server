@@ -26,20 +26,29 @@ var routes = function routes(history) {
       _react2.default.createElement(
         _reactRouter.Route,
         { path: 'search', component: _core.CommonViewContainer },
-        _react2.default.createElement(_reactRouter.IndexRoute, { component: _core.SearchDashboard })
+        _react2.default.createElement(_reactRouter.IndexRoute, { component: _core.SearchDashboardContainer })
       ),
       _react2.default.createElement(
         _reactRouter.Route,
         { path: 'collections', component: _core.CommonViewContainer },
-        _react2.default.createElement(_reactRouter.IndexRoute, { component: _core.CollectionsDashboard }),
+        _react2.default.createElement(_reactRouter.IndexRoute, { component: _core.CollectionsDashboardContainer }),
         _react2.default.createElement(_reactRouter.Route, { path: 'foo', component: _core.Dashboard })
       )
     )
   );
 };
 
-// Please add new core components to /components/core/index.js
+/**
+ * React-router components.
+ *
+ * React router help to render component related to the path or url.
+ *
+ * Please have a look to:
+ * https://github.com/reactjs/react-router
+ *
+ */
 
+// Please add new core components to /components/core/index.js
 
 exports.default = routes;
 //# sourceMappingURL=routes.js.map

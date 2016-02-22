@@ -16,6 +16,11 @@ var _reactRouterRedux = require('react-router-redux');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * Component that renders the search bar.
+ *
+ */
+
 var SearchCompact = _react2.default.createClass({
   displayName: 'SearchCompact',
 
@@ -33,6 +38,7 @@ var SearchCompact = _react2.default.createClass({
     var query = '';
     var searchQueryValue = props.location.query.q;
 
+    // To go to another url using the redux and react-router-redux.
     // props.dispatch(routeActions.push('/collections'));
 
     return _react2.default.createElement(
@@ -90,6 +96,10 @@ var SearchCompact = _react2.default.createClass({
     );
   }
 });
+
+// Redux react code to map the store with the component props.
+// More info about:
+// http://redux.js.org/docs/basics/UsageWithReact.html
 
 function mapStateToProps(state, ownProps) {
   return {

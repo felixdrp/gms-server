@@ -20,6 +20,11 @@ var _searchCompact2 = _interopRequireDefault(_searchCompact);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * Component that renders the '/' (root) view.
+ *
+ */
+
 var Dashboard = _react2.default.createClass({
   displayName: 'Dashboard',
 

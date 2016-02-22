@@ -3,6 +3,11 @@ import { Link } from 'react-router'
 import TopHeaderMenuContainer from './top-header-menu-container'
 import SearchCompact from './search-compact'
 
+/**
+ * Component that renders the '/' (root) view.
+ *
+ */
+
 var Dashboard = React.createClass({
   statics: {
     customMethod: function(foo) {

@@ -5,6 +5,11 @@ import qs from 'qs'
 import TopHeaderMenuContainer from './top-header-menu-container'
 import SearchCompact from './search-compact'
 
+/**
+ * Component that renders the common view. The top header and the bottom foot.
+ *
+ */
+
 var CommonViewContainer = React.createClass({
   statics: {
     customMethod: function(foo) {

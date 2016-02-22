@@ -12,7 +12,10 @@ var _reactRouter = require('react-router');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import Two from './two-component'
+/**
+ * Component that renders the top header menu.
+ *
+ */
 
 var TopHeaderMenuContainer = _react2.default.createClass({
   displayName: 'TopHeaderMenuContainer',
@@ -51,8 +54,9 @@ var TopHeaderMenuContainer = _react2.default.createClass({
           _react2.default.createElement(
             _reactRouter.Link,
             {
-              to: '/collections',
-              activeStyle: {
+              to: '/collections'
+              // On same path, Active inline-styles or CSS class.
+              , activeStyle: {
                 // color: 'red'
               },
               activeClassName: 'active-location'

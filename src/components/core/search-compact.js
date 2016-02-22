@@ -3,6 +3,11 @@ import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import { routeActions } from 'react-router-redux'
 
+/**
+ * Component that renders the search bar.
+ *
+ */
+
 var SearchCompact = React.createClass({
   statics: {
     customMethod: function(foo) {
@@ -16,6 +21,7 @@ var SearchCompact = React.createClass({
     let query = '';
     let searchQueryValue = props.location.query.q;
 
+    // To go to another url using the redux and react-router-redux.
     // props.dispatch(routeActions.push('/collections'));
 
     return (
@@ -61,6 +67,10 @@ var SearchCompact = React.createClass({
     );
   }
 });
+
+// Redux react code to map the store with the component props.
+// More info about:
+// http://redux.js.org/docs/basics/UsageWithReact.html
 
 function mapStateToProps(state, ownProps) {
   return {

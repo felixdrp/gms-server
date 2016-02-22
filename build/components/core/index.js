@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.CollectionsDashboard = exports.SearchDashboard = exports.CommonViewContainer = exports.Dashboard = exports.AppContainer = undefined;
+exports.CollectionsDashboardContainer = exports.SearchDashboardContainer = exports.CommonViewContainer = exports.Dashboard = exports.AppContainer = undefined;
 
 var _appContainer = require('./app-container');
 
@@ -17,19 +17,23 @@ var _commonViewContainer = require('./common-view-container');
 
 var _commonViewContainer2 = _interopRequireDefault(_commonViewContainer);
 
-var _searchDashboardComponent = require('./search-dashboard-component');
+var _searchDashboardContainer = require('./search-dashboard-container');
 
-var _searchDashboardComponent2 = _interopRequireDefault(_searchDashboardComponent);
+var _searchDashboardContainer2 = _interopRequireDefault(_searchDashboardContainer);
 
-var _collectionsDashboardComponent = require('./collections-dashboard-component');
+var _collectionsDashboardContainer = require('./collections-dashboard-container');
 
-var _collectionsDashboardComponent2 = _interopRequireDefault(_collectionsDashboardComponent);
+var _collectionsDashboardContainer2 = _interopRequireDefault(_collectionsDashboardContainer);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.AppContainer = _appContainer2.default;
+exports.AppContainer = _appContainer2.default; /**
+                                                * Module to export the components needed by react-router (please look ./src/routes.js)
+                                                *
+                                                */
+
 exports.Dashboard = _dashboardComponent2.default;
 exports.CommonViewContainer = _commonViewContainer2.default;
-exports.SearchDashboard = _searchDashboardComponent2.default;
-exports.CollectionsDashboard = _collectionsDashboardComponent2.default;
+exports.SearchDashboardContainer = _searchDashboardContainer2.default;
+exports.CollectionsDashboardContainer = _collectionsDashboardContainer2.default;
 //# sourceMappingURL=index.js.map

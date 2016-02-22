@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router'
 
-var SearchDashboard  = React.createClass({
+var SearchDashboardContainer  = React.createClass({
   statics: {
     customMethod: function(foo) {
       return foo === 'bardoooo';
@@ -23,4 +23,4 @@ var SearchDashboard  = React.createClass({
   }
 });
 
-export default SearchDashboard
+export default SearchDashboardContainer
