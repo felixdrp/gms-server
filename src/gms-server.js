@@ -1,6 +1,13 @@
+// * Express server
+// ***
+
+import Express from 'express'
+
+// * React and react-router imports
+// ***
+
 import React from 'react'
 import { renderToString } from 'react-dom/server'
-import Express from 'express'
 
 // Check react-router doc: RoutingContext and RouterContext
 // import { match, RouterContext } from 'react-router'
@@ -13,6 +20,9 @@ import Routes from './routes';
 
 import qs from 'qs'
 
+// * Redux related imports
+// ***
+
 import { applyMiddleware, compose, createStore, combineReducers } from 'redux'
 // Load Provider component.
 import { Provider } from 'react-redux';
@@ -20,10 +30,16 @@ import { syncHistory, routeReducer, routeActions } from 'react-router-redux'
 
 import counter from './reducers/reducer-1'
 
+// * GraphQl server. This part could be move to another server (modular and scale the system)
+// ***
+
+import graphqlHTTP from 'express-graphql'
+import schema from './graphql/schema'
+
 // const store = createStore(counter)
 
-const app = Express()
-const PORT = 8009
+const app = Express();
+const PORT = 8009;
 const routes = Routes( history );
 
 function renderFullPage(html, initialState) {
@@ -103,10 +119,7 @@ function handleRender(request, response) {
           </Provider>
         ),
         // Pass initial info to the page with window.__INITIAL_STATE__ =
-        {
-          location,
-          hola:'hi',
-        }
+        store.getState()
       )
 
       response.writeHead(200, {'Content-Type': 'text/html'})
@@ -123,6 +136,9 @@ function handleRender(request, response) {
 // This is fired every time the server side receives a request
 // app.use('/static', Express.static('public'));
 app.use(Express.static('public'));
+// * GraphQl server. This part could be move to another server (modular and scale the system)
+// ***
+app.use('/graphql', graphqlHTTP({ schema: schema, pretty: true }))
 app.use(handleRender)
 
 app.listen(PORT, function() {

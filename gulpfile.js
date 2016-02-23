@@ -38,10 +38,15 @@ gulp.task('less', function () {
   .pipe(gulp.dest('./public/css'));
 });
 
+gulp.task('jsonData', function () {
+    gulp.src(['src/**/*.json'])
+        .pipe(gulp.dest('./build/'));
+});
 
 var watchTaskList = [
   'babel',
-  'less'
+  'less',
+  'jsonData'
 ];
 
 gulp.task('watch',
@@ -50,8 +55,10 @@ gulp.task('watch',
           function () {
             gulp.watch(
               [
-                'src/**/*.js','src/**/*.jsx',
-                'src-style/**/*.less'
+                'src/**/*.js',
+                'src/**/*.jsx',
+                'src-style/**/*.less',
+                'src/**/*.json'
               ],
               // watch jobs
               watchTaskList

@@ -59,7 +59,7 @@ var finalCreateStore = (0, _redux.compose)((0, _redux.applyMiddleware)(middlewar
 // DevTools.instrument()
 //
 )(_redux.createStore);
-var store = finalCreateStore(reducer);
+var store = finalCreateStore(reducer, window.__INITIAL_STATE__);
 middleware.listenForReplays(store);
 
 console.log(store.getState());

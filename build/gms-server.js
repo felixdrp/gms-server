@@ -1,6 +1,10 @@
 'use strict';
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; // * Express server
+// ***
+
+// * React and react-router imports
+// ***
 
 // Check react-router doc: RoutingContext and RouterContext
 // import { match, RouterContext } from 'react-router'
@@ -8,15 +12,15 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 // import { browserHistory, Router, Route, IndexRoute, Link } from 'react-router'
 
 
+var _express = require('express');
+
+var _express2 = _interopRequireDefault(_express);
+
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
 var _server = require('react-dom/server');
-
-var _express = require('express');
-
-var _express2 = _interopRequireDefault(_express);
 
 var _reactRouter = require('react-router');
 
@@ -42,11 +46,26 @@ var _reducer = require('./reducers/reducer-1');
 
 var _reducer2 = _interopRequireDefault(_reducer);
 
+var _expressGraphql = require('express-graphql');
+
+var _expressGraphql2 = _interopRequireDefault(_expressGraphql);
+
+var _schema = require('./graphql/schema');
+
+var _schema2 = _interopRequireDefault(_schema);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var history = (0, _createMemoryHistory2.default)();
+
+// * Redux related imports
+// ***
+
 // Load Provider component.
 
+
+// * GraphQl server. This part could be move to another server (modular and scale the system)
+// ***
 
 // const store = createStore(counter)
 
@@ -111,10 +130,7 @@ function handleRender(request, response) {
         _react2.default.createElement(_reactRouter.RoutingContext, renderProps)
       )),
       // Pass initial info to the page with window.__INITIAL_STATE__ =
-      {
-        location: location,
-        hola: 'hi'
-      });
+      store.getState());
 
       response.writeHead(200, { 'Content-Type': 'text/html' });
       response.end(page, function () {
@@ -132,6 +148,9 @@ function handleRender(request, response) {
 // This is fired every time the server side receives a request
 // app.use('/static', Express.static('public'));
 app.use(_express2.default.static('public'));
+// * GraphQl server. This part could be move to another server (modular and scale the system)
+// ***
+app.use('/graphql', (0, _expressGraphql2.default)({ schema: _schema2.default, pretty: true }));
 app.use(handleRender);
 
 app.listen(PORT, function () {

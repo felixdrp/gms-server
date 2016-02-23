@@ -39,7 +39,7 @@ const finalCreateStore = compose(
   // DevTools.instrument()
   //
 )(createStore)
-const store = finalCreateStore(reducer)
+const store = finalCreateStore(reducer, window.__INITIAL_STATE__)
 middleware.listenForReplays(store)
 
 console.log(store.getState())
