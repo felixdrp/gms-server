@@ -23,13 +23,13 @@ var TopHeaderMenuContainer = React.createClass({
           <li className="top-header-menu">
             <Link
               to="/collections"
-              // On same path, Active inline-styles or CSS class.
+              // On url share the same path, Active inline-styles or CSS class.
               activeStyle={{
                 // color: 'red'
               }}
               activeClassName="active-location"
             >
-              Collections
+              Summary
             </Link>
           </li>
         </ul>

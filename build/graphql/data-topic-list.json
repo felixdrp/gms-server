@@ -1,0 +1,81 @@
+[
+  {
+    "id": "1",
+    "title": "Science",
+    "tagWords": [
+      {
+        "word": "physic",
+        "frequency": 5
+      },
+      {
+        "word": "vector",
+        "frequency": 6
+      },
+      {
+        "word": "laser",
+        "frequency": 3
+      }
+    ],
+    "urlList": [
+      {
+        "url": "https://en.wikipedia.org/wiki/Science",
+        "title": "wikipedia science",
+        "story": "About science"
+      }
+    ],
+    "tweetList": ["1", "2"],
+    "comments": [
+      {
+        "id": "1",
+        "userId": "1",
+        "body": "Some related with science. Good!!",
+        "timeStamp": "12354",
+        "upVote": 10,
+        "downVote": 1,
+        "replies": [ ]
+      }
+    ]
+  },
+  {
+    "id": "2",
+    "title": "Music",
+    "tagWords": [
+      {
+        "word": "song",
+        "frequency": 30
+      },
+      {
+        "word": "singer",
+        "frequency": 10
+      },
+      {
+        "word": "tone",
+        "frequency": 3
+      }
+    ],
+    "urlList": [
+      {
+        "url": "https://en.wikipedia.org/wiki/Music",
+        "title": "wikipedia Music",
+        "story": "About Music"
+      },
+      {
+        "url": "http://www.bbc.co.uk/music",
+        "title": "BBC musci",
+        "story": "BBc about science"
+      }
+    ],
+    "tweetList": ["1", "2"],
+    "comments": [
+      {
+        "id": "1",
+        "userId": "1",
+        "body": "Some related with music. Very Good!!",
+        "timeStamp": "12354",
+        "upVote": 10,
+        "downVote": 1,
+        "replies": [ ]
+      }
+    ]
+  }
+]
