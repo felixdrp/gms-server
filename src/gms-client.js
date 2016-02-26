@@ -17,6 +17,8 @@ import { syncHistory, routeReducer } from 'react-router-redux'
 // import generalStore from './reducers/reducer-1'
 import counter from './reducers/reducer-1'
 
+import fetch from 'isomorphic-fetch';
+
 // The initial state from server-generated HTML
 // have a look to server code.
 const initialState = window.__INITIAL_STATE__

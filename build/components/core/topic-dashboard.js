@@ -8,6 +8,8 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRedux = require('react-redux');
+
 var _reactRouter = require('react-router');
 
 var _topHeaderMenuContainer = require('./top-header-menu-container');
@@ -34,6 +36,31 @@ var Dashboard = _react2.default.createClass({
       return foo === 'bar';
     }
   },
+
+  topicItem: function topicItem(topicInfo) {
+    return _react2.default.createElement(
+      'div',
+      null,
+      _react2.default.createElement(
+        'h1',
+        null,
+        topicInfo.title
+      ),
+      topicInfo.urlList.map(function (story) {
+        return _react2.default.createElement(
+          'div',
+          null,
+          'story ',
+          _react2.default.createElement(
+            'a',
+            { href: story.url },
+            story.url,
+            ' '
+          )
+        );
+      })
+    );
+  },
   render: function render() {
     var props = this.props;
     return _react2.default.createElement(
@@ -57,12 +84,8 @@ var Dashboard = _react2.default.createClass({
               'h1',
               null,
               'GMS'
-            )
-          ),
-          _react2.default.createElement(
-            'div',
-            { style: { flex: 1, width: 600 } },
-            _react2.default.createElement(_searchCompact2.default, this.props)
+            ),
+            topicItem
           )
         )
       ),
@@ -71,5 +94,12 @@ var Dashboard = _react2.default.createClass({
   }
 });
 
-exports.default = Dashboard;
+function mapStateToProps(state, ownProps) {
+  return {
+    // if route contains params
+    params: ownProps.params,
+    location: ownProps.location
+  };
+}
+exports.default = (0, _reactRedux.connect)(mapStateToProps)(Dashboard);
 //# sourceMappingURL=topic-dashboard.js.map

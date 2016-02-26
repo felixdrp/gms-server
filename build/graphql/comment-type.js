@@ -48,11 +48,11 @@ var commentType = new _graphql.GraphQLObjectType({
         description: 'The comment timestamp.'
       },
       upVote: {
-        type: new _graphql.GraphQLInt(),
+        type: _graphql.GraphQLInt,
         description: 'The Up Vote.'
       },
       downVote: {
-        type: new _graphql.GraphQLInt(),
+        type: _graphql.GraphQLInt,
         description: 'The Up Vote.'
       },
       // https://github.com/graphql/graphql-js/issues/23

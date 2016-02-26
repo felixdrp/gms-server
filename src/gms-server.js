@@ -1,11 +1,14 @@
 // * Express server
 // ***
-
 import Express from 'express'
+
+// http://expressjs.com/en/api.html#req.body
+import bodyParser from 'body-parser'
+import multer from 'multer'
+var upload = multer(); // for parsing multipart/form-data
 
 // * React and react-router imports
 // ***
-
 import React from 'react'
 import { renderToString } from 'react-dom/server'
 
@@ -32,7 +35,7 @@ import counter from './reducers/reducer-1'
 
 // * GraphQl server. This part could be move to another server (modular and scale the system)
 // ***
-
+import { graphql } from 'graphql'
 import graphqlHTTP from 'express-graphql'
 import schema from './graphql/schema'
 
@@ -136,8 +139,13 @@ function handleRender(request, response) {
 // This is fired every time the server side receives a request
 // app.use('/static', Express.static('public'));
 app.use(Express.static('public'));
+
+app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+
 // * GraphQl server. This part could be move to another server (modular and scale the system)
 // ***
+app.post( '/graphql', upload.array(), graphqlHTTP({ schema: schema, pretty: true }) );
 app.use('/graphql', graphqlHTTP({ schema: schema, pretty: true }))
 app.use(handleRender)
 
@@ -145,3 +153,18 @@ app.listen(PORT, function() {
     //Callback triggered when server is successfully listening. Hurray!
     console.log("Server listening on: http://localhost:%s", PORT);
 })
+
+function b() {
+  return new Promise( (resolve, fail) => {resolve('its OK');} )
+}
+async function a() {
+  console.log('await');
+  let result = 'mlk'
+  result = await b()
+  result = await graphql(schema, 'query {collections}');
+  result = await graphql(schema, 'query {topicList(amount:1){...TopicFragment,urlList{url}}} fragment TopicFragment on Topic {id,title}');
+
+  console.log("graphql:" + JSON.stringify(result));
+}
+
+a();

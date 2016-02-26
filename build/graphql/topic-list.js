@@ -21,7 +21,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *   }
  */
 
-var topicListType = new _graphql.GraphQLList(GraphQLString);
+var topicListType = new _graphql.GraphQLList(_topicType2.default);
 
 exports.default = topicListType;
 //# sourceMappingURL=topic-list.js.map

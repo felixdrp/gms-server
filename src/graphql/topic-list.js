@@ -14,6 +14,6 @@ import TopicType from './topic-type'
  *   }
  */
 
-const topicListType = new GraphQLList(GraphQLString)
+const topicListType = new GraphQLList( TopicType )
 
 export default topicListType

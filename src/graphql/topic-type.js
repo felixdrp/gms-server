@@ -7,8 +7,8 @@ import {
 } from 'graphql'
 
 import WordFrequencyType from './word-frequency-type'
-import StoryType from './comment-type'
-import TweetType from './comment-type'
+import StoryType from './story-type'
+import TweetType from './tweet-type'
 import CommentType from './comment-type'
 
 /**

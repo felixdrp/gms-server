@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import TopHeaderMenuContainer from './top-header-menu-container'
 import SearchCompact from './search-compact'
@@ -15,6 +16,23 @@ var Dashboard = React.createClass({
       return foo === 'bar';
     }
   },
+
+  topicItem(topicInfo) {
+    return (
+      <div>
+        <h1>{topicInfo.title}</h1>
+
+        {topicInfo.urlList.map(
+          (story) => (
+            <div>
+              story <a href={story.url}>{story.url} </a>
+            </div>
+          )
+        )}
+      </div>
+    );
+  },
+
   render() {
     let props = this.props;
     return (
@@ -27,10 +45,7 @@ var Dashboard = React.createClass({
           <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
             <div className="" style={{flex: 1}} >
               <h1>GMS</h1>
-            </div>
-
-            <div style={{flex: 1, width: 600}}>
-              <SearchCompact {...this.props} />
+              {topicItem}
             </div>
           </div>
         </div>
@@ -42,4 +57,11 @@ var Dashboard = React.createClass({
   }
 });
 
-export default Dashboard
+function mapStateToProps(state, ownProps) {
+  return {
+    // if route contains params
+    params: ownProps.params,
+    location: ownProps.location
+  };
+}
+export default connect(mapStateToProps)(Dashboard);

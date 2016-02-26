@@ -1,17 +1,8 @@
 'use strict';
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; // *** Load react and react-dom ***
+var _extends2 = require('babel-runtime/helpers/extends');
 
-
-// *** Load react-router ***
-
-
-// *** Load redux ***
-
-
-// *** Load store reducers ***
-// import generalStore from './reducers/reducer-1'
-
+var _extends3 = _interopRequireDefault(_extends2);
 
 var _react = require('react');
 
@@ -37,18 +28,33 @@ var _reducer = require('./reducers/reducer-1');
 
 var _reducer2 = _interopRequireDefault(_reducer);
 
+var _isomorphicFetch = require('isomorphic-fetch');
+
+var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // The initial state from server-generated HTML
 // have a look to server code.
+
+
+// *** Load store reducers ***
+// import generalStore from './reducers/reducer-1'
 var initialState = window.__INITIAL_STATE__;
 
 // https://github.com/rackt/history/blob/master/docs/GettingStarted.md
+
+
+// *** Load redux ***
+
+
+// *** Load react-router ***
+// *** Load react and react-dom ***
 var history = (0, _history.createHistory)();
 
 // https://github.com/rackt/react-router-redux/blob/master/examples/basic/app.js
 var middleware = (0, _reactRouterRedux.syncHistory)(history);
-var reducer = (0, _redux.combineReducers)(_extends({}, _reducer2.default, {
+var reducer = (0, _redux.combineReducers)((0, _extends3.default)({}, _reducer2.default, {
   routing: _reactRouterRedux.routeReducer
 }));
 

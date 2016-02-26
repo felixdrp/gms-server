@@ -10,6 +10,14 @@ var _wordFrequencyType = require('./word-frequency-type');
 
 var _wordFrequencyType2 = _interopRequireDefault(_wordFrequencyType);
 
+var _storyType = require('./story-type');
+
+var _storyType2 = _interopRequireDefault(_storyType);
+
+var _tweetType = require('./tweet-type');
+
+var _tweetType2 = _interopRequireDefault(_tweetType);
+
 var _commentType = require('./comment-type');
 
 var _commentType2 = _interopRequireDefault(_commentType);
@@ -49,11 +57,11 @@ var topicType = new _graphql.GraphQLObjectType({
       description: 'The topic tag words. It will be used to create tag clouds'
     },
     urlList: {
-      type: new _graphql.GraphQLList(_commentType2.default),
+      type: new _graphql.GraphQLList(_storyType2.default),
       description: 'These are individual stories below to that Topic.'
     },
     tweetList: {
-      type: new _graphql.GraphQLList(_commentType2.default),
+      type: new _graphql.GraphQLList(_tweetType2.default),
       description: 'The topic related tweet list.'
     },
     comments: {

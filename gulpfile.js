@@ -12,7 +12,8 @@ gulp.task('babel', function () {
           {
             presets: [
               'react',
-              'es2015'
+              'es2015',
+              'stage-0'
             ],
             plugins: [
               // http://babeljs.io/docs/plugins/transform-object-rest-spread/
@@ -20,6 +21,11 @@ gulp.task('babel', function () {
 
               // export from ES6 to use ./src/components/core/index.js
               "transform-export-extensions",
+
+              // async function foo() { await bar(); }
+              "transform-async-to-generator",
+              "transform-regenerator",
+              "transform-runtime"
             ]
           }
         ))
