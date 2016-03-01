@@ -20,6 +20,8 @@ var _searchCompact = require('./search-compact');
 
 var _searchCompact2 = _interopRequireDefault(_searchCompact);
 
+var _dataFetch = require('../../data-fetch/data-fetch');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
@@ -31,9 +33,8 @@ var Dashboard = _react2.default.createClass({
   displayName: 'Dashboard',
 
   statics: {
-    customMethod: function customMethod(foo) {
-      console.log(this.props);
-      return foo === 'bar';
+    fetchData: function fetchData() {
+      return '{topicList(amount:1){...TopicFragment,urlList{url}}} fragment TopicFragment on Topic {id,title}';
     }
   },
 
@@ -63,9 +64,10 @@ var Dashboard = _react2.default.createClass({
   },
   render: function render() {
     var props = this.props;
+
     return _react2.default.createElement(
       'div',
-      { id: 'dashboard' },
+      { id: 'topicDashboard' },
       _react2.default.createElement(
         'div',
         { className: 'main-header' },
@@ -76,16 +78,24 @@ var Dashboard = _react2.default.createClass({
         { className: 'main-viewport' },
         _react2.default.createElement(
           'div',
-          { style: { display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' } },
+          { style: {
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: '100%',
+              maxWidth: 600
+            }
+          },
           _react2.default.createElement(
             'div',
             { className: '', style: { flex: 1 } },
             _react2.default.createElement(
-              'h1',
+              'h3',
               null,
-              'GMS'
+              'Topic list'
             ),
-            topicItem
+            'hola' || this.topicItem()
           )
         )
       ),
@@ -93,6 +103,9 @@ var Dashboard = _react2.default.createClass({
     );
   }
 });
+
+// Fetch data.
+
 
 function mapStateToProps(state, ownProps) {
   return {

@@ -19,13 +19,14 @@ import {
   CollectionsDashboardContainer,
   Dashboard,
   SearchDashboardContainer,
+  TopicDashboard,
 } from './components/core'
 
 // Assign the history:
 var routes = (history) => (
   <Router history={history}>
     <Route path="/" component={AppContainer}>
-      <IndexRoute component={Dashboard} />
+      <IndexRoute component={TopicDashboard} />
       <Route path="search" component={CommonViewContainer} >
         <IndexRoute component={SearchDashboardContainer} />
       </Route>

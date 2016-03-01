@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.CollectionsDashboardContainer = exports.SearchDashboardContainer = exports.CommonViewContainer = exports.Dashboard = exports.AppContainer = undefined;
+exports.TopicDashboard = exports.CollectionsDashboardContainer = exports.SearchDashboardContainer = exports.CommonViewContainer = exports.Dashboard = exports.AppContainer = undefined;
 
 var _appContainer = require('./app-container');
 
@@ -25,6 +25,10 @@ var _collectionsDashboardContainer = require('./collections-dashboard-container'
 
 var _collectionsDashboardContainer2 = _interopRequireDefault(_collectionsDashboardContainer);
 
+var _topicDashboard = require('./topic-dashboard');
+
+var _topicDashboard2 = _interopRequireDefault(_topicDashboard);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.AppContainer = _appContainer2.default; /**
@@ -36,4 +40,5 @@ exports.Dashboard = _dashboardComponent2.default;
 exports.CommonViewContainer = _commonViewContainer2.default;
 exports.SearchDashboardContainer = _searchDashboardContainer2.default;
 exports.CollectionsDashboardContainer = _collectionsDashboardContainer2.default;
+exports.TopicDashboard = _topicDashboard2.default;
 //# sourceMappingURL=index.js.map

@@ -22,7 +22,7 @@ var routes = function routes(history) {
     _react2.default.createElement(
       _reactRouter.Route,
       { path: '/', component: _core.AppContainer },
-      _react2.default.createElement(_reactRouter.IndexRoute, { component: _core.Dashboard }),
+      _react2.default.createElement(_reactRouter.IndexRoute, { component: _core.TopicDashboard }),
       _react2.default.createElement(
         _reactRouter.Route,
         { path: 'search', component: _core.CommonViewContainer },

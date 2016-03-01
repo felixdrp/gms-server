@@ -4,6 +4,9 @@ import { Link } from 'react-router'
 import TopHeaderMenuContainer from './top-header-menu-container'
 import SearchCompact from './search-compact'
 
+// Fetch data.
+import { getTopicList } from '../../data-fetch/data-fetch'
+
 /**
  * Component that renders the '/' (root) view.
  *
@@ -11,9 +14,8 @@ import SearchCompact from './search-compact'
 
 var Dashboard = React.createClass({
   statics: {
-    customMethod: function(foo) {
-      console.log(this.props);
-      return foo === 'bar';
+    fetchData() {
+      return '{topicList(amount:1){...TopicFragment,urlList{url}}} fragment TopicFragment on Topic {id,title}';
     }
   },
 
@@ -35,17 +37,26 @@ var Dashboard = React.createClass({
 
   render() {
     let props = this.props;
+
     return (
-      <div id="dashboard">
+      <div id="topicDashboard">
         <div className="main-header">
           <TopHeaderMenuContainer {...this.props} />
         </div>
 
         <div className="main-viewport">
-          <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+          <div style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    width: '100%',
+                    maxWidth: 600,
+                  }}
+          >
             <div className="" style={{flex: 1}} >
-              <h1>GMS</h1>
-              {topicItem}
+              <h3>Topic list</h3>
+              {'hola' || this.topicItem()}
             </div>
           </div>
         </div>

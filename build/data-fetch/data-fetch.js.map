@@ -1,0 +1,1 @@
+{"version":3,"sources":["data-fetch/data-fetch.js"],"names":[],"mappings":";;;;;AAEO,IAAI,sCAAe,SAAf,YAAe;SAAM,QAAQ,GAAR,CAAY,KAAZ;CAAN","file":"data-fetch/data-fetch.js","sourcesContent":["\n\nexport var getTopicList = () => console.log('mlk')\n"],"sourceRoot":"/source/"}

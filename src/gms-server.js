@@ -2,6 +2,7 @@
 // ***
 import Express from 'express'
 
+// Used to respond to POST HTTP (used in graphql server)
 // http://expressjs.com/en/api.html#req.body
 import bodyParser from 'body-parser'
 import multer from 'multer'
@@ -38,6 +39,11 @@ import counter from './reducers/reducer-1'
 import { graphql } from 'graphql'
 import graphqlHTTP from 'express-graphql'
 import schema from './graphql/schema'
+
+import globalFetch from './data-fetch/global-fetch'
+
+// var fetcher = new globalFetch('server');
+var fetcher = new globalFetch();
 
 // const store = createStore(counter)
 
@@ -114,7 +120,25 @@ function handleRender(request, response) {
 
       console.log('store state: ' + JSON.stringify(store.getState()))
 
-      renderProps.components[2].customMethod('barquito');
+      // Fetch the data needed by the components to render.
+      // Look for fetchData method in the components list to call it.
+      //renderProps.components[2].customMethod('barquito');
+      console.log(
+        renderProps.components.map(
+          (component) => {
+            if (component) {
+              if ('fetchData' in component) {
+                return component.fetchData();
+              }
+              if ('customMethod' in component) {
+                return component.customMethod('barquito');
+              }
+            }
+            return false;
+          }
+        )
+      )
+
       page = renderFullPage(
         renderToString(
           <Provider store={store}>
@@ -140,13 +164,18 @@ function handleRender(request, response) {
 // app.use('/static', Express.static('public'));
 app.use(Express.static('public'));
 
+// Used to parse the info in the body of a POST HTTP server call (used in graphql server)
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 // * GraphQl server. This part could be move to another server (modular and scale the system)
 // ***
+// POST HTTP
 app.post( '/graphql', upload.array(), graphqlHTTP({ schema: schema, pretty: true }) );
+// GET HTTP
 app.use('/graphql', graphqlHTTP({ schema: schema, pretty: true }))
+
+// GMS Server
 app.use(handleRender)
 
 app.listen(PORT, function() {
@@ -167,4 +196,4 @@ async function a() {
   console.log("graphql:" + JSON.stringify(result));
 }
 
-a();
+// a();

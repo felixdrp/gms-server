@@ -60,6 +60,9 @@ var a = function () {
   };
 }();
 
+// a();
+
+
 var _express = require('express');
 
 var _express2 = _interopRequireDefault(_express);
@@ -112,8 +115,13 @@ var _schema = require('./graphql/schema');
 
 var _schema2 = _interopRequireDefault(_schema);
 
+var _globalFetch = require('./data-fetch/global-fetch');
+
+var _globalFetch2 = _interopRequireDefault(_globalFetch);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// Used to respond to POST HTTP (used in graphql server)
 // http://expressjs.com/en/api.html#req.body
 
 var upload = (0, _multer2.default)(); // for parsing multipart/form-data
@@ -140,6 +148,9 @@ var history = (0, _createMemoryHistory2.default)();
 // * GraphQl server. This part could be move to another server (modular and scale the system)
 // ***
 
+
+// var fetcher = new globalFetch('server');
+var fetcher = new _globalFetch2.default();
 
 // const store = createStore(counter)
 
@@ -197,7 +208,21 @@ function handleRender(request, response) {
 
       console.log('store state: ' + (0, _stringify2.default)(store.getState()));
 
-      renderProps.components[2].customMethod('barquito');
+      // Fetch the data needed by the components to render.
+      // Look for fetchData method in the components list to call it.
+      //renderProps.components[2].customMethod('barquito');
+      console.log(renderProps.components.map(function (component) {
+        if (component) {
+          if ('fetchData' in component) {
+            return component.fetchData();
+          }
+          if ('customMethod' in component) {
+            return component.customMethod('barquito');
+          }
+        }
+        return false;
+      }));
+
       page = renderFullPage((0, _server.renderToString)(_react2.default.createElement(
         _reactRedux.Provider,
         { store: store },
@@ -223,13 +248,18 @@ function handleRender(request, response) {
 // app.use('/static', Express.static('public'));
 app.use(_express2.default.static('public'));
 
+// Used to parse the info in the body of a POST HTTP server call (used in graphql server)
 app.use(_bodyParser2.default.json()); // for parsing application/json
 app.use(_bodyParser2.default.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 // * GraphQl server. This part could be move to another server (modular and scale the system)
 // ***
+// POST HTTP
 app.post('/graphql', upload.array(), (0, _expressGraphql2.default)({ schema: _schema2.default, pretty: true }));
+// GET HTTP
 app.use('/graphql', (0, _expressGraphql2.default)({ schema: _schema2.default, pretty: true }));
+
+// GMS Server
 app.use(handleRender);
 
 app.listen(PORT, function () {
@@ -242,7 +272,4 @@ function b() {
     resolve('its OK');
   });
 }
-
-
-a();
 //# sourceMappingURL=gms-server.js.map
