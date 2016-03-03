@@ -179,70 +179,90 @@ function handleRender(request, response) {
     } else if (redirectLocation) {
       response.redirect(302, redirectLocation.pathname + redirectLocation.search);
     } else if (renderProps) {
-      // You can also check renderProps.components or renderProps.routes for
-      // your "not found" component or route respectively, and send a 404 as
-      // below, if you're using a catch-all route.
-      // res.status(200).send(renderToString(<RouterContext {...renderProps} />))
+      (function () {
+        // You can also check renderProps.components or renderProps.routes for
+        // your "not found" component or route respectively, and send a 404 as
+        // below, if you're using a catch-all route.
+        // res.status(200).send(renderToString(<RouterContext {...renderProps} />))
 
-      // debugger
-      // call a component static function
+        // debugger
+        // call a component static function
 
-      // create store
-      var middleware = (0, _reactRouterRedux.syncHistory)(history);
-      var reducer = (0, _redux.combineReducers)((0, _extends3.default)({}, _reducer2.default, {
-        routing: _reactRouterRedux.routeReducer
-      }));
+        // create store
+        var middleware = (0, _reactRouterRedux.syncHistory)(history);
+        var reducer = (0, _redux.combineReducers)((0, _extends3.default)({}, _reducer2.default, {
+          routing: _reactRouterRedux.routeReducer
+        }));
 
-      // // Create Redux store with initial state
-      // // const store = createStore(counterApp, initialState)
+        // // Create Redux store with initial state
+        // // const store = createStore(counterApp, initialState)
 
-      var finalCreateStore = (0, _redux.compose)((0, _redux.applyMiddleware)(middleware)
-      // DevTools.instrument()
-      //
-      )(_redux.createStore);
-      var store = finalCreateStore(reducer);
-      middleware.listenForReplays(store);
+        var finalCreateStore = (0, _redux.compose)((0, _redux.applyMiddleware)(middleware)
+        // DevTools.instrument()
+        //
+        )(_redux.createStore);
+        var store = finalCreateStore(reducer);
+        middleware.listenForReplays(store);
 
-      // dispatch the first url location to give the url to the components.
-      store.dispatch(_reactRouterRedux.routeActions.push(location.pathname + location.search));
+        // dispatch the first url location to give the url to the components.
+        store.dispatch(_reactRouterRedux.routeActions.push(location.pathname + location.search));
 
-      console.log('store state: ' + (0, _stringify2.default)(store.getState()));
+        console.log('store state: ' + (0, _stringify2.default)(store.getState()));
 
-      // Fetch the data needed by the components to render.
-      // Look for fetchData method in the components list to call it.
-      //renderProps.components[2].customMethod('barquito');
-      var queries = renderProps.components.map(function (component) {
-        if (component) {
-          if ('fetchData' in component) {
-            return fetcher.getData(component.fetchData().query);
+        // In allComponentsDataConsult we will store all the chain of fetch data. The action and query
+        var allComponentsDataConsult = [];
 
-            console.log(fetcher.getData());
-            // fetcher.getData().then((text) => console.log('text:' + text))
+        // Fetch the data needed by the components to render.
+        // The variable renderProps.components is an array with all the React components needed to render a URL.
+        // Look for all fetchData method in the components list.
+        // Use each fetchData method to get the query and action to retrieve the data for each the component.
+
+        // queries is an array of promises that will contain the fetched data
+
+        //renderProps.components[2].customMethod('barquito');
+        var queries = renderProps.components.map(function (component) {
+          if (component) {
+            var consult = {};
+            if ('fetchData' in component) {
+              consult = component.fetchData();
+              allComponentsDataConsult.push(consult);
+              return fetcher.getData(consult.query);
+            }
+            if ('customMethod' in component) {
+              return component.customMethod('barquito');
+            }
           }
-          if ('customMethod' in component) {
-            return component.customMethod('barquito');
+
+          allComponentsDataConsult.push(false);
+          return false;
+        });
+        console.log(queries);
+
+        // Process all the data to the store.
+        _promise2.default.all(queries).then(function (values) {
+          console.log(values);
+
+          for (var i = 0 | 0; i < values.length; i++) {
+            if (values[i]) {
+              console.log(';-): store.dispatch ' + allComponentsDataConsult[i].action + ' ' + values[i]);
+            }
           }
-        }
-        return false;
-      });
-      console.log(queries);
-      _promise2.default.all(queries).then(function (values) {
-        console.log(values); // [3, 1337, "foo"]
-      });
 
-      page = renderFullPage((0, _server.renderToString)(_react2.default.createElement(
-        _reactRedux.Provider,
-        { store: store },
-        _react2.default.createElement(_reactRouter.RoutingContext, renderProps)
-      )),
-      // Pass initial info to the page with window.__INITIAL_STATE__ =
-      store.getState());
+          page = renderFullPage((0, _server.renderToString)(_react2.default.createElement(
+            _reactRedux.Provider,
+            { store: store },
+            _react2.default.createElement(_reactRouter.RoutingContext, renderProps)
+          )),
+          // Pass initial info to the page with window.__INITIAL_STATE__ =
+          store.getState());
 
-      response.writeHead(200, { 'Content-Type': 'text/html' });
-      response.end(page, function () {
-        console.log('yahoo!!');
-      });
-      // res.status(200).send(page);
+          response.writeHead(200, { 'Content-Type': 'text/html' });
+          response.end(page, function () {
+            console.log('yahoo!!');
+          });
+          // res.status(200).send(page);
+        });
+      })();
     } else {
         // res.status(404).send('Not found')
         response.writeHead(404, { 'Content-Type': 'text/plain' });

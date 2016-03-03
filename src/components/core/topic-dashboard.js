@@ -4,9 +4,14 @@ import { Link } from 'react-router'
 import TopHeaderMenuContainer from './top-header-menu-container'
 import SearchCompact from './search-compact'
 
-// Fetch data.
-import { getTopicList } from '../../data-fetch/data-fetch'
+// Used to create the query to fetch data.
 import { fragment as TopicFragment } from '../../graphql/topic-type'
+
+
+// Fetch data.
+import globalFetch from '../../data-fetch/global-fetch'
+
+var fetcher = new globalFetch();
 
 
 
@@ -23,13 +28,17 @@ var Dashboard = React.createClass({
         query: `
           {
             topicList(amount:1){...${TopicFragment.name},urlList{url}},
-            topicList2:topicList(amount:1){...otrofragment,urlList{url}}
           }
           ${TopicFragment.definition}
-          fragment otrofragment on Topic {title}
          `,
       }
     }
+  },
+
+  fetchData() {
+    this.constructor.fetchData();
+
+    console.log( fetcher.getData( this.constructor.fetchData().query ) );
   },
 
   topicItem(topicInfo) {
@@ -69,7 +78,9 @@ var Dashboard = React.createClass({
           >
             <div className="" style={{flex: 1}} >
               <h3>Topic list</h3>
+              <div onClick={ () => this.fetchData() }>
               {'hola' || this.topicItem()}
+              </div>
             </div>
           </div>
         </div>

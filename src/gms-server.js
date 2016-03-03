@@ -116,51 +116,69 @@ function handleRender(request, response) {
       middleware.listenForReplays(store)
 
       // dispatch the first url location to give the url to the components.
-      store.dispatch(routeActions.push(location.pathname + location.search));
+      store.dispatch( routeActions.push(location.pathname + location.search) );
 
       console.log('store state: ' + JSON.stringify(store.getState()))
 
+      // In allComponentsDataConsult we will store all the chain of fetch data. The action and query
+      const allComponentsDataConsult = [];
+
       // Fetch the data needed by the components to render.
-      // Look for fetchData method in the components list to call it.
+      // The variable renderProps.components is an array with all the React components needed to render a URL.
+      // Look for all fetchData method in the components list.
+      // Use each fetchData method to get the query and action to retrieve the data for each the component.
+
+      // queries is an array of promises that will contain the fetched data
+
       //renderProps.components[2].customMethod('barquito');
       let queries = renderProps.components.map(
         (component) => {
           if (component) {
+            let consult = {};
             if ('fetchData' in component) {
-              return fetcher.getData( component.fetchData().query );
-
-              console.log( fetcher.getData() );
-              // fetcher.getData().then((text) => console.log('text:' + text))
-
+              consult = component.fetchData();
+              allComponentsDataConsult.push(consult);
+              return fetcher.getData( consult.query );
             }
             if ('customMethod' in component) {
               return component.customMethod('barquito');
             }
           }
+
+          allComponentsDataConsult.push(false);
           return false;
         }
       )
       console.log(
         queries
       )
+
+      // Process all the data to the store.
       Promise.all( queries ).then(function(values) {
-        console.log(values); // [3, 1337, "foo"]
+        console.log(values);
+
+        for ( let i=0|0; i < values.length; i++ ) {
+          if (values[i]) {
+            console.log(';-): store.dispatch ' + allComponentsDataConsult[i].action + ' ' + values[i]);
+
+          }
+        }
+
+        page = renderFullPage(
+          renderToString(
+            <Provider store={store}>
+              <RoutingContext {...renderProps} />
+            </Provider>
+          ),
+          // Pass initial info to the page with window.__INITIAL_STATE__ =
+          store.getState()
+        )
+
+        response.writeHead(200, {'Content-Type': 'text/html'});
+        response.end(page, () => {console.log('yahoo!!')});
+        // res.status(200).send(page);
       });
 
-
-      page = renderFullPage(
-        renderToString(
-          <Provider store={store}>
-            <RoutingContext {...renderProps} />
-          </Provider>
-        ),
-        // Pass initial info to the page with window.__INITIAL_STATE__ =
-        store.getState()
-      )
-
-      response.writeHead(200, {'Content-Type': 'text/html'})
-      response.end(page, () => {console.log('yahoo!!')});
-      // res.status(200).send(page);
     } else {
       // res.status(404).send('Not found')
       response.writeHead(404, {'Content-Type': 'text/plain'})

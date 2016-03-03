@@ -13,62 +13,64 @@
  * ```
  */
 
-import { graphql } from 'graphql'
-import Lokka from 'lokka';
-import { Transport } from 'lokka-transport-http';
-import schema from '../graphql/schema'
+// import { graphql } from 'graphql'
+// require('es6-promise').polyfill();
+// import isomorphicFetch from 'isomorphic-fetch';
+var rp = require('request-promise');
+// import schema from '../graphql/schema'
 
 
 export default class GlobalFetch {
   constructor(type) {
     this.type = type || 'client';
     // Create a different fetch for server and client
-    // create a new Lokka client
     if (type === 'server') {
-      this.client = graphql;
+      // Fetch data using graphql module.
+      this.client = async (query) => {
+        return await rp(
+          {
+            uri: 'http://localhost:8009/graphql?query=' + query,
+            json: true,
+          }
+        );
+      };
     } else {
-      this.client = new Lokka({
-        transport: new Transport('/graphql')
-      });
+      // Fetch data using graphql module.
+      this.client = async (query) => {
+        return await rp(
+          {
+            uri: location.origin + '/graphql?query=' + query,
+            json: true,
+          }
+        );
+      };
+      // this.client = (query) => {
+      //   return fetch(location.origin + '/graphql?query=' + query);
+      // };
     }
-    // console.log(this.client)
-
-    // // Get the initial data from the transport (it's a promise)
-    // this.dataPromise = this.client
-    //   // invoke the GraphQL query to get all the items
-    //   .query(`
-    //     {items}
-    //   `)
-    //   .then(res => res.items);
   }
 
   async getData(query) {
     let result = {};
     console.log('fetching data1:' + result)
     try {
-      if (this.type === 'client') {
-        console.log('mlkkk')
-        result = await this.client.query('{collections}');
-      } else {
-        result = await this.client(schema, 'query ' + query);
-      }
+      // if (this.type === 'client') {
+      //   console.log('mlkkk')
+      //   result = await this.client( query );
+      //   // fetch('graphql?query=' + query).then((d)=>console.log('XXX: ' + d))
+      // } else {
+      //   // result = await this.client(schema, 'query ' + query);
+      // }
+      result = await this.client( query );
+
     }
-    catch(e) {
-      new Throw(e);
+    catch (e) {
+      console.error(e);
+      // throw e;
     }
     console.log('query: ' + query)
-    console.log('fetching data3:' + JSON.stringify(result))
-    return result;
-  }
-
-  async a() {
-    console.log('await');
-    let result = 'mlk'
-    result = await b()
-    result = await graphql(schema, 'query {collections}');
-    result = await graphql(schema, 'query {topicList(amount:1){...TopicFragment,urlList{url}}} fragment TopicFragment on Topic {id,title}');
-
-    console.log("graphql:" + JSON.stringify(result));
+    console.log('fetching data3:' + JSON.stringify( result.text() ))
+    return result.json();
   }
 
 }

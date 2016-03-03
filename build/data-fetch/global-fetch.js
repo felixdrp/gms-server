@@ -4,13 +4,13 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _regenerator = require('babel-runtime/regenerator');
-
-var _regenerator2 = _interopRequireDefault(_regenerator);
-
 var _stringify = require('babel-runtime/core-js/json/stringify');
 
 var _stringify2 = _interopRequireDefault(_stringify);
+
+var _regenerator = require('babel-runtime/regenerator');
+
+var _regenerator2 = _interopRequireDefault(_regenerator);
 
 var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
 
@@ -23,18 +23,6 @@ var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 var _createClass2 = require('babel-runtime/helpers/createClass');
 
 var _createClass3 = _interopRequireDefault(_createClass2);
-
-var _graphql = require('graphql');
-
-var _lokka = require('lokka');
-
-var _lokka2 = _interopRequireDefault(_lokka);
-
-var _lokkaTransportHttp = require('lokka-transport-http');
-
-var _schema = require('../graphql/schema');
-
-var _schema2 = _interopRequireDefault(_schema);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -53,130 +41,125 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * ```
  */
 
+// import { graphql } from 'graphql'
+// require('es6-promise').polyfill();
+// import isomorphicFetch from 'isomorphic-fetch';
+var rp = require('request-promise');
+// import schema from '../graphql/schema'
+
 var GlobalFetch = function () {
   function GlobalFetch(type) {
+    var _this2 = this;
+
     (0, _classCallCheck3.default)(this, GlobalFetch);
 
     this.type = type || 'client';
     // Create a different fetch for server and client
-    // create a new Lokka client
     if (type === 'server') {
-      this.client = _graphql.graphql;
-    } else {
-      this.client = new _lokka2.default({
-        transport: new _lokkaTransportHttp.Transport('/graphql')
-      });
-    }
-    // console.log(this.client)
+      // Fetch data using graphql module.
+      this.client = function () {
+        var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(query) {
+          return _regenerator2.default.wrap(function _callee$(_context) {
+            while (1) {
+              switch (_context.prev = _context.next) {
+                case 0:
+                  _context.next = 2;
+                  return rp({
+                    uri: 'http://localhost:8009/graphql?query=' + query,
+                    json: true
+                  });
 
-    // // Get the initial data from the transport (it's a promise)
-    // this.dataPromise = this.client
-    //   // invoke the GraphQL query to get all the items
-    //   .query(`
-    //     {items}
-    //   `)
-    //   .then(res => res.items);
+                case 2:
+                  return _context.abrupt('return', _context.sent);
+
+                case 3:
+                case 'end':
+                  return _context.stop();
+              }
+            }
+          }, _callee, _this2);
+        })),
+            _this = _this2;
+        return function (_x) {
+          return ref.apply(_this, arguments);
+        };
+      }();
+    } else {
+      // Fetch data using graphql module.
+      this.client = function () {
+        var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2(query) {
+          return _regenerator2.default.wrap(function _callee2$(_context2) {
+            while (1) {
+              switch (_context2.prev = _context2.next) {
+                case 0:
+                  _context2.next = 2;
+                  return rp({
+                    uri: location.origin + '/graphql?query=' + query,
+                    json: true
+                  });
+
+                case 2:
+                  return _context2.abrupt('return', _context2.sent);
+
+                case 3:
+                case 'end':
+                  return _context2.stop();
+              }
+            }
+          }, _callee2, _this2);
+        })),
+            _this = _this2;
+        return function (_x2) {
+          return ref.apply(_this, arguments);
+        };
+      }();
+      // this.client = (query) => {
+      //   return fetch(location.origin + '/graphql?query=' + query);
+      // };
+    }
   }
 
   (0, _createClass3.default)(GlobalFetch, [{
     key: 'getData',
     value: function () {
-      var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(query) {
+      var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee3(query) {
         var result;
-        return _regenerator2.default.wrap(function _callee$(_context) {
+        return _regenerator2.default.wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context.prev = _context.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
                 result = {};
 
                 console.log('fetching data1:' + result);
-                _context.prev = 2;
+                _context3.prev = 2;
+                _context3.next = 5;
+                return this.client(query);
 
-                if (!(this.type === 'client')) {
-                  _context.next = 10;
-                  break;
-                }
-
-                console.log('mlkkk');
-                _context.next = 7;
-                return this.client.query('{collections}');
-
-              case 7:
-                result = _context.sent;
-                _context.next = 13;
+              case 5:
+                result = _context3.sent;
+                _context3.next = 11;
                 break;
 
-              case 10:
-                _context.next = 12;
-                return this.client(_schema2.default, 'query ' + query);
+              case 8:
+                _context3.prev = 8;
+                _context3.t0 = _context3['catch'](2);
 
-              case 12:
-                result = _context.sent;
+                console.error(_context3.t0);
+                // throw e;
 
-              case 13:
-                _context.next = 18;
-                break;
-
-              case 15:
-                _context.prev = 15;
-                _context.t0 = _context['catch'](2);
-
-                new Throw(_context.t0);
-
-              case 18:
+              case 11:
                 console.log('query: ' + query);
-                console.log('fetching data3:' + (0, _stringify2.default)(result));
-                return _context.abrupt('return', result);
+                console.log('fetching data3:' + (0, _stringify2.default)(result.text()));
+                return _context3.abrupt('return', result.json());
 
-              case 21:
+              case 14:
               case 'end':
-                return _context.stop();
+                return _context3.stop();
             }
           }
-        }, _callee, this, [[2, 15]]);
+        }, _callee3, this, [[2, 8]]);
       }));
-      return function getData(_x) {
-        return ref.apply(this, arguments);
-      };
-    }()
-  }, {
-    key: 'a',
-    value: function () {
-      var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2() {
-        var result;
-        return _regenerator2.default.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                console.log('await');
-                result = 'mlk';
-                _context2.next = 4;
-                return b();
-
-              case 4:
-                result = _context2.sent;
-                _context2.next = 7;
-                return (0, _graphql.graphql)(_schema2.default, 'query {collections}');
-
-              case 7:
-                result = _context2.sent;
-                _context2.next = 10;
-                return (0, _graphql.graphql)(_schema2.default, 'query {topicList(amount:1){...TopicFragment,urlList{url}}} fragment TopicFragment on Topic {id,title}');
-
-              case 10:
-                result = _context2.sent;
-
-
-                console.log("graphql:" + (0, _stringify2.default)(result));
-
-              case 12:
-              case 'end':
-                return _context2.stop();
-            }
-          }
-        }, _callee2, this);
-      }));
-      return function a() {
+      return function getData(_x3) {
         return ref.apply(this, arguments);
       };
     }()

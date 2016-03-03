@@ -26,3 +26,18 @@ The objective is to make a system modular and scalable.
 + Crawler -> DataBase/File.
 + Static files.
 + Another sources.
+
+## URL Plan
+
+### Root "/"
+
+The root element will redirect to the topic list "/topicList/"
+
+### Topic List "/topicList/" "/topicList/?offset=10"
+
+The topic list, "/topicList/", will present the last list of topics.
+We can advance in the topics chain by the use of the offset query value, "/topicList/?offset=10".
+
+### Topic "/topic/:topicID"
+
+We can access to a topic by "/topic/:topicID" where :topicID is the topic identifier.

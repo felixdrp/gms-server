@@ -20,11 +20,18 @@ var _searchCompact = require('./search-compact');
 
 var _searchCompact2 = _interopRequireDefault(_searchCompact);
 
-var _dataFetch = require('../../data-fetch/data-fetch');
-
 var _topicType = require('../../graphql/topic-type');
 
+var _globalFetch = require('../../data-fetch/global-fetch');
+
+var _globalFetch2 = _interopRequireDefault(_globalFetch);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// Used to create the query to fetch data.
+
+
+var fetcher = new _globalFetch2.default();
 
 /**
  * Component that renders the '/' (root) view.
@@ -39,11 +46,16 @@ var Dashboard = _react2.default.createClass({
     fetchData: function fetchData() {
       return {
         action: 'add_topic_list',
-        query: '\n          {\n            topicList(amount:1){...' + _topicType.fragment.name + ',urlList{url}},\n            topicList2:topicList(amount:1){...otrofragment,urlList{url}}\n          }\n          ' + _topicType.fragment.definition + '\n          fragment otrofragment on Topic {title}\n         '
+        query: '\n          {\n            topicList(amount:1){...' + _topicType.fragment.name + ',urlList{url}},\n          }\n          ' + _topicType.fragment.definition + '\n         '
       };
     }
   },
 
+  fetchData: function fetchData() {
+    this.constructor.fetchData();
+
+    console.log(fetcher.getData(this.constructor.fetchData().query));
+  },
   topicItem: function topicItem(topicInfo) {
     return _react2.default.createElement(
       'div',
@@ -69,6 +81,8 @@ var Dashboard = _react2.default.createClass({
     );
   },
   render: function render() {
+    var _this = this;
+
     var props = this.props;
 
     return _react2.default.createElement(
@@ -101,7 +115,13 @@ var Dashboard = _react2.default.createClass({
               null,
               'Topic list'
             ),
-            'hola' || this.topicItem()
+            _react2.default.createElement(
+              'div',
+              { onClick: function onClick() {
+                  return _this.fetchData();
+                } },
+              'hola' || this.topicItem()
+            )
           )
         )
       ),
