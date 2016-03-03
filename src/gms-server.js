@@ -42,8 +42,8 @@ import schema from './graphql/schema'
 
 import globalFetch from './data-fetch/global-fetch'
 
-// var fetcher = new globalFetch('server');
-var fetcher = new globalFetch();
+var fetcher = new globalFetch('server');
+// var fetcher = new globalFetch();
 
 // const store = createStore(counter)
 
@@ -123,21 +123,30 @@ function handleRender(request, response) {
       // Fetch the data needed by the components to render.
       // Look for fetchData method in the components list to call it.
       //renderProps.components[2].customMethod('barquito');
-      console.log(
-        renderProps.components.map(
-          (component) => {
-            if (component) {
-              if ('fetchData' in component) {
-                return component.fetchData();
-              }
-              if ('customMethod' in component) {
-                return component.customMethod('barquito');
-              }
+      let queries = renderProps.components.map(
+        (component) => {
+          if (component) {
+            if ('fetchData' in component) {
+              return fetcher.getData( component.fetchData().query );
+
+              console.log( fetcher.getData() );
+              // fetcher.getData().then((text) => console.log('text:' + text))
+
             }
-            return false;
+            if ('customMethod' in component) {
+              return component.customMethod('barquito');
+            }
           }
-        )
+          return false;
+        }
       )
+      console.log(
+        queries
+      )
+      Promise.all( queries ).then(function(values) {
+        console.log(values); // [3, 1337, "foo"]
+      });
+
 
       page = renderFullPage(
         renderToString(

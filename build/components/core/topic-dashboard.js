@@ -22,6 +22,8 @@ var _searchCompact2 = _interopRequireDefault(_searchCompact);
 
 var _dataFetch = require('../../data-fetch/data-fetch');
 
+var _topicType = require('../../graphql/topic-type');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
@@ -29,12 +31,16 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  */
 
+// Fetch data.
 var Dashboard = _react2.default.createClass({
   displayName: 'Dashboard',
 
   statics: {
     fetchData: function fetchData() {
-      return '{topicList(amount:1){...TopicFragment,urlList{url}}} fragment TopicFragment on Topic {id,title}';
+      return {
+        action: 'add_topic_list',
+        query: '\n          {\n            topicList(amount:1){...' + _topicType.fragment.name + ',urlList{url}},\n            topicList2:topicList(amount:1){...otrofragment,urlList{url}}\n          }\n          ' + _topicType.fragment.definition + '\n          fragment otrofragment on Topic {title}\n         '
+      };
     }
   },
 
@@ -103,9 +109,6 @@ var Dashboard = _react2.default.createClass({
     );
   }
 });
-
-// Fetch data.
-
 
 function mapStateToProps(state, ownProps) {
   return {

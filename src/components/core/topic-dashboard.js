@@ -6,6 +6,9 @@ import SearchCompact from './search-compact'
 
 // Fetch data.
 import { getTopicList } from '../../data-fetch/data-fetch'
+import { fragment as TopicFragment } from '../../graphql/topic-type'
+
+
 
 /**
  * Component that renders the '/' (root) view.
@@ -15,7 +18,17 @@ import { getTopicList } from '../../data-fetch/data-fetch'
 var Dashboard = React.createClass({
   statics: {
     fetchData() {
-      return '{topicList(amount:1){...TopicFragment,urlList{url}}} fragment TopicFragment on Topic {id,title}';
+      return {
+        action: 'add_topic_list',
+        query: `
+          {
+            topicList(amount:1){...${TopicFragment.name},urlList{url}},
+            topicList2:topicList(amount:1){...otrofragment,urlList{url}}
+          }
+          ${TopicFragment.definition}
+          fragment otrofragment on Topic {title}
+         `,
+      }
     }
   },
 

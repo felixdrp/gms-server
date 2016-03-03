@@ -3,6 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.fragment = undefined;
 
 var _graphql = require('graphql');
 
@@ -72,4 +73,8 @@ var topicType = new _graphql.GraphQLObjectType({
 });
 
 exports.default = topicType;
+var fragment = exports.fragment = {
+  name: 'TopicFragment',
+  definition: 'fragment TopicFragment on Topic {id,title}'
+};
 //# sourceMappingURL=topic-type.js.map

@@ -59,3 +59,8 @@ const topicType = new GraphQLObjectType({
 });
 
 export default topicType
+
+export const fragment = {
+  name: 'TopicFragment',
+  definition: 'fragment TopicFragment on Topic {id,title}'
+}

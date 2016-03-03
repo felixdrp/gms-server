@@ -149,8 +149,8 @@ var history = (0, _createMemoryHistory2.default)();
 // ***
 
 
-// var fetcher = new globalFetch('server');
-var fetcher = new _globalFetch2.default();
+var fetcher = new _globalFetch2.default('server');
+// var fetcher = new globalFetch();
 
 // const store = createStore(counter)
 
@@ -211,17 +211,24 @@ function handleRender(request, response) {
       // Fetch the data needed by the components to render.
       // Look for fetchData method in the components list to call it.
       //renderProps.components[2].customMethod('barquito');
-      console.log(renderProps.components.map(function (component) {
+      var queries = renderProps.components.map(function (component) {
         if (component) {
           if ('fetchData' in component) {
-            return component.fetchData();
+            return fetcher.getData(component.fetchData().query);
+
+            console.log(fetcher.getData());
+            // fetcher.getData().then((text) => console.log('text:' + text))
           }
           if ('customMethod' in component) {
             return component.customMethod('barquito');
           }
         }
         return false;
-      }));
+      });
+      console.log(queries);
+      _promise2.default.all(queries).then(function (values) {
+        console.log(values); // [3, 1337, "foo"]
+      });
 
       page = renderFullPage((0, _server.renderToString)(_react2.default.createElement(
         _reactRedux.Provider,
