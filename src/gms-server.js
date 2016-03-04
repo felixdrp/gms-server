@@ -136,22 +136,24 @@ function handleRender(request, response) {
           if (component) {
             let consult = {};
             if ('fetchData' in component) {
-              consult = component.fetchData();
+              // To the component fetching data method we pass the location var.
+              consult = component.fetchData( location );
               allComponentsDataConsult.push(consult);
               return fetcher.getData( consult.query );
             }
-            if ('customMethod' in component) {
-              return component.customMethod('barquito');
-            }
+            // We could call more methods if it is needed.
+            // if ('customMethod' in component) {
+            //   return component.customMethod('SOME_DATA');
+            // }
           }
 
           allComponentsDataConsult.push(false);
           return false;
         }
       )
-      console.log(
-        queries
-      )
+      // console.log(
+      //   queries
+      // )
 
       // Process all the data to the store.
       Promise.all( queries ).then(function(values) {
@@ -209,18 +211,3 @@ app.listen(PORT, function() {
     //Callback triggered when server is successfully listening. Hurray!
     console.log("Server listening on: http://localhost:%s", PORT);
 })
-
-function b() {
-  return new Promise( (resolve, fail) => {resolve('its OK');} )
-}
-async function a() {
-  console.log('await');
-  let result = 'mlk'
-  result = await b()
-  result = await graphql(schema, 'query {collections}');
-  result = await graphql(schema, 'query {topicList(amount:1){...TopicFragment,urlList{url}}} fragment TopicFragment on Topic {id,title}');
-
-  console.log("graphql:" + JSON.stringify(result));
-}
-
-// a();

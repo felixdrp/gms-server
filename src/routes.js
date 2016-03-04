@@ -30,6 +30,9 @@ var routes = (history) => (
       <Route path="search" component={CommonViewContainer} >
         <IndexRoute component={SearchDashboardContainer} />
       </Route>
+      <Route path="summary" component={CommonViewContainer} >
+        <IndexRoute component={SearchDashboardContainer} />
+      </Route>
       <Route path="topicList" component={TopicDashboard} />
     </Route>
   </Router>

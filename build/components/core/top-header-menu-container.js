@@ -54,7 +54,7 @@ var TopHeaderMenuContainer = _react2.default.createClass({
           _react2.default.createElement(
             _reactRouter.Link,
             {
-              to: '/collections'
+              to: '/summary'
               // On url share the same path, Active inline-styles or CSS class.
               , activeStyle: {
                 // color: 'red'

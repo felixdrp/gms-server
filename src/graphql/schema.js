@@ -65,10 +65,14 @@ const queryType = new GraphQLObjectType({
     topicList: {
       type: topicList,
       args: {
-        amount: { type: GraphQLInt }
+        offset: { type: GraphQLString }
       },
       resolve: function (_, args) {
-        return dataTopicList;
+        return {
+          offset: args.offset || '0',
+          timestamp: Date.now().toString(),
+          topics: dataTopicList,
+        };
       }
     }
 

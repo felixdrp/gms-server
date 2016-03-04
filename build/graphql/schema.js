@@ -61,10 +61,14 @@ var queryType = new _graphql.GraphQLObjectType({
       topicList: {
         type: _2.topicList,
         args: {
-          amount: { type: _graphql.GraphQLInt }
+          offset: { type: _graphql.GraphQLString }
         },
         resolve: function resolve(_, args) {
-          return _dataTopicList2.default;
+          return {
+            offset: args.offset || '0',
+            timestamp: Date.now().toString(),
+            topics: _dataTopicList2.default
+          };
         }
       }
 

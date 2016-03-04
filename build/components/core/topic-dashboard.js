@@ -43,18 +43,23 @@ var Dashboard = _react2.default.createClass({
   displayName: 'Dashboard',
 
   statics: {
-    fetchData: function fetchData() {
+    fetchData: function fetchData(location) {
+      var offset = 0;
+      if (location && location.query) {
+        offset = location.query.offset || 0;
+      }
+
       return {
         action: 'add_topic_list',
-        query: '\n          {\n            topicList(amount:1){...' + _topicType.fragment.name + ',urlList{url}},\n          }\n          ' + _topicType.fragment.definition + '\n         '
+        query: '\n          {\n            topicList(offset:"' + offset + '") {\n              offset,\n              timestamp,\n              topics {\n                ...' + _topicType.fragment.name + ',\n                urlList {\n                  url\n                }\n              }\n            }\n          }\n          ' + _topicType.fragment.definition + '\n         '
       };
     }
   },
 
   fetchData: function fetchData() {
-    this.constructor.fetchData();
 
-    console.log(fetcher.getData(this.constructor.fetchData().query));
+    console.log(fetcher.getData(this.constructor.fetchData(this.props.location).query));
+    // return fetcher.getData( this.constructor.fetchData( this.props.location ).query );
   },
   topicItem: function topicItem(topicInfo) {
     return _react2.default.createElement(

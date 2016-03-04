@@ -22,12 +22,26 @@ var fetcher = new globalFetch();
 
 var Dashboard = React.createClass({
   statics: {
-    fetchData() {
+    fetchData( location ) {
+      let offset = 0;
+      if ( location && location.query ) {
+        offset = location.query.offset || 0;
+      }
+
       return {
         action: 'add_topic_list',
         query: `
           {
-            topicList(amount:1){...${TopicFragment.name},urlList{url}},
+            topicList(offset:"${offset}") {
+              offset,
+              timestamp,
+              topics {
+                ...${TopicFragment.name},
+                urlList {
+                  url
+                }
+              }
+            }
           }
           ${TopicFragment.definition}
          `,
@@ -36,9 +50,10 @@ var Dashboard = React.createClass({
   },
 
   fetchData() {
-    this.constructor.fetchData();
 
-    console.log( fetcher.getData( this.constructor.fetchData().query ) );
+    console.log( fetcher.getData( this.constructor.fetchData( this.props.location ).query ) );
+    // return fetcher.getData( this.constructor.fetchData( this.props.location ).query );
+
   },
 
   topicItem(topicInfo) {

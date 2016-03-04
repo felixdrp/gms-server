@@ -28,6 +28,11 @@ var routes = function routes(history) {
         { path: 'search', component: _core.CommonViewContainer },
         _react2.default.createElement(_reactRouter.IndexRoute, { component: _core.SearchDashboardContainer })
       ),
+      _react2.default.createElement(
+        _reactRouter.Route,
+        { path: 'summary', component: _core.CommonViewContainer },
+        _react2.default.createElement(_reactRouter.IndexRoute, { component: _core.SearchDashboardContainer })
+      ),
       _react2.default.createElement(_reactRouter.Route, { path: 'topicList', component: _core.TopicDashboard })
     )
   );
