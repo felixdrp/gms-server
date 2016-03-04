@@ -26,7 +26,7 @@ byobu-tmux send-keys "gulp watch" C-m
 
 # Same with 3nd pane
 # Call for browserify
-#browserify -t [ babelify --optional es7.asyncFunctions --optional runtime ] -g reactify --debug ./src/main.js -o public/lib/bundle.js
+# browserify -t [ babelify --optional es7.asyncFunctions --optional runtime ] -g reactify --debug ./src/main.js -o public/lib/bundle.js
 
 # Watch for browserify
 # "watchify -t [ babelify --optional es7.asyncFunctions --optional runtime ] -g reactify --debug ./src/main.js -o public/lib/bundle.js"

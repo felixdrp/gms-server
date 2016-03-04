@@ -13,64 +13,69 @@
  * ```
  */
 
-// import { graphql } from 'graphql'
-// require('es6-promise').polyfill();
-// import isomorphicFetch from 'isomorphic-fetch';
-var rp = require('request-promise');
-// import schema from '../graphql/schema'
-
+import http from 'http'
 
 export default class GlobalFetch {
   constructor(type) {
     this.type = type || 'client';
     // Create a different fetch for server and client
     if (type === 'server') {
-      // Fetch data using graphql module.
-      this.client = async (query) => {
-        return await rp(
-          {
-            uri: 'http://localhost:8009/graphql?query=' + query,
-            json: true,
-          }
-        );
+      // Server fetching data .
+      // Change host and port if the server change in the future
+      this.options = (query) => {
+        return {
+          host: 'localhost',
+          port: 8009,
+          method: 'GET',
+          path: '/graphql?query=' + escape( query ),
+        }
       };
     } else {
-      // Fetch data using graphql module.
-      this.client = async (query) => {
-        return await rp(
-          {
-            uri: location.origin + '/graphql?query=' + query,
-            json: true,
-          }
-        );
+      // Client Fetching data.
+      this.options = (query) => {
+        return {
+          host: location.hostname,
+          port: location.port,
+          method: 'GET',
+          path: '/graphql?query=' + escape( query ),
+        }
       };
-      // this.client = (query) => {
-      //   return fetch(location.origin + '/graphql?query=' + query);
-      // };
     }
+
+    this.client = (query) => {
+      return new Promise(
+        (resolve, reject) => {
+          http.request(
+              this.options( query ),
+              ( response ) => {
+                var data = '';
+                response.on('data', function (chunk) {
+                  data += chunk;
+                });
+
+                response.on('end', function () {
+                  console.log('X-D: ' + data);
+                  resolve( JSON.parse(data) );
+                });
+              }
+            )
+            .end();
+        }
+      );
+    };
   }
 
   async getData(query) {
     let result = {};
-    console.log('fetching data1:' + result)
-    try {
-      // if (this.type === 'client') {
-      //   console.log('mlkkk')
-      //   result = await this.client( query );
-      //   // fetch('graphql?query=' + query).then((d)=>console.log('XXX: ' + d))
-      // } else {
-      //   // result = await this.client(schema, 'query ' + query);
-      // }
-      result = await this.client( query );
 
+    try {
+      result = await this.client( query );
     }
     catch (e) {
       console.error(e);
-      // throw e;
     }
-    console.log('query: ' + query)
-    console.log('fetching data3:' + JSON.stringify( result.text() ))
-    return result.json();
+
+    return result;
   }
 
 }
