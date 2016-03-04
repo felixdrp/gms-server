@@ -1,9 +1,5 @@
 'use strict';
 
-var _extends2 = require('babel-runtime/helpers/extends');
-
-var _extends3 = _interopRequireDefault(_extends2);
-
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -24,9 +20,9 @@ var _reactRedux = require('react-redux');
 
 var _reactRouterRedux = require('react-router-redux');
 
-var _reducer = require('./reducers/reducer-1');
+var _topicListReducer = require('./reducers/topic-list-reducer');
 
-var _reducer2 = _interopRequireDefault(_reducer);
+var _topicListReducer2 = _interopRequireDefault(_topicListReducer);
 
 var _isomorphicFetch = require('isomorphic-fetch');
 
@@ -39,7 +35,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 
 // *** Load store reducers ***
-// import generalStore from './reducers/reducer-1'
 var initialState = window.__INITIAL_STATE__;
 
 // https://github.com/rackt/history/blob/master/docs/GettingStarted.md
@@ -54,9 +49,10 @@ var history = (0, _history.createHistory)();
 
 // https://github.com/rackt/react-router-redux/blob/master/examples/basic/app.js
 var middleware = (0, _reactRouterRedux.syncHistory)(history);
-var reducer = (0, _redux.combineReducers)((0, _extends3.default)({}, _reducer2.default, {
+var reducer = (0, _redux.combineReducers)({
+  topicListPage: _topicListReducer2.default,
   routing: _reactRouterRedux.routeReducer
-}));
+});
 
 // // Create Redux store with initial state
 // // const store = createStore(counterApp, initialState)

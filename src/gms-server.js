@@ -32,7 +32,10 @@ import { applyMiddleware, compose, createStore, combineReducers } from 'redux'
 import { Provider } from 'react-redux';
 import { syncHistory, routeReducer, routeActions } from 'react-router-redux'
 
+// * Redux reducers
+// ***
 import counter from './reducers/reducer-1'
+import topicListPage from './reducers/topic-list-reducer'
 
 // * GraphQl server. This part could be move to another server (modular and scale the system)
 // ***
@@ -100,7 +103,8 @@ function handleRender(request, response) {
       // create store
       const middleware = syncHistory(history)
       const reducer = combineReducers({
-        ...counter,
+        // counter,
+        topicListPage,
         routing: routeReducer
       })
 
@@ -118,7 +122,7 @@ function handleRender(request, response) {
       // dispatch the first url location to give the url to the components.
       store.dispatch( routeActions.push(location.pathname + location.search) );
 
-      console.log('store state: ' + JSON.stringify(store.getState()))
+      // console.log('store state: ' + JSON.stringify(store.getState()))
 
       // In allComponentsDataConsult we will store all the chain of fetch data. The action and query
       const allComponentsDataConsult = [];
@@ -162,9 +166,15 @@ function handleRender(request, response) {
         for ( let i=0|0; i < values.length; i++ ) {
           if (values[i]) {
             console.log(';-): store.dispatch ' + allComponentsDataConsult[i].action + ' ' + values[i]);
+            store.dispatch({
+              type: allComponentsDataConsult[i].action,
+              ...values[i].data
+            });
 
           }
         }
+
+        console.log('store state: ' + JSON.stringify(store.getState()))
 
         page = renderFullPage(
           renderToString(

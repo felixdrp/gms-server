@@ -14,8 +14,7 @@ import { Provider } from 'react-redux'
 import { syncHistory, routeReducer } from 'react-router-redux'
 
 // *** Load store reducers ***
-// import generalStore from './reducers/reducer-1'
-import counter from './reducers/reducer-1'
+import topicListPage from './reducers/topic-list-reducer'
 
 import fetch from 'isomorphic-fetch';
 
@@ -29,7 +28,7 @@ const history = createHistory()
 // https://github.com/rackt/react-router-redux/blob/master/examples/basic/app.js
 const middleware = syncHistory(history)
 const reducer = combineReducers({
-  ...counter,
+  topicListPage,
   routing: routeReducer
 })
 

@@ -54,6 +54,10 @@ var _reducer = require('./reducers/reducer-1');
 
 var _reducer2 = _interopRequireDefault(_reducer);
 
+var _topicListReducer = require('./reducers/topic-list-reducer');
+
+var _topicListReducer2 = _interopRequireDefault(_topicListReducer);
+
 var _graphql = require('graphql');
 
 var _expressGraphql = require('express-graphql');
@@ -92,6 +96,10 @@ var history = (0, _createMemoryHistory2.default)();
 // ***
 
 // Load Provider component.
+
+
+// * Redux reducers
+// ***
 
 
 // * GraphQl server. This part could be move to another server (modular and scale the system)
@@ -139,9 +147,11 @@ function handleRender(request, response) {
 
         // create store
         var middleware = (0, _reactRouterRedux.syncHistory)(history);
-        var reducer = (0, _redux.combineReducers)((0, _extends3.default)({}, _reducer2.default, {
+        var reducer = (0, _redux.combineReducers)({
+          // counter,
+          topicListPage: _topicListReducer2.default,
           routing: _reactRouterRedux.routeReducer
-        }));
+        });
 
         // // Create Redux store with initial state
         // // const store = createStore(counterApp, initialState)
@@ -156,7 +166,7 @@ function handleRender(request, response) {
         // dispatch the first url location to give the url to the components.
         store.dispatch(_reactRouterRedux.routeActions.push(location.pathname + location.search));
 
-        console.log('store state: ' + (0, _stringify2.default)(store.getState()));
+        // console.log('store state: ' + JSON.stringify(store.getState()))
 
         // In allComponentsDataConsult we will store all the chain of fetch data. The action and query
         var allComponentsDataConsult = [];
@@ -198,8 +208,13 @@ function handleRender(request, response) {
           for (var i = 0 | 0; i < values.length; i++) {
             if (values[i]) {
               console.log(';-): store.dispatch ' + allComponentsDataConsult[i].action + ' ' + values[i]);
+              store.dispatch((0, _extends3.default)({
+                type: allComponentsDataConsult[i].action
+              }, values[i].data));
             }
           }
+
+          console.log('store state: ' + (0, _stringify2.default)(store.getState()));
 
           page = renderFullPage((0, _server.renderToString)(_react2.default.createElement(
             _reactRedux.Provider,

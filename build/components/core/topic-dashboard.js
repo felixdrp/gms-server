@@ -26,9 +26,11 @@ var _globalFetch = require('../../data-fetch/global-fetch');
 
 var _globalFetch2 = _interopRequireDefault(_globalFetch);
 
+var _actions = require('../../actions/actions');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// Used to create the query to fetch data.
+// Fetch data.
 
 
 var fetcher = new _globalFetch2.default();
@@ -38,7 +40,7 @@ var fetcher = new _globalFetch2.default();
  *
  */
 
-// Fetch data.
+// Used to create the query to fetch data.
 var Dashboard = _react2.default.createClass({
   displayName: 'Dashboard',
 
@@ -50,7 +52,7 @@ var Dashboard = _react2.default.createClass({
       }
 
       return {
-        action: 'add_topic_list',
+        action: _actions.ADD_TOPIC_LIST,
         query: '\n          {\n            topicList(offset:"' + offset + '") {\n              offset,\n              timestamp,\n              topics {\n                ...' + _topicType.fragment.name + ',\n                urlList {\n                  url\n                }\n              }\n            }\n          }\n          ' + _topicType.fragment.definition + '\n         '
       };
     }

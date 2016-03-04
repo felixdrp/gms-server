@@ -7,13 +7,13 @@ import SearchCompact from './search-compact'
 // Used to create the query to fetch data.
 import { fragment as TopicFragment } from '../../graphql/topic-type'
 
-
 // Fetch data.
 import globalFetch from '../../data-fetch/global-fetch'
 
+import { ADD_TOPIC_LIST } from '../../actions/actions'
+
+
 var fetcher = new globalFetch();
-
-
 
 /**
  * Component that renders the '/' (root) view.
@@ -29,7 +29,7 @@ var Dashboard = React.createClass({
       }
 
       return {
-        action: 'add_topic_list',
+        action: ADD_TOPIC_LIST,
         query: `
           {
             topicList(offset:"${offset}") {
