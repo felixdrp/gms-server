@@ -33,7 +33,7 @@ var routes = (history) => (
       <Route path="summary" component={CommonViewContainer} >
         <IndexRoute component={SearchDashboardContainer} />
       </Route>
-      <Route path="topicList" component={TopicDashboard} />
+      <Route path="/topicList/:id" component={TopicDashboard} />
     </Route>
   </Router>
 )

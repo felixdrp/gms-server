@@ -3,6 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.fragment = undefined;
 
 var _graphql = require('graphql');
 
@@ -37,4 +38,8 @@ var StoryType = new _graphql.GraphQLObjectType({
 });
 
 exports.default = StoryType;
+var fragment = exports.fragment = {
+  name: 'StoryFragment',
+  definition: 'fragment StoryFragment on Story {url,title,story}'
+};
 //# sourceMappingURL=story-type.js.map

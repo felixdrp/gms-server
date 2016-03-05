@@ -11,7 +11,7 @@ import { createHistory } from 'history';
 // *** Load redux ***
 import { applyMiddleware, compose, createStore, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
-import { syncHistory, routeReducer } from 'react-router-redux'
+import { syncHistory, routeReducer, routeActions  } from 'react-router-redux'
 
 // *** Load store reducers ***
 import topicListPage from './reducers/topic-list-reducer'

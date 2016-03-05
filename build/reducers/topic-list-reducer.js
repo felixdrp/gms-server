@@ -19,10 +19,9 @@ var _actions = require('../actions/actions');
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function addTopicList(state, action) {
-  var data = action.topicList;
-  return (0, _extends4.default)({}, state, (0, _defineProperty3.default)({}, data.offset, {
-    timestamp: data.timestamp,
-    topicList: data.topics
+  return (0, _extends4.default)({}, state, (0, _defineProperty3.default)({}, action.offset, {
+    timestamp: action.timestamp,
+    topicList: action.topics
   }));
 }
 

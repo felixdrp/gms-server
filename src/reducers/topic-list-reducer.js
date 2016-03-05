@@ -3,12 +3,11 @@ import {
 } from '../actions/actions'
 
 function addTopicList(state, action) {
-  let data = action.topicList;
   return {
     ...state,
-    [data.offset] : {
-      timestamp: data.timestamp,
-      topicList: data.topics
+    [action.offset] : {
+      timestamp: action.timestamp,
+      topicList: action.topics
     }
   }
 }

@@ -4,6 +4,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _getIterator2 = require('babel-runtime/core-js/get-iterator');
+
+var _getIterator3 = _interopRequireDefault(_getIterator2);
+
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -22,6 +26,8 @@ var _searchCompact2 = _interopRequireDefault(_searchCompact);
 
 var _topicType = require('../../graphql/topic-type');
 
+var _storyType = require('../../graphql/story-type');
+
 var _globalFetch = require('../../data-fetch/global-fetch');
 
 var _globalFetch2 = _interopRequireDefault(_globalFetch);
@@ -33,6 +39,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // Fetch data.
 
 
+// Used to create the query to fetch data.
+
+
 var fetcher = new _globalFetch2.default();
 
 /**
@@ -40,20 +49,26 @@ var fetcher = new _globalFetch2.default();
  *
  */
 
-// Used to create the query to fetch data.
 var Dashboard = _react2.default.createClass({
   displayName: 'Dashboard',
 
   statics: {
-    fetchData: function fetchData(location) {
+    fetchData: function fetchData(_ref) {
+      var location = _ref.location;
+      var _ref$params = _ref.params;
+      var params = _ref$params === undefined ? '' : _ref$params;
+
       var offset = 0;
       if (location && location.query) {
         offset = location.query.offset || 0;
       }
 
       return {
-        action: _actions.ADD_TOPIC_LIST,
-        query: '\n          {\n            topicList(offset:"' + offset + '") {\n              offset,\n              timestamp,\n              topics {\n                ...' + _topicType.fragment.name + ',\n                urlList {\n                  url\n                }\n              }\n            }\n          }\n          ' + _topicType.fragment.definition + '\n         '
+        actions: [{
+          action: _actions.ADD_TOPIC_LIST,
+          varName: 'topicList'
+        }],
+        query: '\n          {\n            topicList(offset:"' + offset + '") {\n              offset,\n              timestamp,\n              topics {\n                ...' + _topicType.fragment.name + ',\n                urlList {\n                  ...' + _storyType.fragment.name + ',\n                }\n              }\n            }\n          }\n          ' + _topicType.fragment.definition + '\n          ' + _storyType.fragment.definition + '\n         '
       };
     }
   },
@@ -63,34 +78,83 @@ var Dashboard = _react2.default.createClass({
     console.log(fetcher.getData(this.constructor.fetchData(this.props.location).query));
     // return fetcher.getData( this.constructor.fetchData( this.props.location ).query );
   },
-  topicItem: function topicItem(topicInfo) {
+  topicItem: function topicItem(topic) {
+
     return _react2.default.createElement(
       'div',
       null,
       _react2.default.createElement(
-        'h1',
+        'h2',
         null,
-        topicInfo.title
+        topic.title
       ),
-      topicInfo.urlList.map(function (story) {
-        return _react2.default.createElement(
-          'div',
-          null,
-          'story ',
-          _react2.default.createElement(
-            'a',
-            { href: story.url },
-            story.url,
-            ' '
-          )
-        );
-      })
+      _react2.default.createElement(
+        'div',
+        { style: { marginLeft: 18 } },
+        topic.urlList.map(function (story) {
+          return _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(
+              'h3',
+              null,
+              story.title || story.url
+            ),
+            _react2.default.createElement(
+              'h4',
+              null,
+              story.story || ''
+            ),
+            _react2.default.createElement(
+              'a',
+              { href: story.url },
+              story.url,
+              ' '
+            )
+          );
+        })
+      )
     );
   },
   render: function render() {
     var _this = this;
 
-    var props = this.props;
+    var props = this.props,
+        offset = props.location.query && 'offset' in props.location.query ? props.location.query.offset : 0,
+        topicList = [];
+
+    if (props.topicListPage[offset] && props.topicListPage[offset].topicList.length > 0) {
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        for (var _iterator = (0, _getIterator3.default)(props.topicListPage[offset].topicList), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var topic = _step.value;
+
+          topicList.push(_react2.default.createElement(
+            'div',
+            { key: topic.id },
+            this.topicItem(topic)
+          ));
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator.return) {
+            _iterator.return();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+    } else {
+      topicList = 'Topic list is empty at the moment... Please try later.';
+    }
 
     return _react2.default.createElement(
       'div',
@@ -127,7 +191,7 @@ var Dashboard = _react2.default.createClass({
               { onClick: function onClick() {
                   return _this.fetchData();
                 } },
-              'hola' || this.topicItem()
+              topicList
             )
           )
         )
@@ -138,10 +202,13 @@ var Dashboard = _react2.default.createClass({
 });
 
 function mapStateToProps(state, ownProps) {
+  // console.log(state, ownProps)
   return {
     // if route contains params
     params: ownProps.params,
-    location: ownProps.location
+    location: ownProps.location,
+    // store data.
+    topicListPage: state.topicListPage
   };
 }
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(Dashboard);

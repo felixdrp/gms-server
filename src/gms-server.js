@@ -61,7 +61,7 @@ function renderFullPage(html, initialState) {
       <head>
         <meta charset="UTF-8">
         <title>Glasgow Memories Server</title>
-        <link rel="stylesheet" type="text/css" href="css/app.css">
+        <link rel="stylesheet" type="text/css" href="/css/app.css">
       </head>
       <body>
         <div id="root">${html}</div>
@@ -120,7 +120,7 @@ function handleRender(request, response) {
       middleware.listenForReplays(store)
 
       // dispatch the first url location to give the url to the components.
-      store.dispatch( routeActions.push(location.pathname + location.search) );
+      store.dispatch( routeActions.push( location.pathname + location.search ) );
 
       // console.log('store state: ' + JSON.stringify(store.getState()))
 
@@ -141,8 +141,18 @@ function handleRender(request, response) {
             let consult = {};
             if ('fetchData' in component) {
               // To the component fetching data method we pass the location var.
-              consult = component.fetchData( location );
-              allComponentsDataConsult.push(consult);
+              consult = component.fetchData(
+                {
+                  // The location information with the url query.
+                  // Ex. if url "/path?query=raspberry" then location.query = raspberry
+                  location,
+
+                  // Ex. params:
+                  // if route "/path/:id" and url "/path/3" then params.id = 3
+                  params: renderProps.params
+                }
+              );
+              allComponentsDataConsult.push( consult.actions );
               return fetcher.getData( consult.query );
             }
             // We could call more methods if it is needed.
@@ -165,12 +175,15 @@ function handleRender(request, response) {
 
         for ( let i=0|0; i < values.length; i++ ) {
           if (values[i]) {
-            console.log(';-): store.dispatch ' + allComponentsDataConsult[i].action + ' ' + values[i]);
-            store.dispatch({
-              type: allComponentsDataConsult[i].action,
-              ...values[i].data
-            });
-
+            console.log(';-): store.dispatch ' + JSON.stringify(allComponentsDataConsult[i]) + ' ' + values[i]);
+            allComponentsDataConsult[i].map(
+              (action) => {
+                store.dispatch({
+                  type: action.action,
+                  ...values[i].data[action.varName]
+                });
+              }
+            )
           }
         }
 

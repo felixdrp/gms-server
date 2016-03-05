@@ -37,3 +37,8 @@ const StoryType = new GraphQLObjectType({
 });
 
 export default StoryType
+
+export const fragment = {
+  name: 'StoryFragment',
+  definition: 'fragment StoryFragment on Story {url,title,story}'
+}

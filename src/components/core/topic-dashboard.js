@@ -6,6 +6,7 @@ import SearchCompact from './search-compact'
 
 // Used to create the query to fetch data.
 import { fragment as TopicFragment } from '../../graphql/topic-type'
+import { fragment as StoryFragment } from '../../graphql/story-type'
 
 // Fetch data.
 import globalFetch from '../../data-fetch/global-fetch'
@@ -22,14 +23,19 @@ var fetcher = new globalFetch();
 
 var Dashboard = React.createClass({
   statics: {
-    fetchData( location ) {
+    fetchData( { location, params = '' } ) {
       let offset = 0;
       if ( location && location.query ) {
         offset = location.query.offset || 0;
       }
 
       return {
-        action: ADD_TOPIC_LIST,
+        actions: [
+          {
+            action: ADD_TOPIC_LIST,
+            varName: 'topicList'
+          }
+        ],
         query: `
           {
             topicList(offset:"${offset}") {
@@ -38,12 +44,13 @@ var Dashboard = React.createClass({
               topics {
                 ...${TopicFragment.name},
                 urlList {
-                  url
+                  ...${StoryFragment.name},
                 }
               }
             }
           }
           ${TopicFragment.definition}
+          ${StoryFragment.definition}
          `,
       }
     }
@@ -56,24 +63,40 @@ var Dashboard = React.createClass({
 
   },
 
-  topicItem(topicInfo) {
+  topicItem(topic) {
+
     return (
       <div>
-        <h1>{topicInfo.title}</h1>
-
-        {topicInfo.urlList.map(
-          (story) => (
-            <div>
-              story <a href={story.url}>{story.url} </a>
-            </div>
-          )
-        )}
+        <h2>{topic.title}</h2>
+        <div  style={{marginLeft: 18}}>
+          {topic.urlList.map(
+            (story) => (
+              <div>
+                <h3>{story.title || story.url}</h3>
+                <h4>{story.story || ''}</h4>
+                <a href={story.url}>{story.url} </a>
+              </div>
+            )
+          )}
+        </div>
       </div>
     );
   },
 
   render() {
-    let props = this.props;
+    let props = this.props,
+        offset = ( props.location.query && 'offset' in props.location.query ) ?
+          props.location.query.offset :
+          0,
+        topicList = [];
+
+    if ( props.topicListPage[offset] && props.topicListPage[offset].topicList.length > 0 ) {
+      for (let topic of props.topicListPage[offset].topicList) {
+        topicList.push(<div key={ topic.id }>{ this.topicItem( topic ) }</div>)
+      }
+    } else {
+      topicList = 'Topic list is empty at the moment... Please try later.';
+    }
 
     return (
       <div id="topicDashboard">
@@ -94,7 +117,7 @@ var Dashboard = React.createClass({
             <div className="" style={{flex: 1}} >
               <h3>Topic list</h3>
               <div onClick={ () => this.fetchData() }>
-              {'hola' || this.topicItem()}
+              { topicList }
               </div>
             </div>
           </div>
@@ -108,10 +131,13 @@ var Dashboard = React.createClass({
 });
 
 function mapStateToProps(state, ownProps) {
+  // console.log(state, ownProps)
   return {
     // if route contains params
     params: ownProps.params,
-    location: ownProps.location
+    location: ownProps.location,
+    // store data.
+    topicListPage: state.topicListPage,
   };
 }
 export default connect(mapStateToProps)(Dashboard);

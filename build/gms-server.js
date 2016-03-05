@@ -116,7 +116,7 @@ var PORT = 8009;
 var routes = (0, _routes2.default)(history);
 
 function renderFullPage(html, initialState) {
-  return '\n    <!doctype html>\n    <html>\n      <head>\n        <meta charset="UTF-8">\n        <title>Glasgow Memories Server</title>\n        <link rel="stylesheet" type="text/css" href="css/app.css">\n      </head>\n      <body>\n        <div id="root">' + html + '</div>\n        <script>\n          window.__INITIAL_STATE__ = ' + (0, _stringify2.default)(initialState) + '\n        </script>\n        <script src="/lib/bundle.js"></script>\n      </body>\n    </html>\n  ';
+  return '\n    <!doctype html>\n    <html>\n      <head>\n        <meta charset="UTF-8">\n        <title>Glasgow Memories Server</title>\n        <link rel="stylesheet" type="text/css" href="/css/app.css">\n      </head>\n      <body>\n        <div id="root">' + html + '</div>\n        <script>\n          window.__INITIAL_STATE__ = ' + (0, _stringify2.default)(initialState) + '\n        </script>\n        <script src="/lib/bundle.js"></script>\n      </body>\n    </html>\n  ';
 }
 
 // We are going to fill these out in the sections to follow
@@ -184,8 +184,16 @@ function handleRender(request, response) {
             var consult = {};
             if ('fetchData' in component) {
               // To the component fetching data method we pass the location var.
-              consult = component.fetchData(location);
-              allComponentsDataConsult.push(consult);
+              consult = component.fetchData({
+                // The location information with the url query.
+                // Ex. if url "/path?query=raspberry" then location.query = raspberry
+                location: location,
+
+                // Ex. params:
+                // if route "/path/:id" and url "/path/3" then params.id = 3
+                params: renderProps.params
+              });
+              allComponentsDataConsult.push(consult.actions);
               return fetcher.getData(consult.query);
             }
             // We could call more methods if it is needed.
@@ -205,13 +213,19 @@ function handleRender(request, response) {
         _promise2.default.all(queries).then(function (values) {
           console.log(values);
 
-          for (var i = 0 | 0; i < values.length; i++) {
+          var _loop = function _loop(i) {
             if (values[i]) {
-              console.log(';-): store.dispatch ' + allComponentsDataConsult[i].action + ' ' + values[i]);
-              store.dispatch((0, _extends3.default)({
-                type: allComponentsDataConsult[i].action
-              }, values[i].data));
+              console.log(';-): store.dispatch ' + (0, _stringify2.default)(allComponentsDataConsult[i]) + ' ' + values[i]);
+              allComponentsDataConsult[i].map(function (action) {
+                store.dispatch((0, _extends3.default)({
+                  type: action.action
+                }, values[i].data[action.varName]));
+              });
             }
+          };
+
+          for (var i = 0 | 0; i < values.length; i++) {
+            _loop(i);
           }
 
           console.log('store state: ' + (0, _stringify2.default)(store.getState()));
