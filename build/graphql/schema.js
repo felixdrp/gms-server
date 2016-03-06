@@ -4,6 +4,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _promise = require('babel-runtime/core-js/promise');
+
+var _promise2 = _interopRequireDefault(_promise);
+
 var _graphql = require('graphql');
 
 var _2 = require('./');
@@ -64,11 +68,11 @@ var queryType = new _graphql.GraphQLObjectType({
           offset: { type: _graphql.GraphQLString }
         },
         resolve: function resolve(_, args) {
-          return {
+          return _promise2.default.resolve({
             offset: args.offset || '0',
             timestamp: Date.now().toString(),
             topics: _dataTopicList2.default
-          };
+          });
         }
       }
 

@@ -68,11 +68,11 @@ const queryType = new GraphQLObjectType({
         offset: { type: GraphQLString }
       },
       resolve: function (_, args) {
-        return {
+        return Promise.resolve( {
           offset: args.offset || '0',
           timestamp: Date.now().toString(),
           topics: dataTopicList,
-        };
+        } );
       }
     }
 

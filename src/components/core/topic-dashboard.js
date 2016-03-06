@@ -21,7 +21,7 @@ var fetcher = new globalFetch();
  *
  */
 
-var Dashboard = React.createClass({
+var TopicDashboard = React.createClass({
   statics: {
     fetchData( { location, params = '' } ) {
       let offset = 0;
@@ -64,14 +64,14 @@ var Dashboard = React.createClass({
   },
 
   topicItem(topic) {
-
+    let i = 0|0;
     return (
       <div>
         <h2>{topic.title}</h2>
         <div  style={{marginLeft: 18}}>
           {topic.urlList.map(
             (story) => (
-              <div>
+              <div key={i++}>
                 <h3>{story.title || story.url}</h3>
                 <h4>{story.story || ''}</h4>
                 <a href={story.url}>{story.url} </a>
@@ -140,4 +140,4 @@ function mapStateToProps(state, ownProps) {
     topicListPage: state.topicListPage,
   };
 }
-export default connect(mapStateToProps)(Dashboard);
+export default connect(mapStateToProps)(TopicDashboard);

@@ -49,8 +49,8 @@ var fetcher = new _globalFetch2.default();
  *
  */
 
-var Dashboard = _react2.default.createClass({
-  displayName: 'Dashboard',
+var TopicDashboard = _react2.default.createClass({
+  displayName: 'TopicDashboard',
 
   statics: {
     fetchData: function fetchData(_ref) {
@@ -79,7 +79,7 @@ var Dashboard = _react2.default.createClass({
     // return fetcher.getData( this.constructor.fetchData( this.props.location ).query );
   },
   topicItem: function topicItem(topic) {
-
+    var i = 0 | 0;
     return _react2.default.createElement(
       'div',
       null,
@@ -94,7 +94,7 @@ var Dashboard = _react2.default.createClass({
         topic.urlList.map(function (story) {
           return _react2.default.createElement(
             'div',
-            null,
+            { key: i++ },
             _react2.default.createElement(
               'h3',
               null,
@@ -211,5 +211,5 @@ function mapStateToProps(state, ownProps) {
     topicListPage: state.topicListPage
   };
 }
-exports.default = (0, _reactRedux.connect)(mapStateToProps)(Dashboard);
+exports.default = (0, _reactRedux.connect)(mapStateToProps)(TopicDashboard);
 //# sourceMappingURL=topic-dashboard.js.map
