@@ -4,6 +4,7 @@ import {
   GraphQLList,
   GraphQLString,
   GraphQLNonNull,
+  GraphQLScalarType,
 } from 'graphql'
 
 import WordFrequencyType from './word-frequency-type'
@@ -51,12 +52,35 @@ const topicType = new GraphQLObjectType({
      type: new GraphQLList( TweetType ),
      description: 'The topic related tweet list.',
    },
+   // JSON Object with all the comments. This way it loose the type definition check.
+   // https://github.com/graphql/graphql-js/pull/242#issuecomment-192583517
+   // Another option is to make hierarchical data in linear one.
+   // Ex:
+   //
+   // a---b
+   //  \
+   //   \-c
+   //
+   // a
+   // a.b
+   // a.c
+   // Then we could use the graphql type system.
+   // This option force the graphql consumer to recreate the hierarchical data.
    comments: {
-     type: new GraphQLList( CommentType ),
-     description: 'The topic comments.',
+     type: new GraphQLScalarType({
+       name: 'Raw',
+       serialize(value) {
+          //  any kind of data
+          return value;
+       }
+     })
    }
  }
 });
+
+function getComments(comment) {
+
+}
 
 export default topicType
 

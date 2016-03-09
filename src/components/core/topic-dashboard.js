@@ -7,6 +7,7 @@ import SearchCompact from './search-compact'
 // Used to create the query to fetch data.
 import { fragment as TopicFragment } from '../../graphql/topic-type'
 import { fragment as StoryFragment } from '../../graphql/story-type'
+import { fragment as CommentFragment } from '../../graphql/comment-type'
 
 // Fetch data.
 import globalFetch from '../../data-fetch/global-fetch'
@@ -46,6 +47,7 @@ var TopicDashboard = React.createClass({
                 urlList {
                   ...${StoryFragment.name},
                 }
+                comments
               }
             }
           }

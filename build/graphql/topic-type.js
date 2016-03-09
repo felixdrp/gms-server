@@ -65,12 +65,33 @@ var topicType = new _graphql.GraphQLObjectType({
       type: new _graphql.GraphQLList(_tweetType2.default),
       description: 'The topic related tweet list.'
     },
+    // JSON Object with all the comments. This way it loose the type definition check.
+    // https://github.com/graphql/graphql-js/pull/242#issuecomment-192583517
+    // Another option is to make hierarchical data in linear one.
+    // Ex:
+    //
+    // a---b
+    //  \
+    //   \-c
+    //
+    // a
+    // a.b
+    // a.c
+    // Then we could use the graphql type system.
+    // This option force the graphql consumer to recreate the hierarchical data.
     comments: {
-      type: new _graphql.GraphQLList(_commentType2.default),
-      description: 'The topic comments.'
+      type: new _graphql.GraphQLScalarType({
+        name: 'Raw',
+        serialize: function serialize(value) {
+          //  any kind of data
+          return value;
+        }
+      })
     }
   }
 });
+
+function getComments(comment) {}
 
 exports.default = topicType;
 var fragment = exports.fragment = {

@@ -29,9 +29,28 @@
         "id": "1",
         "userId": "1",
         "body": "Some related with science. Good!!",
-        "timeStamp": "12354",
+        "timestamp": "12354",
         "upVote": 10,
         "downVote": 1,
+        "replies": [
+          {
+            "id": "3",
+            "userId": "5",
+            "body": "The science and it method.",
+            "timestamp": "12354",
+            "upVote": 16,
+            "downVote": 0,
+            "replies": [ ]
+          }
+        ]
+      },
+      {
+        "id": "2",
+        "userId": "3",
+        "body": "I like science.",
+        "timestamp": "12354",
+        "upVote": 30,
+        "downVote": 0,
         "replies": [ ]
       }
     ]
@@ -68,10 +87,10 @@
     "tweetList": ["1", "2"],
     "comments": [
       {
-        "id": "1",
+        "id": "9",
         "userId": "1",
         "body": "Some related with music. Very Good!!",
-        "timeStamp": "12354",
+        "timestamp": "12354",
         "upVote": 10,
         "downVote": 1,
         "replies": [ ]

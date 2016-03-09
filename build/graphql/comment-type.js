@@ -3,6 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.fragment = undefined;
 
 var _graphql = require('graphql');
 
@@ -43,7 +44,7 @@ var commentType = new _graphql.GraphQLObjectType({
         type: _graphql.GraphQLString,
         description: 'The comment text.'
       },
-      timeStamp: {
+      timestamp: {
         type: _graphql.GraphQLInt,
         description: 'The comment timestamp.'
       },
@@ -53,11 +54,11 @@ var commentType = new _graphql.GraphQLObjectType({
       },
       downVote: {
         type: _graphql.GraphQLInt,
-        description: 'The Up Vote.'
+        description: 'The Down Vote.'
       },
       // https://github.com/graphql/graphql-js/issues/23
       replies: {
-        type: new _graphql.GraphQLList(commentType),
+        type: _graphql.GraphQLJson,
         description: 'The replies to the comment.'
       }
     };
@@ -66,4 +67,8 @@ var commentType = new _graphql.GraphQLObjectType({
 
 //  resolve: comment => getComment(comment),
 exports.default = commentType;
+var fragment = exports.fragment = {
+  name: 'CommentFragment',
+  definition: 'fragment CommentFragment on Comment {id,userId,body,timestamp,upVote,downVote,replies }'
+};
 //# sourceMappingURL=comment-type.js.map

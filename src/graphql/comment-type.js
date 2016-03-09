@@ -5,6 +5,7 @@ import {
   GraphQLString,
   GraphQLNonNull,
   GraphQLInt,
+  GraphQLJson,
 } from 'graphql'
 
 /**
@@ -43,7 +44,7 @@ const commentType = new GraphQLObjectType({
      type: GraphQLString,
      description: 'The comment text.',
    },
-   timeStamp: {
+   timestamp: {
      type: GraphQLInt,
      description: 'The comment timestamp.',
    },
@@ -53,11 +54,11 @@ const commentType = new GraphQLObjectType({
    },
    downVote: {
      type: GraphQLInt,
-     description: 'The Up Vote.',
+     description: 'The Down Vote.',
    },
    // https://github.com/graphql/graphql-js/issues/23
    replies: {
-     type: new GraphQLList( commentType ),
+     type: GraphQLJson,
      description: 'The replies to the comment.',
     //  resolve: comment => getComment(comment),
    }
@@ -65,3 +66,8 @@ const commentType = new GraphQLObjectType({
 });
 
 export default commentType
+
+export const fragment = {
+  name: 'CommentFragment',
+  definition: 'fragment CommentFragment on Comment {id,userId,body,timestamp,upVote,downVote,replies }'
+}
