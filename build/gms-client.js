@@ -24,20 +24,12 @@ var _topicListReducer = require('./reducers/topic-list-reducer');
 
 var _topicListReducer2 = _interopRequireDefault(_topicListReducer);
 
-var _isomorphicFetch = require('isomorphic-fetch');
-
-var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// import fetch from 'isomorphic-fetch';
 
 // The initial state from server-generated HTML
 // have a look to server code.
-
-
-// *** Load store reducers ***
-var initialState = window.__INITIAL_STATE__;
-
-// https://github.com/rackt/history/blob/master/docs/GettingStarted.md
 
 
 // *** Load redux ***
@@ -45,6 +37,12 @@ var initialState = window.__INITIAL_STATE__;
 
 // *** Load react-router ***
 // *** Load react and react-dom ***
+var initialState = window.__INITIAL_STATE__;
+
+// https://github.com/rackt/history/blob/master/docs/GettingStarted.md
+
+
+// *** Load store reducers ***
 var history = (0, _history.createHistory)();
 
 // https://github.com/rackt/react-router-redux/blob/master/examples/basic/app.js
