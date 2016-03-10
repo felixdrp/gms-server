@@ -30,6 +30,12 @@ Why isomorphic web design?
 + Easier code maintenance.
 > Please visit [Isomorphic](http://isomorphic.net/javascript) for more info.
 
+Why GraphQL?
++ Flexibility and composition.
+
+This characteristics improve, potentially, the speed of the web.
+
+> Please visit [GraphQL](http://graphql.org/) and [GraphQL: A data query language](https://code.facebook.com/posts/1691455094417024/graphql-a-data-query-language/) for more info.
 
 ### Data
 
