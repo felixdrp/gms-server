@@ -21,6 +21,16 @@ The objective is to make a system modular and scalable.
 + Client. ('Isomorphic')
 + GraphQL Server. Provides data to server and client.('Isomorphic').
 
+Why isomorphic web design?
+
++ SPEED. Faster to render HTML content, directly in the browser. Better overall user experience.
+> The importance of the web speed.
+> [Phys.org article about web pages speed](http://phys.org/news/2016-03-web-pages-percent-faster-effectively.html)
+
++ Easier code maintenance.
+> Please visit [Isomorphic](http://isomorphic.net/javascript) for more info.
+
+
 ### Data
 
 + Crawler -> DataBase/File.
