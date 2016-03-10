@@ -74,7 +74,7 @@ var TopicDashboard = React.createClass({
           <div className="header">Stories</div>
           {topic.urlList.map(
             (story) => (
-              <div key={i++} className={story-item}>
+              <div key={i++} className={'story-item'}>
                 <h3>{story.title || story.url}</h3>
                 <h4>{story.story || ''}</h4>
                 <a href={story.url} target={'_blank'}>{story.url} </a>

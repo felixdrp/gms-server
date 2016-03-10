@@ -99,7 +99,7 @@ var TopicDashboard = _react2.default.createClass({
         topic.urlList.map(function (story) {
           return _react2.default.createElement(
             'div',
-            { key: i++, className: story - item },
+            { key: i++, className: 'story-item' },
             _react2.default.createElement(
               'h3',
               null,
