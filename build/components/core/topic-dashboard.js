@@ -82,19 +82,24 @@ var TopicDashboard = _react2.default.createClass({
     var i = 0 | 0;
     return _react2.default.createElement(
       'div',
-      null,
+      { className: 'topic-list-item' },
       _react2.default.createElement(
         'h2',
-        null,
+        { className: 'title' },
         topic.title
       ),
       _react2.default.createElement(
         'div',
-        { style: { marginLeft: 18 } },
+        { className: 'stories-list', style: {} },
+        _react2.default.createElement(
+          'div',
+          { className: 'header' },
+          'Stories'
+        ),
         topic.urlList.map(function (story) {
           return _react2.default.createElement(
             'div',
-            { key: i++ },
+            { key: i++, className: story - item },
             _react2.default.createElement(
               'h3',
               null,
