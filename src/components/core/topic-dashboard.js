@@ -76,7 +76,7 @@ var TopicDashboard = React.createClass({
               <div key={i++}>
                 <h3>{story.title || story.url}</h3>
                 <h4>{story.story || ''}</h4>
-                <a href={story.url}>{story.url} </a>
+                <a href={story.url} target={'_blank'}>{story.url} </a>
               </div>
             )
           )}

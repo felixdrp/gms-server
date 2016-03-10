@@ -107,7 +107,7 @@ var TopicDashboard = _react2.default.createClass({
             ),
             _react2.default.createElement(
               'a',
-              { href: story.url },
+              { href: story.url, target: '_blank' },
               story.url,
               ' '
             )
