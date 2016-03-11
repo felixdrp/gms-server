@@ -94,27 +94,26 @@ var TopicDashboard = _react2.default.createClass({
         _react2.default.createElement(
           'div',
           { className: 'header' },
-          'Stories'
+          'Stories',
+          _react2.default.createElement('hr', null)
         ),
         topic.urlList.map(function (story) {
           return _react2.default.createElement(
             'div',
             { key: i++, className: 'story-item' },
             _react2.default.createElement(
-              'h3',
-              null,
-              story.title || story.url
+              'a',
+              { href: story.url, target: '_blank' },
+              _react2.default.createElement(
+                'h3',
+                null,
+                story.title || story.url || ''
+              )
             ),
             _react2.default.createElement(
               'h4',
               null,
               story.story || ''
-            ),
-            _react2.default.createElement(
-              'a',
-              { href: story.url, target: '_blank' },
-              story.url,
-              ' '
             )
           );
         })
@@ -174,7 +173,8 @@ var TopicDashboard = _react2.default.createClass({
         { className: 'main-viewport' },
         _react2.default.createElement(
           'div',
-          { style: {
+          {
+            style: {
               display: 'flex',
               flexDirection: 'row',
               justifyContent: 'center',
@@ -185,10 +185,10 @@ var TopicDashboard = _react2.default.createClass({
           },
           _react2.default.createElement(
             'div',
-            { className: '', style: { flex: 1 } },
+            { style: { flex: 1 } },
             _react2.default.createElement(
               'h3',
-              null,
+              { className: 'title' },
               'Topic list'
             ),
             _react2.default.createElement(

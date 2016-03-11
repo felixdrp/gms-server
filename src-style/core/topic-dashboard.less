@@ -8,11 +8,14 @@
   right: 0;
 
   .main-header {
-    position: relative;
-    height: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: inherit;
+    align-items: center;
   }
 
   .main-viewport {
+    margin-top: 20px;
     display: flex;
     height: 75%;
     flex-direction: column;
@@ -29,15 +32,62 @@
       margin-bottom: 38px;
     }
 
+    .title {
+      color: @LOGO_MAIN_COLOR;
+    }
+
     .topic-list-item {
       margin-top: 35px;
       margin-bottom: 35px;
 
       .title {
-
+        color: @TOPIC_TITLE_COLOR;
       }
+
+      .header {
+        color: #999;
+        hr {
+          margin-top: 4px;
+          border: 0;
+          height: 0;
+          border-top: 1px solid rgba(0, 0, 0, 0.1);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+      }
+
       .stories-list {
         margin-left: 18px;
+
+        .story-item {
+          margin: 28px;
+
+          a:link {
+            text-decoration: none;
+          }
+
+          a:visited {
+            text-decoration: none;
+          }
+
+          a:hover {
+            text-decoration: underline;
+          }
+
+          a:active {
+            text-decoration: underline;
+          }
+
+          h3 {
+            text-transform: capitalize;
+            margin-top: 15px;
+            margin-bottom: 5px;
+          }
+
+          h4 {
+            margin: 0;
+            color: #545454;
+          }
+        }
       }
     }
 

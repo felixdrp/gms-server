@@ -71,13 +71,15 @@ var TopicDashboard = React.createClass({
       <div className="topic-list-item">
         <h2 className="title">{topic.title}</h2>
         <div className="stories-list" style={{}}>
-          <div className="header">Stories</div>
+          <div className="header">
+            Stories
+            <hr/>
+          </div>
           {topic.urlList.map(
             (story) => (
               <div key={i++} className={'story-item'}>
-                <h3>{story.title || story.url}</h3>
+                <a href={story.url} target={'_blank'}><h3>{ story.title || story.url || '' }</h3></a>
                 <h4>{story.story || ''}</h4>
-                <a href={story.url} target={'_blank'}>{story.url} </a>
               </div>
             )
           )}
@@ -108,17 +110,18 @@ var TopicDashboard = React.createClass({
         </div>
 
         <div className="main-viewport">
-          <div style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    width: '100%',
-                    maxWidth: 600,
-                  }}
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: '100%',
+              maxWidth: 600,
+            }}
           >
-            <div className="" style={{flex: 1}} >
-              <h3>Topic list</h3>
+            <div style={{flex: 1}} >
+              <h3 className="title">Topic list</h3>
               <div onClick={ () => this.fetchData() }>
               { topicList }
               </div>

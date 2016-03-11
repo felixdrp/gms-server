@@ -32,36 +32,49 @@ var TopHeaderMenuContainer = _react2.default.createClass({
       'div',
       { id: 'top-header-menu-container' },
       _react2.default.createElement(
-        'ul',
-        { style: { listStyleType: 'none' } },
+        'div',
+        null,
         _react2.default.createElement(
-          'li',
-          { className: 'top-header-menu' },
-          props.location.pathname
-        ),
+          'h2',
+          { className: 'title' },
+          'Glasgow Memories Server'
+        )
+      ),
+      _react2.default.createElement(
+        'div',
+        { className: 'menu' },
         _react2.default.createElement(
-          'li',
-          { className: 'top-header-menu' },
+          'ul',
+          { style: { listStyleType: 'none' } },
           _react2.default.createElement(
-            _reactRouter.Link,
-            { to: '/' },
-            'Home'
-          )
-        ),
-        _react2.default.createElement(
-          'li',
-          { className: 'top-header-menu' },
+            'li',
+            { className: 'top-header-menu' },
+            props.location.pathname
+          ),
           _react2.default.createElement(
-            _reactRouter.Link,
-            {
-              to: '/summary'
-              // On url share the same path, Active inline-styles or CSS class.
-              , activeStyle: {
-                // color: 'red'
+            'li',
+            { className: 'top-header-menu' },
+            _react2.default.createElement(
+              _reactRouter.Link,
+              { to: '/' },
+              'Home'
+            )
+          ),
+          _react2.default.createElement(
+            'li',
+            { className: 'top-header-menu' },
+            _react2.default.createElement(
+              _reactRouter.Link,
+              {
+                to: '/summary'
+                // On url share the same path, Active inline-styles or CSS class.
+                , activeStyle: {
+                  // color: 'red'
+                },
+                activeClassName: 'active-location'
               },
-              activeClassName: 'active-location'
-            },
-            'Summary'
+              'Summary'
+            )
           )
         )
       )

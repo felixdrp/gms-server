@@ -3,32 +3,50 @@
 @text-color: rgb(102, 102, 102);
 
 #top-header-menu-container {
-    position: absolute;
+/*    position: absolute;
     right: 0;
     margin-top: 4px;
     margin-right: 15px;
+*/
+  margin: auto;
+
+  .title {
+    margin: 20px;
+    color: @LOGO_MAIN_COLOR;
+    font-family: serif;
+    font-size: 2.5em;
+    font-weight: lighter;
+  }
+
+  .menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: inherit;
+    align-items: center;
 
     ul {
+      margin: 0;
+      
       li {
         display: inline;
         padding: .2em 1em;
       }
     }
+  }
 
-    a {
-      color: @text-color;
-      font-family: "Open Sans",sans-serif;
-      font-size: 18px;
-      font-weight: 400;
-      text-decoration: none;
+  a {
+    color: @text-color;
+    font-family: "Open Sans",sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    text-decoration: none;
 
-      &.active-location {
-        color: @MAIN_MENU_TOP_LINK_ACTIVE;
-      }
-
-      &:active {
-        color: @MAIN_MENU_TOP_LINK_ACTIVE_ONCLICK;
-      }
+    &.active-location {
+      color: @MAIN_MENU_TOP_LINK_ACTIVE;
     }
 
+    &:active {
+      color: @MAIN_MENU_TOP_LINK_ACTIVE_ONCLICK;
+    }
+  }
 }
