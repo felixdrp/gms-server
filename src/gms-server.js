@@ -124,7 +124,7 @@ function handleRender(request, response) {
 
       // console.log('store state: ' + JSON.stringify(store.getState()))
 
-      // In allComponentsDataConsult we will store all the chain of fetch data. The action and query
+      // In allComponentsDataConsult we will store the action and query needed by each component.
       const allComponentsDataConsult = [];
 
       // Fetch the data needed by the components to render.
@@ -140,7 +140,7 @@ function handleRender(request, response) {
           if (component) {
             let consult = {};
             if ('fetchData' in component) {
-              // To the component fetching data method we pass the location var.
+              // To the component fetching data method we pass the location and params.
               consult = component.fetchData(
                 {
                   // The location information with the url query.
@@ -170,7 +170,7 @@ function handleRender(request, response) {
       // )
 
       // Process all the data to the store.
-      Promise.all( queries ).then(function(values) {
+      Promise.all( queries ).then( function(values) {
         console.log(values);
 
         for ( let i=0|0; i < values.length; i++ ) {

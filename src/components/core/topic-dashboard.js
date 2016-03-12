@@ -58,11 +58,47 @@ var TopicDashboard = React.createClass({
     }
   },
 
-  fetchData() {
+  componentDidMount() {
+    if (
+      // If not topicListPage
+      !( this.props.topicListPage ) ||
+      !( 'timestamp' in this.props.topicListPage ) ||
+      // Or the timestamp of the topicListPage is out of date.
+      ( Date.now() - this.props.topicListPage.timestamp ) > 5000
+    ) {
+      // Ask for data
+      this.fetchData();
+      console.log('hoooolaaaa' + this.props.topicListPage)
 
-    console.log( fetcher.getData( this.constructor.fetchData( this.props.location ).query ) );
-    // return fetcher.getData( this.constructor.fetchData( this.props.location ).query );
+    }
+    // console.log('hoooolaaaa' + this.props.topicListPage)
+  },
 
+  async fetchData() {
+    // Call component own method static: fetchData
+    // To retrieve the query to fetch the data needed by the component
+    let actionsAndQuery = this.constructor.fetchData(
+      {
+        // The location information with the url query.
+        // Ex. if url "/path?query=raspberry" then location.query = raspberry
+        location: this.props.location,
+
+        // Ex. params:
+        // if route "/path/:id" and url "/path/3" then params.id = 3
+        params: this.props.params
+      }
+    );
+    let data = await fetcher.getData( actionsAndQuery.query );
+
+    actionsAndQuery.actions.forEach(
+      (action) => {
+        this.props.dispatch({
+          type: action.action,
+          ...data.data[action.varName]
+        });
+      }
+    )
+    console.log( 'algo ' + JSON.stringify(actionsAndQuery.actions) + JSON.stringify(data) )
   },
 
   topicItem(topic) {
@@ -112,7 +148,7 @@ var TopicDashboard = React.createClass({
         <div className="main-viewport">
           <div
             style={{
-              display: 'flex',
+              // display: 'flex',
               flexDirection: 'row',
               justifyContent: 'center',
               alignItems: 'center',

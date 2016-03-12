@@ -8,6 +8,22 @@ var _getIterator2 = require('babel-runtime/core-js/get-iterator');
 
 var _getIterator3 = _interopRequireDefault(_getIterator2);
 
+var _regenerator = require('babel-runtime/regenerator');
+
+var _regenerator2 = _interopRequireDefault(_regenerator);
+
+var _stringify = require('babel-runtime/core-js/json/stringify');
+
+var _stringify2 = _interopRequireDefault(_stringify);
+
+var _extends2 = require('babel-runtime/helpers/extends');
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
+
+var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
+
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -73,10 +89,59 @@ var TopicDashboard = _react2.default.createClass({
     }
   },
 
+  componentDidMount: function componentDidMount() {
+    if (
+    // If not topicListPage
+    !this.props.topicListPage || !('timestamp' in this.props.topicListPage) ||
+    // Or the timestamp of the topicListPage is out of date.
+    Date.now() - this.props.topicListPage.timestamp > 5000) {
+      // Ask for data
+      this.fetchData();
+      console.log('hoooolaaaa' + this.props.topicListPage);
+    }
+    // console.log('hoooolaaaa' + this.props.topicListPage)
+  },
   fetchData: function fetchData() {
+    var _this = this;
 
-    console.log(fetcher.getData(this.constructor.fetchData(this.props.location).query));
-    // return fetcher.getData( this.constructor.fetchData( this.props.location ).query );
+    return (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee() {
+      var actionsAndQuery, data;
+      return _regenerator2.default.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              // Call component own method static: fetchData
+              // To retrieve the query to fetch the data needed by the component
+              actionsAndQuery = _this.constructor.fetchData({
+                // The location information with the url query.
+                // Ex. if url "/path?query=raspberry" then location.query = raspberry
+                location: _this.props.location,
+
+                // Ex. params:
+                // if route "/path/:id" and url "/path/3" then params.id = 3
+                params: _this.props.params
+              });
+              _context.next = 3;
+              return fetcher.getData(actionsAndQuery.query);
+
+            case 3:
+              data = _context.sent;
+
+
+              actionsAndQuery.actions.forEach(function (action) {
+                _this.props.dispatch((0, _extends3.default)({
+                  type: action.action
+                }, data.data[action.varName]));
+              });
+              console.log('algo ' + (0, _stringify2.default)(actionsAndQuery.actions) + (0, _stringify2.default)(data));
+
+            case 6:
+            case 'end':
+              return _context.stop();
+          }
+        }
+      }, _callee, _this);
+    }))();
   },
   topicItem: function topicItem(topic) {
     var i = 0 | 0;
@@ -121,7 +186,7 @@ var TopicDashboard = _react2.default.createClass({
     );
   },
   render: function render() {
-    var _this = this;
+    var _this2 = this;
 
     var props = this.props,
         offset = props.location.query && 'offset' in props.location.query ? props.location.query.offset : 0,
@@ -175,7 +240,7 @@ var TopicDashboard = _react2.default.createClass({
           'div',
           {
             style: {
-              display: 'flex',
+              // display: 'flex',
               flexDirection: 'row',
               justifyContent: 'center',
               alignItems: 'center',
@@ -194,7 +259,7 @@ var TopicDashboard = _react2.default.createClass({
             _react2.default.createElement(
               'div',
               { onClick: function onClick() {
-                  return _this.fetchData();
+                  return _this2.fetchData();
                 } },
               topicList
             )
