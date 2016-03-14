@@ -157,9 +157,8 @@ var TopicDashboard = React.createClass({
             }}
           >
             <div style={{flex: 1}} >
-              <h3 className="title">Topic list</h3>
               <div onClick={ () => this.fetchData() }>
-              { topicList }
+                { topicList }
               </div>
             </div>
           </div>

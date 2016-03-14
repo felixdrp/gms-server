@@ -57,26 +57,25 @@ var CommonViewContainer = _react2.default.createClass({
       _react2.default.createElement(
         'div',
         { className: 'main-header' },
-        _react2.default.createElement(
-          'div',
-          { className: 'header-search-menu' },
-          _react2.default.createElement(
-            'span',
-            { className: 'title' },
-            _react2.default.createElement(
-              _reactRouter.Link,
-              { to: '/' },
-              'GMS'
-            )
-          ),
-          _react2.default.createElement(_searchCompact2.default, { location: props.location, params: props.params })
-        ),
         _react2.default.createElement(_topHeaderMenuContainer2.default, this.props)
       ),
       _react2.default.createElement(
         'div',
         { className: 'main-viewport' },
-        props.children
+        _react2.default.createElement(
+          'div',
+          {
+            style: {
+              // display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: '100%',
+              maxWidth: 600
+            }
+          },
+          props.children
+        )
       ),
       _react2.default.createElement('div', { className: 'main-footer', style: { height: 40, padding: '0 10px' } })
     );

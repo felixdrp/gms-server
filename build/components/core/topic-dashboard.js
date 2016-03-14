@@ -252,11 +252,6 @@ var TopicDashboard = _react2.default.createClass({
             'div',
             { style: { flex: 1 } },
             _react2.default.createElement(
-              'h3',
-              { className: 'title' },
-              'Topic list'
-            ),
-            _react2.default.createElement(
               'div',
               { onClick: function onClick() {
                   return _this2.fetchData();

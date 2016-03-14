@@ -28,16 +28,22 @@ var CommonViewContainer = React.createClass({
     return (
       <div id="common-view-page">
         <div className="main-header">
-          <div className="header-search-menu">
-            <span className="title"><Link to="/">GMS</Link></span>
-            <SearchCompact location={props.location} params={props.params} />
-          </div>
-
           <TopHeaderMenuContainer {...this.props} />
         </div>
 
         <div className="main-viewport">
-          {props.children}
+          <div
+            style={{
+              // display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: '100%',
+              maxWidth: 600,
+            }}
+          >
+            {props.children}
+          </div>
         </div>
 
         <div className="main-footer" style={{height: 40, padding: '0 10px'}}>

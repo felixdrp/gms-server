@@ -1,5 +1,5 @@
 import React from 'react'
-import { browserHistory, Router, Route, IndexRoute } from 'react-router'
+import { browserHistory, Router, Route, IndexRoute, IndexRedirect } from 'react-router'
 
 /**
  * React-router components.
@@ -26,14 +26,15 @@ import {
 var routes = (history) => (
   <Router history={history}>
     <Route path="/" component={AppContainer}>
-      <IndexRoute component={TopicDashboard} />
+      {/*<IndexRoute component={TopicDashboard} />*/}
+      <IndexRedirect to="/topicList" />
       <Route path="search" component={CommonViewContainer} >
         <IndexRoute component={SearchDashboardContainer} />
       </Route>
       <Route path="summary" component={CommonViewContainer} >
         <IndexRoute component={SearchDashboardContainer} />
       </Route>
-      <Route path="/topicList/:id" component={TopicDashboard} />
+      <Route path="/topicList" component={TopicDashboard} />
     </Route>
   </Router>
 )

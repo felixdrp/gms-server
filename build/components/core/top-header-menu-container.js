@@ -49,15 +49,13 @@ var TopHeaderMenuContainer = _react2.default.createClass({
           _react2.default.createElement(
             'li',
             { className: 'top-header-menu' },
-            props.location.pathname
-          ),
-          _react2.default.createElement(
-            'li',
-            { className: 'top-header-menu' },
             _react2.default.createElement(
               _reactRouter.Link,
-              { to: '/' },
-              'Home'
+              {
+                to: '/topicList',
+                activeClassName: 'active-location'
+              },
+              'Topic list'
             )
           ),
           _react2.default.createElement(

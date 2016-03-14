@@ -26,8 +26,8 @@
 
   The project use [nodeJs](https://nodejs.org). To install nodeJs please follow one of the next options:
 
-   * [Option 1](https://nodejs.org/en/download/package-manager/)
-   * [Option 2](https://github.com/creationix/nvm)
+- [Option 1](https://nodejs.org/en/download/package-manager/)
+- [Option 2](https://github.com/creationix/nvm)
 
 ### Install Development tools
 
@@ -91,6 +91,7 @@
 **[⬆ back to top](#table-of-contents)**
 
 ## Start to work
+> MacOs User? It is recommend to use [iterm2](https://www.iterm2.com) with the startWork script.
 
   Execute the script 'startWork' to run the Development environment.
   It runs the server, compiles the js code with babeljs and then creates the bundle.js file for the clients.
@@ -100,11 +101,12 @@
     ./startWork
   ```
 
-   * ```Shift + Arrow``` keys to move across pane.
-   * ```Shift + F11``` to full a pane.
-   * ```Ctrl + F11``` to close a pane.
+* ```Shift + Arrow``` keys to move across pane.
+* ```Shift + F11``` to full a pane.
+* ```Ctrl + F11``` to close a pane.
+* ```Ctrl + a``` and then ```&``` or ```Shift + 7``` to kill window.
 
-   > If you are using Mac Os and the shortcuts doesn't work.
-   > [Solve MacOs shortcuts](http://stackoverflow.com/questions/26180096/os-x-byobu-vertical-split)
+> If you are using Mac Os and the shortcuts doesn't work.
+> [Solve MacOs shortcuts](http://stackoverflow.com/questions/26180096/os-x-byobu-vertical-split)
 
 **[⬆ back to top](#table-of-contents)**
