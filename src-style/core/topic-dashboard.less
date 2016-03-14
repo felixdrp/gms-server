@@ -12,12 +12,16 @@
     flex-direction: column;
     justify-content: inherit;
     align-items: center;
+    background-color: #efefef;
+    padding-bottom: 7px;
+    box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.39);
   }
 
   .main-viewport {
-    margin-top: 20px;
+/*    margin-top: 20px;
+*/
     display: flex;
-    height: 75%;
+    min-height: 80%;
     flex-direction: column;
     justify-content: inherit;
     align-items: center;
@@ -28,7 +32,7 @@
       font-size: 5em;
       font-weight: 500;
       line-height: 46px;
-      margin-top: 20px;
+      margin-top: 10px;
       margin-bottom: 38px;
     }
 
@@ -39,6 +43,10 @@
     .topic-list-item {
       margin-top: 35px;
       margin-bottom: 35px;
+
+      h2 {
+        margin-bottom: 10px;
+      }
 
       .title {
         color: @TOPIC_TITLE_COLOR;

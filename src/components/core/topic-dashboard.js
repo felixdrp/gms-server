@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import TopHeaderMenuContainer from './top-header-menu-container'
 import SearchCompact from './search-compact'
+import PageCommonBottom from './page-common-bottom'
 
 // Used to create the query to fetch data.
 import { fragment as TopicFragment } from '../../graphql/topic-type'

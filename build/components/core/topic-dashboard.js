@@ -40,6 +40,10 @@ var _searchCompact = require('./search-compact');
 
 var _searchCompact2 = _interopRequireDefault(_searchCompact);
 
+var _pageCommonBottom = require('./page-common-bottom');
+
+var _pageCommonBottom2 = _interopRequireDefault(_pageCommonBottom);
+
 var _topicType = require('../../graphql/topic-type');
 
 var _storyType = require('../../graphql/story-type');
