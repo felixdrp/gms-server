@@ -59,22 +59,6 @@ var TopicDashboard = React.createClass({
     }
   },
 
-  componentDidMount() {
-    if (
-      // If not topicListPage
-      !( this.props.topicListPage ) ||
-      !( 'timestamp' in this.props.topicListPage ) ||
-      // Or the timestamp of the topicListPage is out of date.
-      ( Date.now() - this.props.topicListPage.timestamp ) > 5000
-    ) {
-      // Ask for data
-      this.fetchData();
-      console.log('hoooolaaaa' + this.props.topicListPage)
-
-    }
-    // console.log('hoooolaaaa' + this.props.topicListPage)
-  },
-
   async fetchData() {
     // Call component own method static: fetchData
     // To retrieve the query to fetch the data needed by the component
@@ -100,6 +84,29 @@ var TopicDashboard = React.createClass({
       }
     )
     console.log( 'algo ' + JSON.stringify(actionsAndQuery.actions) + JSON.stringify(data) )
+  },
+
+  componentDidMount() {
+    let query = this.props.location.query,
+        offset = 0;
+    if ( 'offset' in query && parseInt( Number( query.offset ) ) ) {
+      offset = parseInt( Number( query.offset ) );
+    }
+
+    if (
+      // If not exist this.props.topicListPage
+      !( this.props.topicListPage ) ||
+      !( this.props.topicListPage[offset] ) ||
+      !( 'timestamp' in this.props.topicListPage[offset] ) ||
+      // Or the timestamp of the topicListPage is out of date.
+      ( Date.now() - this.props.topicListPage[offset].timestamp ) > 5000
+    ) {
+      // Ask for data
+      this.fetchData();
+      // console.log('hoooolaaaa' + this.props.topicListPage)
+
+    }
+    // console.log('hoooolaaaa' + this.props.topicListPage)
   },
 
   topicItem(topic) {

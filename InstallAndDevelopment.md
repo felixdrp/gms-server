@@ -91,7 +91,7 @@
 **[⬆ back to top](#table-of-contents)**
 
 ## Start to work
-> MacOs User? It is recommend to use [iterm2](https://www.iterm2.com) with the startWork script.
+> MacOs User? It is recommended to use [iterm2](https://www.iterm2.com) with the startWork script.
 
   Execute the script 'startWork' to run the Development environment.
   It runs the server, compiles the js code with babeljs and then creates the bundle.js file for the clients.

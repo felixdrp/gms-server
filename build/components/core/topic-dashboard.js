@@ -93,18 +93,6 @@ var TopicDashboard = _react2.default.createClass({
     }
   },
 
-  componentDidMount: function componentDidMount() {
-    if (
-    // If not topicListPage
-    !this.props.topicListPage || !('timestamp' in this.props.topicListPage) ||
-    // Or the timestamp of the topicListPage is out of date.
-    Date.now() - this.props.topicListPage.timestamp > 5000) {
-      // Ask for data
-      this.fetchData();
-      console.log('hoooolaaaa' + this.props.topicListPage);
-    }
-    // console.log('hoooolaaaa' + this.props.topicListPage)
-  },
   fetchData: function fetchData() {
     var _this = this;
 
@@ -146,6 +134,24 @@ var TopicDashboard = _react2.default.createClass({
         }
       }, _callee, _this);
     }))();
+  },
+  componentDidMount: function componentDidMount() {
+    var query = this.props.location.query,
+        offset = 0;
+    if ('offset' in query && parseInt(Number(query.offset))) {
+      offset = parseInt(Number(query.offset));
+    }
+
+    if (
+    // If not exist this.props.topicListPage
+    !this.props.topicListPage || !this.props.topicListPage[offset] || !('timestamp' in this.props.topicListPage[offset]) ||
+    // Or the timestamp of the topicListPage is out of date.
+    Date.now() - this.props.topicListPage[offset].timestamp > 5000) {
+      // Ask for data
+      this.fetchData();
+      // console.log('hoooolaaaa' + this.props.topicListPage)
+    }
+    // console.log('hoooolaaaa' + this.props.topicListPage)
   },
   topicItem: function topicItem(topic) {
     var i = 0 | 0;
