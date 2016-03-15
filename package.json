@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node ./build/gms-server.js",
     "build": "browserify ./build/gms-client.js -o public/lib/bundle.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
@@ -27,6 +27,7 @@
     "redux": "^3.0.6"
   },
   "devDependencies": {
+    "babel-jest": "^9.0.3",
     "babel-plugin-syntax-export-extensions": "^6.5.0",
     "babel-plugin-syntax-object-rest-spread": "^6.3.13",
     "babel-plugin-transform-async-to-generator": "^6.5.0",
@@ -45,6 +46,16 @@
     "gulp-babel": "^6.1.1",
     "gulp-concat": "^2.6.0",
     "gulp-less": "^3.0.5",
-    "gulp-sourcemaps": "^1.6.0"
+    "gulp-sourcemaps": "^1.6.0",
+    "jest-cli": "^0.9.2",
+    "react-addons-test-utils": "^0.14.7"
+  },
+  "jest": {
+    "testDirectoryName": "test",
+    "unmockedModulePathPatterns": [
+      "<rootDir>/node_modules/react",
+      "<rootDir>/node_modules/react-dom",
+      "<rootDir>/node_modules/react-addons-test-utils"
+    ]
   }
 }
