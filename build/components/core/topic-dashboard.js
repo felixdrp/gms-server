@@ -125,7 +125,7 @@ var TopicDashboard = _react2.default.createClass({
                   type: action.action
                 }, data.data[action.varName]));
               });
-              console.log('algo ' + (0, _stringify2.default)(actionsAndQuery.actions) + (0, _stringify2.default)(data));
+              console.log('async fetchData() ' + (0, _stringify2.default)(actionsAndQuery.actions) + (0, _stringify2.default)(data));
 
             case 6:
             case 'end':
@@ -138,20 +138,30 @@ var TopicDashboard = _react2.default.createClass({
   componentDidMount: function componentDidMount() {
     var query = this.props.location.query,
         offset = 0;
+
     if ('offset' in query && parseInt(Number(query.offset))) {
       offset = parseInt(Number(query.offset));
     }
 
+    this._topicListBrowserMenu._INIT_POSITION = this._topicListBrowserMenu.offsetTop;
+    window.addEventListener('scroll', this.handleOnScroll);
+
+    // The client need to fetch Data?
     if (
     // If not exist this.props.topicListPage
     !this.props.topicListPage || !this.props.topicListPage[offset] || !('timestamp' in this.props.topicListPage[offset]) ||
     // Or the timestamp of the topicListPage is out of date.
     Date.now() - this.props.topicListPage[offset].timestamp > 5000) {
-      // Ask for data
+      // Fetch data
       this.fetchData();
-      // console.log('hoooolaaaa' + this.props.topicListPage)
     }
-    // console.log('hoooolaaaa' + this.props.topicListPage)
+  },
+  componentWillUnmount: function componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleOnScroll);
+  },
+  handleOnScroll: function handleOnScroll(e) {
+    console.log(e.target.scrollingElement.scrollTop);
+    this.setState({ scroll: e.target.scrollingElement.scrollTop });
   },
   topicItem: function topicItem(topic) {
     var i = 0 | 0;
@@ -241,7 +251,40 @@ var TopicDashboard = _react2.default.createClass({
       _react2.default.createElement(
         'div',
         { className: 'main-header' },
-        _react2.default.createElement(_topHeaderMenuContainer2.default, this.props)
+        _react2.default.createElement(_topHeaderMenuContainer2.default, this.props),
+        _react2.default.createElement(
+          'div',
+          {
+            ref: function ref(c) {
+              return _this2._topicListBrowserMenu = c;
+            },
+            style: {
+              display: 'flex',
+              top: 1,
+              position: this.state && 'scroll' in this.state && '_topicListBrowserMenu' in this && '_INIT_POSITION' in this._topicListBrowserMenu && this.state.scroll >= this._topicListBrowserMenu._INIT_POSITION ? 'fixed' : 'relative',
+              width: '100%',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: '#fafafa',
+              // paddingBottom: 7,
+              boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.39)',
+              color: '#777',
+              padding: 3
+            }
+          },
+          _react2.default.createElement(
+            'b',
+            null,
+            ['<', 1, 2, 3, 4, 5, '>'].map(function (i) {
+              return _react2.default.createElement(
+                'span',
+                { key: i, style: { padding: '0 10px', cursor: 'pointer' } },
+                i
+              );
+            })
+          )
+        )
       ),
       _react2.default.createElement(
         'div',

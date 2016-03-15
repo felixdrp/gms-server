@@ -45,7 +45,7 @@ var TopHeaderMenuContainer = _react2.default.createClass({
         { className: 'menu' },
         _react2.default.createElement(
           'ul',
-          { style: { listStyleType: 'none' } },
+          { style: {} },
           _react2.default.createElement(
             'li',
             { className: 'top-header-menu' },

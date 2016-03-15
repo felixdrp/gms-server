@@ -22,7 +22,7 @@ var TopHeaderMenuContainer = React.createClass({
         </div>
 
         <div className="menu">
-          <ul style={{listStyleType: 'none'}}>
+          <ul style={{}}>
             <li className="top-header-menu">
               <Link
                 to="/topicList"

@@ -83,16 +83,21 @@ var TopicDashboard = React.createClass({
         });
       }
     )
-    console.log( 'algo ' + JSON.stringify(actionsAndQuery.actions) + JSON.stringify(data) )
+    console.log( 'async fetchData() ' + JSON.stringify(actionsAndQuery.actions) + JSON.stringify(data) )
   },
 
   componentDidMount() {
     let query = this.props.location.query,
         offset = 0;
+
     if ( 'offset' in query && parseInt( Number( query.offset ) ) ) {
       offset = parseInt( Number( query.offset ) );
     }
 
+    this._topicListBrowserMenu._INIT_POSITION = this._topicListBrowserMenu.offsetTop;
+    window.addEventListener('scroll', this.handleOnScroll);
+
+    // The client need to fetch Data?
     if (
       // If not exist this.props.topicListPage
       !( this.props.topicListPage ) ||
@@ -101,12 +106,18 @@ var TopicDashboard = React.createClass({
       // Or the timestamp of the topicListPage is out of date.
       ( Date.now() - this.props.topicListPage[offset].timestamp ) > 5000
     ) {
-      // Ask for data
+      // Fetch data
       this.fetchData();
-      // console.log('hoooolaaaa' + this.props.topicListPage)
-
     }
-    // console.log('hoooolaaaa' + this.props.topicListPage)
+  },
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleOnScroll);
+  },
+
+  handleOnScroll(e) {
+    console.log(e.target.scrollingElement.scrollTop);
+    this.setState({scroll: e.target.scrollingElement.scrollTop});
   },
 
   topicItem(topic) {
@@ -151,6 +162,33 @@ var TopicDashboard = React.createClass({
       <div id="topicDashboard">
         <div className="main-header">
           <TopHeaderMenuContainer {...this.props} />
+          <div
+            ref={ (c) => this._topicListBrowserMenu = c }
+            style={{
+              display: 'flex',
+              top: 1,
+              position: (
+                this.state &&
+                'scroll' in this.state &&
+                '_topicListBrowserMenu' in this &&
+                '_INIT_POSITION' in this._topicListBrowserMenu &&
+                this.state.scroll >= this._topicListBrowserMenu._INIT_POSITION )?
+                  'fixed': 'relative',
+              width: '100%',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: '#fafafa',
+              // paddingBottom: 7,
+              boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.39)',
+              color: '#777',
+              padding: 3,
+            }}
+          >
+            <b>
+              { ['<',1,2,3,4,5,'>'].map( (i) => <span key={i} style={{padding: '0 10px', cursor: 'pointer'}}>{ i }</span> ) }
+            </b>
+          </div>
         </div>
 
         <div className="main-viewport">
