@@ -159,9 +159,9 @@ var TopicDashboard = _react2.default.createClass({
   componentWillUnmount: function componentWillUnmount() {
     window.removeEventListener('scroll', this.handleOnScroll);
   },
-  handleOnScroll: function handleOnScroll(e) {
-    console.log(e.target.scrollingElement.scrollTop);
-    this.setState({ scroll: e.target.scrollingElement.scrollTop });
+  handleOnScroll: function handleOnScroll() {
+    console.log(window.scrollY);
+    this.setState({ scroll: window.scrollY });
   },
   topicItem: function topicItem(topic) {
     var i = 0 | 0;
@@ -260,7 +260,8 @@ var TopicDashboard = _react2.default.createClass({
             },
             style: {
               display: 'flex',
-              top: 1,
+              top: 0,
+              left: 0,
               position: this.state && 'scroll' in this.state && '_topicListBrowserMenu' in this && '_INIT_POSITION' in this._topicListBrowserMenu && this.state.scroll >= this._topicListBrowserMenu._INIT_POSITION ? 'fixed' : 'relative',
               width: '100%',
               flexDirection: 'row',

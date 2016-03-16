@@ -115,9 +115,9 @@ var TopicDashboard = React.createClass({
     window.removeEventListener('scroll', this.handleOnScroll);
   },
 
-  handleOnScroll(e) {
-    console.log(e.target.scrollingElement.scrollTop);
-    this.setState({scroll: e.target.scrollingElement.scrollTop});
+  handleOnScroll() {
+    console.log(window.scrollY);
+    this.setState({scroll: window.scrollY});
   },
 
   topicItem(topic) {
@@ -166,7 +166,8 @@ var TopicDashboard = React.createClass({
             ref={ (c) => this._topicListBrowserMenu = c }
             style={{
               display: 'flex',
-              top: 1,
+              top: 0,
+              left: 0,
               position: (
                 this.state &&
                 'scroll' in this.state &&
