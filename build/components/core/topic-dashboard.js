@@ -93,10 +93,10 @@ var TopicDashboard = _react2.default.createClass({
     }
   },
 
-  fetchData: function fetchData() {
-    var _this = this;
+  fetchData: function () {
+    var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee() {
+      var _this = this;
 
-    return (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee() {
       var actionsAndQuery, data;
       return _regenerator2.default.wrap(function _callee$(_context) {
         while (1) {
@@ -104,14 +104,14 @@ var TopicDashboard = _react2.default.createClass({
             case 0:
               // Call component own method static: fetchData
               // To retrieve the query to fetch the data needed by the component
-              actionsAndQuery = _this.constructor.fetchData({
+              actionsAndQuery = this.constructor.fetchData({
                 // The location information with the url query.
                 // Ex. if url "/path?query=raspberry" then location.query = raspberry
-                location: _this.props.location,
+                location: this.props.location,
 
                 // Ex. params:
                 // if route "/path/:id" and url "/path/3" then params.id = 3
-                params: _this.props.params
+                params: this.props.params
               });
               _context.next = 3;
               return fetcher.getData(actionsAndQuery.query);
@@ -132,9 +132,15 @@ var TopicDashboard = _react2.default.createClass({
               return _context.stop();
           }
         }
-      }, _callee, _this);
-    }))();
-  },
+      }, _callee, this);
+    }));
+
+    function fetchData() {
+      return ref.apply(this, arguments);
+    }
+
+    return fetchData;
+  }(),
   componentDidMount: function componentDidMount() {
     var query = this.props.location.query,
         offset = 0;
