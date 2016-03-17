@@ -28,6 +28,9 @@ var CommonViewContainer = React.createClass({
     return (
       <div id="common-view-page">
         <div className="main-header">
+          <div>
+            <h2 className="title">Glasgow Memories Server</h2>
+          </div>
           <TopHeaderMenuContainer {...this.props} />
         </div>
 

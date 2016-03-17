@@ -33,15 +33,6 @@ var TopHeaderMenuContainer = _react2.default.createClass({
       { id: 'top-header-menu-container' },
       _react2.default.createElement(
         'div',
-        null,
-        _react2.default.createElement(
-          'h2',
-          { className: 'title' },
-          'Glasgow Memories Server'
-        )
-      ),
-      _react2.default.createElement(
-        'div',
         { className: 'menu' },
         _react2.default.createElement(
           'ul',
@@ -64,14 +55,22 @@ var TopHeaderMenuContainer = _react2.default.createClass({
             _react2.default.createElement(
               _reactRouter.Link,
               {
-                to: '/summary'
-                // On url share the same path, Active inline-styles or CSS class.
-                , activeStyle: {
-                  // color: 'red'
-                },
+                to: '/login',
                 activeClassName: 'active-location'
               },
-              'Summary'
+              'Login'
+            )
+          ),
+          _react2.default.createElement(
+            'li',
+            { className: 'top-header-menu' },
+            _react2.default.createElement(
+              _reactRouter.Link,
+              {
+                to: '/signup',
+                activeClassName: 'active-location'
+              },
+              'Signup'
             )
           )
         )

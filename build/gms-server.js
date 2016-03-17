@@ -116,7 +116,7 @@ var PORT = 8009;
 var routes = (0, _routes2.default)(history);
 
 function renderFullPage(html, initialState) {
-  return '\n    <!doctype html>\n    <html>\n      <head>\n        <meta charset="UTF-8">\n        <title>Glasgow Memories Server</title>\n        <link rel="stylesheet" type="text/css" href="/css/app.css">\n      </head>\n      <body>\n        <div id="root">' + html + '</div>\n        <script>\n          window.__INITIAL_STATE__ = ' + (0, _stringify2.default)(initialState) + '\n        </script>\n        <script src="/lib/bundle.js"></script>\n      </body>\n    </html>\n  ';
+  return '\n    <!doctype html>\n    <html>\n      <head>\n        <meta charset="UTF-8">\n        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">\n        <title>Glasgow Memories Server</title>\n        <link rel="stylesheet" type="text/css" href="/css/app.css">\n      </head>\n      <body>\n        <div id="root">' + html + '</div>\n        <script>\n          window.__INITIAL_STATE__ = ' + (0, _stringify2.default)(initialState) + '\n        </script>\n        <script src="/lib/bundle.js"></script>\n      </body>\n    </html>\n  ';
 }
 
 // We are going to fill these out in the sections to follow

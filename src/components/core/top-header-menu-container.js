@@ -17,10 +17,6 @@ var TopHeaderMenuContainer = React.createClass({
     let props = this.props;
     return (
       <div id="top-header-menu-container">
-        <div>
-          <h2 className="title">Glasgow Memories Server</h2>
-        </div>
-
         <div className="menu">
           <ul style={{}}>
             <li className="top-header-menu">
@@ -34,16 +30,35 @@ var TopHeaderMenuContainer = React.createClass({
 
             <li className="top-header-menu">
               <Link
-                to="/summary"
-                // On url share the same path, Active inline-styles or CSS class.
-                activeStyle={{
-                  // color: 'red'
-                }}
+                to="/login"
                 activeClassName="active-location"
               >
-                Summary
+                Login
               </Link>
             </li>
+            <li className="top-header-menu">
+              <Link
+                to="/signup"
+                activeClassName="active-location"
+              >
+                Signup
+              </Link>
+            </li>
+
+{
+  // <li className="top-header-menu">
+  //   <Link
+  //     to="/summary"
+  //     // On url share the same path, Active inline-styles or CSS class.
+  //     activeStyle={{
+  //       // color: 'red'
+  //     }}
+  //     activeClassName="active-location"
+  //   >
+  //     Summary
+  //   </Link>
+  // </li>
+}
           </ul>
         </div>
       </div>

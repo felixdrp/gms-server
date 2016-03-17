@@ -161,7 +161,9 @@ var TopicDashboard = React.createClass({
     return (
       <div id="topicDashboard">
         <div className="main-header">
-          <TopHeaderMenuContainer {...this.props} />
+          <div>
+            <h2 className="title">Glasgow Memories Server</h2>
+          </div>
           <div
             ref={ (c) => this._topicListBrowserMenu = c }
             style={{
@@ -176,19 +178,39 @@ var TopicDashboard = React.createClass({
                 this.state.scroll >= this._topicListBrowserMenu._INIT_POSITION )?
                   'fixed': 'relative',
               width: '100%',
-              flexDirection: 'row',
+              flexDirection: 'column',
               justifyContent: 'center',
               alignItems: 'center',
-              backgroundColor: '#fafafa',
+              backgroundColor: '#efefef',
               // paddingBottom: 7,
               boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.39)',
               color: '#777',
-              padding: 3,
+              paddingTop: 10,
             }}
           >
-            <b>
-              { ['<',1,2,3,4,5,'>'].map( (i) => <span key={i} style={{padding: '0 10px', cursor: 'pointer'}}>{ i }</span> ) }
-            </b>
+            <div>
+              <TopHeaderMenuContainer {...this.props} />
+            </div>
+
+            <div
+              style={{
+                display: 'flex',
+                position: 'relative',
+                top: 3,
+                width: '100%',
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: '#fafafa',
+                // paddingBottom: 7,
+                boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.39)',
+                color: '#777',
+                padding: 3,
+              }}
+            >
+              <b>
+                { ['<',1,2,3,4,5,'>'].map( (i) => <span key={i} style={{padding: '0 10px', cursor: 'pointer'}}>{ i }</span> ) }
+              </b>
+            </div>
           </div>
         </div>
 

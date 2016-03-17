@@ -20,6 +20,8 @@ import {
   Dashboard,
   SearchDashboardContainer,
   TopicDashboard,
+  Login,
+  Signup,
 } from './components/core'
 
 // Assign the history:
@@ -35,6 +37,9 @@ var routes = (history) => (
         <IndexRoute component={SearchDashboardContainer} />
       </Route>
       <Route path="/topicList" component={TopicDashboard} />
+
+      <Route path="/login" component={Login} />
+      <Route path="/signup" component={Signup} />
     </Route>
   </Router>
 )

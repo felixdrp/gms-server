@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.TopicDashboard = exports.CollectionsDashboardContainer = exports.SearchDashboardContainer = exports.CommonViewContainer = exports.Dashboard = exports.AppContainer = undefined;
+exports.Signup = exports.Login = exports.TopicDashboard = exports.CollectionsDashboardContainer = exports.SearchDashboardContainer = exports.CommonViewContainer = exports.Dashboard = exports.AppContainer = undefined;
 
 var _appContainer = require('./app-container');
 
@@ -29,6 +29,14 @@ var _topicDashboard = require('./topic-dashboard');
 
 var _topicDashboard2 = _interopRequireDefault(_topicDashboard);
 
+var _login = require('./login');
+
+var _login2 = _interopRequireDefault(_login);
+
+var _signup = require('./signup');
+
+var _signup2 = _interopRequireDefault(_signup);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.AppContainer = _appContainer2.default; /**
@@ -41,4 +49,6 @@ exports.CommonViewContainer = _commonViewContainer2.default;
 exports.SearchDashboardContainer = _searchDashboardContainer2.default;
 exports.CollectionsDashboardContainer = _collectionsDashboardContainer2.default;
 exports.TopicDashboard = _topicDashboard2.default;
+exports.Login = _login2.default;
+exports.Signup = _signup2.default;
 //# sourceMappingURL=index.js.map

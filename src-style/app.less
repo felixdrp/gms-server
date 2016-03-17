@@ -1,3 +1,5 @@
+@import "./constant.less";
+
 @base: #f938aa;
 @orange: #f26f20;
 @gray: #565656;
@@ -37,4 +39,35 @@
 .link-active {
   color: #bbbbbb;
   text-decoration: none;
+}
+
+.main-header {
+  .title {
+    margin: 20px;
+    color: @LOGO_MAIN_COLOR;
+    font-family: serif;
+    font-size: 2.2em;
+    font-weight: lighter;
+  }
+}
+
+.login {
+  background-color: rgb(238, 238, 238);
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  box-sizing: border-box;
+  color: rgb(51, 51, 51);
+  display: block;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  margin-bottom: 30px;
+  margin-left: 0px;
+  margin-right: 0px;
+  padding-bottom: 48px;
+  padding-left: 60px;
+  padding-right: 60px;
+  padding-top: 48px;
 }

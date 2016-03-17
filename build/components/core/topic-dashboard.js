@@ -251,7 +251,15 @@ var TopicDashboard = _react2.default.createClass({
       _react2.default.createElement(
         'div',
         { className: 'main-header' },
-        _react2.default.createElement(_topHeaderMenuContainer2.default, this.props),
+        _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'h2',
+            { className: 'title' },
+            'Glasgow Memories Server'
+          )
+        ),
         _react2.default.createElement(
           'div',
           {
@@ -264,26 +272,49 @@ var TopicDashboard = _react2.default.createClass({
               left: 0,
               position: this.state && 'scroll' in this.state && '_topicListBrowserMenu' in this && '_INIT_POSITION' in this._topicListBrowserMenu && this.state.scroll >= this._topicListBrowserMenu._INIT_POSITION ? 'fixed' : 'relative',
               width: '100%',
-              flexDirection: 'row',
+              flexDirection: 'column',
               justifyContent: 'center',
               alignItems: 'center',
-              backgroundColor: '#fafafa',
+              backgroundColor: '#efefef',
               // paddingBottom: 7,
               boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.39)',
               color: '#777',
-              padding: 3
+              paddingTop: 10
             }
           },
           _react2.default.createElement(
-            'b',
+            'div',
             null,
-            ['<', 1, 2, 3, 4, 5, '>'].map(function (i) {
-              return _react2.default.createElement(
-                'span',
-                { key: i, style: { padding: '0 10px', cursor: 'pointer' } },
-                i
-              );
-            })
+            _react2.default.createElement(_topHeaderMenuContainer2.default, this.props)
+          ),
+          _react2.default.createElement(
+            'div',
+            {
+              style: {
+                display: 'flex',
+                position: 'relative',
+                top: 3,
+                width: '100%',
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: '#fafafa',
+                // paddingBottom: 7,
+                boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.39)',
+                color: '#777',
+                padding: 3
+              }
+            },
+            _react2.default.createElement(
+              'b',
+              null,
+              ['<', 1, 2, 3, 4, 5, '>'].map(function (i) {
+                return _react2.default.createElement(
+                  'span',
+                  { key: i, style: { padding: '0 10px', cursor: 'pointer' } },
+                  i
+                );
+              })
+            )
           )
         )
       ),

@@ -57,6 +57,15 @@ var CommonViewContainer = _react2.default.createClass({
       _react2.default.createElement(
         'div',
         { className: 'main-header' },
+        _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'h2',
+            { className: 'title' },
+            'Glasgow Memories Server'
+          )
+        ),
         _react2.default.createElement(_topHeaderMenuContainer2.default, this.props)
       ),
       _react2.default.createElement(
