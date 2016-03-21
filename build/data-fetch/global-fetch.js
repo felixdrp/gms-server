@@ -46,7 +46,8 @@ var GlobalFetch = function () {
           host: 'localhost',
           port: 8009,
           method: 'GET',
-          path: '/graphql?query=' + escape(query)
+          path: '/graphql?query=' + escape(query),
+          headers: { 'mlk-server': 'yeaaahh' }
         };
       };
     } else {
@@ -56,7 +57,9 @@ var GlobalFetch = function () {
           host: location.hostname,
           port: location.port,
           method: 'GET',
-          path: '/graphql?query=' + escape(query)
+          path: '/graphql?query=' + escape(query),
+          headers: { 'mlk-client': 'yeaaahh' }
+
         };
       };
     }

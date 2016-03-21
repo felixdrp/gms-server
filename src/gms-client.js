@@ -16,8 +16,6 @@ import { syncHistory, routeReducer, routeActions  } from 'react-router-redux'
 // *** Load store reducers ***
 import topicListPage from './reducers/topic-list-reducer'
 
-// import fetch from 'isomorphic-fetch';
-
 // The initial state from server-generated HTML
 // have a look to server code.
 const initialState = window.__INITIAL_STATE__

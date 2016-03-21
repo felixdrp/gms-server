@@ -26,8 +26,6 @@ var _topicListReducer2 = _interopRequireDefault(_topicListReducer);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import fetch from 'isomorphic-fetch';
-
 // The initial state from server-generated HTML
 // have a look to server code.
 

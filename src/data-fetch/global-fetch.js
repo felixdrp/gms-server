@@ -28,6 +28,7 @@ export default class GlobalFetch {
           port: 8009,
           method: 'GET',
           path: '/graphql?query=' + escape( query ),
+          headers: {'mlk-server': 'yeaaahh'}
         }
       };
     } else {
@@ -38,6 +39,8 @@ export default class GlobalFetch {
           port: location.port,
           method: 'GET',
           path: '/graphql?query=' + escape( query ),
+          headers: {'mlk-client': 'yeaaahh'}
+
         }
       };
     }

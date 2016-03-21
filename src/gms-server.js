@@ -48,7 +48,13 @@ import globalFetch from './data-fetch/global-fetch'
 var fetcher = new globalFetch('server');
 // var fetcher = new globalFetch();
 
-// const store = createStore(counter)
+
+import twitterOAuth from './data-fetch/twitter-oauth'
+
+var twitterOAuthClient = new twitterOAuth();
+
+twitterOAuthClient.getData();
+
 
 const app = Express();
 const PORT = 8009;

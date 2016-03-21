@@ -72,6 +72,10 @@ var _globalFetch = require('./data-fetch/global-fetch');
 
 var _globalFetch2 = _interopRequireDefault(_globalFetch);
 
+var _twitterOauth = require('./data-fetch/twitter-oauth');
+
+var _twitterOauth2 = _interopRequireDefault(_twitterOauth);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // Used to respond to POST HTTP (used in graphql server)
@@ -109,7 +113,9 @@ var history = (0, _createMemoryHistory2.default)();
 var fetcher = new _globalFetch2.default('server');
 // var fetcher = new globalFetch();
 
-// const store = createStore(counter)
+var twitterOAuthClient = new _twitterOauth2.default();
+
+twitterOAuthClient.getData();
 
 var app = (0, _express2.default)();
 var PORT = 8009;
