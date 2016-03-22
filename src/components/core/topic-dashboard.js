@@ -121,23 +121,26 @@ var TopicDashboard = React.createClass({
   },
 
   topicItem(topic) {
-    let i = 0|0;
+    let i = 0|0,
+        news = topic.urlList || [];
     return (
       <div className="topic-list-item">
-        <h2 className="title">{topic.title}</h2>
+        <h2 className="title">{ topic.title || 'Untitled' }</h2>
         <div className="stories-list" style={{}}>
           <div className="header">
             Stories
             <hr/>
           </div>
-          {topic.urlList.map(
-            (story) => (
-              <div key={i++} className={'story-item'}>
-                <a href={story.url} target={'_blank'}><h3>{ story.title || story.url || '' }</h3></a>
-                <h4>{story.story || ''}</h4>
-              </div>
+          {
+            news.map(
+              (story) => (
+                <div key={i++} className={'story-item'}>
+                  <a href={story.url} target={'_blank'}><h3>{ story.title || story.url || '' }</h3></a>
+                  <h4>{story.story || ''}</h4>
+                </div>
+              )
             )
-          )}
+          }
         </div>
       </div>
     );
@@ -151,8 +154,12 @@ var TopicDashboard = React.createClass({
         topicList = [];
 
     if ( props.topicListPage[offset] && props.topicListPage[offset].topicList.length > 0 ) {
-      for (let topic of props.topicListPage[offset].topicList) {
-        topicList.push(<div key={ topic.id }>{ this.topicItem( topic ) }</div>)
+      try {
+        for (let topic of props.topicListPage[offset].topicList) {
+          topicList.push(<div key={ topic.id }>{ this.topicItem( topic ) }</div>)
+        }
+      } catch(e) {
+        console.warn( ' ERROR: ' + e );
       }
     } else {
       topicList = 'Topic list is empty at the moment... Please try later.';

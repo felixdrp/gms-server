@@ -93,10 +93,10 @@ var TopicDashboard = _react2.default.createClass({
     }
   },
 
-  fetchData: function fetchData() {
-    var _this = this;
+  fetchData: function () {
+    var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee() {
+      var _this = this;
 
-    return (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee() {
       var actionsAndQuery, data;
       return _regenerator2.default.wrap(function _callee$(_context) {
         while (1) {
@@ -104,14 +104,14 @@ var TopicDashboard = _react2.default.createClass({
             case 0:
               // Call component own method static: fetchData
               // To retrieve the query to fetch the data needed by the component
-              actionsAndQuery = _this.constructor.fetchData({
+              actionsAndQuery = this.constructor.fetchData({
                 // The location information with the url query.
                 // Ex. if url "/path?query=raspberry" then location.query = raspberry
-                location: _this.props.location,
+                location: this.props.location,
 
                 // Ex. params:
                 // if route "/path/:id" and url "/path/3" then params.id = 3
-                params: _this.props.params
+                params: this.props.params
               });
               _context.next = 3;
               return fetcher.getData(actionsAndQuery.query);
@@ -132,9 +132,15 @@ var TopicDashboard = _react2.default.createClass({
               return _context.stop();
           }
         }
-      }, _callee, _this);
-    }))();
-  },
+      }, _callee, this);
+    }));
+
+    function fetchData() {
+      return ref.apply(this, arguments);
+    }
+
+    return fetchData;
+  }(),
   componentDidMount: function componentDidMount() {
     var query = this.props.location.query,
         offset = 0;
@@ -164,14 +170,15 @@ var TopicDashboard = _react2.default.createClass({
     this.setState({ scroll: window.scrollY });
   },
   topicItem: function topicItem(topic) {
-    var i = 0 | 0;
+    var i = 0 | 0,
+        news = topic.urlList || [];
     return _react2.default.createElement(
       'div',
       { className: 'topic-list-item' },
       _react2.default.createElement(
         'h2',
         { className: 'title' },
-        topic.title
+        topic.title || 'Untitled'
       ),
       _react2.default.createElement(
         'div',
@@ -182,7 +189,7 @@ var TopicDashboard = _react2.default.createClass({
           'Stories',
           _react2.default.createElement('hr', null)
         ),
-        topic.urlList.map(function (story) {
+        news.map(function (story) {
           return _react2.default.createElement(
             'div',
             { key: i++, className: 'story-item' },
@@ -213,33 +220,37 @@ var TopicDashboard = _react2.default.createClass({
         topicList = [];
 
     if (props.topicListPage[offset] && props.topicListPage[offset].topicList.length > 0) {
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
-
       try {
-        for (var _iterator = (0, _getIterator3.default)(props.topicListPage[offset].topicList), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-          var topic = _step.value;
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
 
-          topicList.push(_react2.default.createElement(
-            'div',
-            { key: topic.id },
-            this.topicItem(topic)
-          ));
-        }
-      } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
-      } finally {
         try {
-          if (!_iteratorNormalCompletion && _iterator.return) {
-            _iterator.return();
+          for (var _iterator = (0, _getIterator3.default)(props.topicListPage[offset].topicList), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var topic = _step.value;
+
+            topicList.push(_react2.default.createElement(
+              'div',
+              { key: topic.id },
+              this.topicItem(topic)
+            ));
           }
+        } catch (err) {
+          _didIteratorError = true;
+          _iteratorError = err;
         } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
+          try {
+            if (!_iteratorNormalCompletion && _iterator.return) {
+              _iterator.return();
+            }
+          } finally {
+            if (_didIteratorError) {
+              throw _iteratorError;
+            }
           }
         }
+      } catch (e) {
+        console.warn(' ERROR: ' + e);
       }
     } else {
       topicList = 'Topic list is empty at the moment... Please try later.';

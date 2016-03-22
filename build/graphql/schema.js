@@ -4,6 +4,14 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _keys = require('babel-runtime/core-js/object/keys');
+
+var _keys2 = _interopRequireDefault(_keys);
+
+var _getIterator2 = require('babel-runtime/core-js/get-iterator');
+
+var _getIterator3 = _interopRequireDefault(_getIterator2);
+
 var _promise = require('babel-runtime/core-js/promise');
 
 var _promise2 = _interopRequireDefault(_promise);
@@ -16,9 +24,9 @@ var _data = require('./data.json');
 
 var _data2 = _interopRequireDefault(_data);
 
-var _dataTopicList = require('./data-topic-list.json');
+var _dataTopicListReal = require('./data-topic-list-real.json');
 
-var _dataTopicList2 = _interopRequireDefault(_dataTopicList);
+var _dataTopicListReal2 = _interopRequireDefault(_dataTopicListReal);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -71,7 +79,72 @@ var queryType = new _graphql.GraphQLObjectType({
           return _promise2.default.resolve({
             offset: args.offset || '0',
             timestamp: Date.now().toString(),
-            topics: _dataTopicList2.default
+            topics:
+            // // Please import the json file file data-topic-list
+            // dataTopicList,
+
+            // Please import the json file data-topic-list-real.json
+            // Function to format TopList data from data-topic-list-real.json
+            function topics() {
+              var formatedTopicList = [],
+                  topics = _dataTopicListReal2.default.topics,
+                  topic = 0,
+
+
+              // Vars to process urlList.
+              urlList = [],
+                  urls = [],
+                  documents = [],
+
+
+              // Temporal vars.
+              i = 0;
+
+              var _iteratorNormalCompletion = true;
+              var _didIteratorError = false;
+              var _iteratorError = undefined;
+
+              try {
+                for (var _iterator = (0, _getIterator3.default)((0, _keys2.default)(topics).sort()), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                  topic = _step.value;
+
+                  // Process NEWs
+                  urlList = [];
+                  urls = topics[topic].urls || [];
+                  documents = topics[topic].documents || [];
+
+                  for (i = 0; i < urls.length; i++) {
+                    urlList.push({
+                      url: urls[i] || null,
+                      story: documents[i] || null,
+                      title: 'Untitled'
+                    });
+                  }
+
+                  formatedTopicList.push({
+                    id: topic,
+                    title: topics[topic].title || 'Topic ' + topic,
+                    urlList: urlList
+
+                  });
+                }
+              } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+              } finally {
+                try {
+                  if (!_iteratorNormalCompletion && _iterator.return) {
+                    _iterator.return();
+                  }
+                } finally {
+                  if (_didIteratorError) {
+                    throw _iteratorError;
+                  }
+                }
+              }
+
+              return formatedTopicList;
+            }
           });
         }
       }
@@ -82,7 +155,6 @@ var queryType = new _graphql.GraphQLObjectType({
 
 var schema = new _graphql.GraphQLSchema({
   query: queryType
-
 });
 
 exports.default = schema;

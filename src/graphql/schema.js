@@ -15,7 +15,7 @@ import {
 
 
 import data from './data.json'
-import dataTopicList from './data-topic-list.json'
+import dataTopicList from './data-topic-list-real.json'
 
 // Some test calls:
 // http://localhost:8009/graphql?query={user(id:"1"){name}}
@@ -68,11 +68,57 @@ const queryType = new GraphQLObjectType({
         offset: { type: GraphQLString }
       },
       resolve: function (_, args) {
-        return Promise.resolve( {
+        return Promise.resolve({
           offset: args.offset || '0',
           timestamp: Date.now().toString(),
-          topics: dataTopicList,
-        } );
+          topics: (
+            // // Please import the json file file data-topic-list
+            // dataTopicList,
+
+            // Please import the json file data-topic-list-real.json
+            // Function to format TopList data from data-topic-list-real.json
+            () => {
+              let formatedTopicList = [],
+                  topics = dataTopicList.topics,
+                  topic = 0,
+
+                  // Vars to process urlList.
+                  urlList = [],
+                  urls = [],
+                  documents = [],
+
+                  // Temporal vars.
+                  i = 0;
+
+              for ( topic of Object.keys( topics ).sort() ) {
+                // Process NEWs
+                urlList = [];
+                urls = topics[topic].urls || [];
+                documents = topics[topic].documents || [];
+
+                for ( i = 0; i < urls.length; i++ ) {
+                  urlList.push(
+                    {
+                      url: urls[i] || null,
+                      story: documents[i] || null,
+                      title: 'Untitled',
+                    }
+                  );
+                }
+
+                formatedTopicList.push(
+                  {
+                    id: topic,
+                    title: topics[topic].title || 'Topic ' + topic,
+                    urlList,
+
+                  }
+                );
+              }
+              return formatedTopicList;
+            }
+          ),
+        });
       }
     }
 
@@ -81,7 +127,6 @@ const queryType = new GraphQLObjectType({
 
 const schema = new GraphQLSchema({
   query: queryType
-
 });
 
 export default schema
