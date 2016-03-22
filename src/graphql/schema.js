@@ -82,15 +82,51 @@ const queryType = new GraphQLObjectType({
                   topics = dataTopicList.topics,
                   topic = 0,
 
+                  // Vars to process tagWords.
+                  tagWords = [],
+                  tagWordsMap = [],
+                  words = [],
+
                   // Vars to process urlList.
                   urlList = [],
                   urls = [],
                   documents = [],
 
                   // Temporal vars.
-                  i = 0;
+                  i = 0,
+                  j = 0;
 
               for ( topic of Object.keys( topics ).sort() ) {
+                // Process tagWords
+                tagWords = [];
+                tagWordsMap = new Map();
+                // Convert in array of words.
+
+                // Calc the words frequency
+                for ( i = 0; i < topics[topic].words.length; i++ ) {
+                  words = (topics[topic].words[i] || '').split(' ');
+
+                  for ( j = 0; j < words.length; j++ ) {
+                    tagWordsMap.set(
+                      words[j],
+                      tagWordsMap.has( words[j] ) ?
+                        tagWordsMap.get( words[j] ) + 1 :
+                        1
+                    )
+                  }
+                }
+
+                tagWordsMap.forEach(
+                  (value, key) => {
+                    tagWords.push({
+                      word:key,
+                      frequency: value
+                    });
+                  }
+                );
+                // console.log(tagWords)
+
+
                 // Process NEWs
                 urlList = [];
                 urls = topics[topic].urls || [];
@@ -110,6 +146,7 @@ const queryType = new GraphQLObjectType({
                   {
                     id: topic,
                     title: topics[topic].title || 'Topic ' + topic,
+                    tagWords,
                     urlList,
 
                   }

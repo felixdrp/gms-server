@@ -46,6 +46,8 @@ var _pageCommonBottom2 = _interopRequireDefault(_pageCommonBottom);
 
 var _topicType = require('../../graphql/topic-type');
 
+var _wordFrequencyType = require('../../graphql/word-frequency-type');
+
 var _storyType = require('../../graphql/story-type');
 
 var _commentType = require('../../graphql/comment-type');
@@ -61,6 +63,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // Fetch data.
 
 
+// Used to create the query to fetch data.
+
+
 var fetcher = new _globalFetch2.default();
 
 /**
@@ -68,7 +73,6 @@ var fetcher = new _globalFetch2.default();
  *
  */
 
-// Used to create the query to fetch data.
 var TopicDashboard = _react2.default.createClass({
   displayName: 'TopicDashboard',
 
@@ -88,7 +92,7 @@ var TopicDashboard = _react2.default.createClass({
           action: _actions.ADD_TOPIC_LIST,
           varName: 'topicList'
         }],
-        query: '\n          {\n            topicList(offset:"' + offset + '") {\n              offset,\n              timestamp,\n              topics {\n                ...' + _topicType.fragment.name + ',\n                urlList {\n                  ...' + _storyType.fragment.name + ',\n                }\n                comments\n              }\n            }\n          }\n          ' + _topicType.fragment.definition + '\n          ' + _storyType.fragment.definition + '\n         '
+        query: '\n          {\n            topicList(offset:"' + offset + '") {\n              offset,\n              timestamp,\n              topics {\n                ...' + _topicType.fragment.name + ',\n                tagWords {\n                  ...' + _wordFrequencyType.fragment.name + ',\n                },\n                urlList {\n                  ...' + _storyType.fragment.name + ',\n                },\n                comments\n              }\n            }\n          }\n          ' + _topicType.fragment.definition + '\n          ' + _wordFrequencyType.fragment.definition + '\n          ' + _storyType.fragment.definition + '\n         '
       };
     }
   },

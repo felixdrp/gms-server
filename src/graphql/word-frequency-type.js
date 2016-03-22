@@ -32,3 +32,8 @@ const wordFrequencyType = new GraphQLObjectType({
 });
 
 export default wordFrequencyType
+
+export const fragment = {
+  name: 'WordFrequencyFragment',
+  definition: 'fragment WordFrequencyFragment on WordFrequency {word,frequency}'
+}

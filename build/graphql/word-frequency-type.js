@@ -3,6 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.fragment = undefined;
 
 var _graphql = require('graphql');
 
@@ -32,4 +33,8 @@ var wordFrequencyType = new _graphql.GraphQLObjectType({
 });
 
 exports.default = wordFrequencyType;
+var fragment = exports.fragment = {
+  name: 'WordFrequencyFragment',
+  definition: 'fragment WordFrequencyFragment on WordFrequency {word,frequency}'
+};
 //# sourceMappingURL=word-frequency-type.js.map

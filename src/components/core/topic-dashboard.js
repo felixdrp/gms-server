@@ -7,6 +7,7 @@ import PageCommonBottom from './page-common-bottom'
 
 // Used to create the query to fetch data.
 import { fragment as TopicFragment } from '../../graphql/topic-type'
+import { fragment as WordFrequencyFragment } from '../../graphql/word-frequency-type'
 import { fragment as StoryFragment } from '../../graphql/story-type'
 import { fragment as CommentFragment } from '../../graphql/comment-type'
 
@@ -45,14 +46,18 @@ var TopicDashboard = React.createClass({
               timestamp,
               topics {
                 ...${TopicFragment.name},
+                tagWords {
+                  ...${WordFrequencyFragment.name},
+                },
                 urlList {
                   ...${StoryFragment.name},
-                }
+                },
                 comments
               }
             }
           }
           ${TopicFragment.definition}
+          ${WordFrequencyFragment.definition}
           ${StoryFragment.definition}
          `,
       }

@@ -4,6 +4,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _map = require('babel-runtime/core-js/map');
+
+var _map2 = _interopRequireDefault(_map);
+
 var _keys = require('babel-runtime/core-js/object/keys');
 
 var _keys2 = _interopRequireDefault(_keys);
@@ -91,6 +95,12 @@ var queryType = new _graphql.GraphQLObjectType({
                   topic = 0,
 
 
+              // Vars to process tagWords.
+              tagWords = [],
+                  tagWordsMap = [],
+                  words = [],
+
+
               // Vars to process urlList.
               urlList = [],
                   urls = [],
@@ -98,7 +108,8 @@ var queryType = new _graphql.GraphQLObjectType({
 
 
               // Temporal vars.
-              i = 0;
+              i = 0,
+                  j = 0;
 
               var _iteratorNormalCompletion = true;
               var _didIteratorError = false;
@@ -107,6 +118,28 @@ var queryType = new _graphql.GraphQLObjectType({
               try {
                 for (var _iterator = (0, _getIterator3.default)((0, _keys2.default)(topics).sort()), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
                   topic = _step.value;
+
+                  // Process tagWords
+                  tagWords = [];
+                  tagWordsMap = new _map2.default();
+                  // Convert in array of words.
+
+                  // Calc the words frequency
+                  for (i = 0; i < topics[topic].words.length; i++) {
+                    words = (topics[topic].words[i] || '').split(' ');
+
+                    for (j = 0; j < words.length; j++) {
+                      tagWordsMap.set(words[j], tagWordsMap.has(words[j]) ? tagWordsMap.get(words[j]) + 1 : 1);
+                    }
+                  }
+
+                  tagWordsMap.forEach(function (value, key) {
+                    tagWords.push({
+                      word: key,
+                      frequency: value
+                    });
+                  });
+                  // console.log(tagWords)
 
                   // Process NEWs
                   urlList = [];
@@ -124,6 +157,7 @@ var queryType = new _graphql.GraphQLObjectType({
                   formatedTopicList.push({
                     id: topic,
                     title: topics[topic].title || 'Topic ' + topic,
+                    tagWords: tagWords,
                     urlList: urlList
 
                   });
