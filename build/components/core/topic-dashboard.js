@@ -36,6 +36,10 @@ var _topHeaderMenuContainer = require('./top-header-menu-container');
 
 var _topHeaderMenuContainer2 = _interopRequireDefault(_topHeaderMenuContainer);
 
+var _topicItemNews = require('./topic-item-news');
+
+var _topicItemNews2 = _interopRequireDefault(_topicItemNews);
+
 var _searchCompact = require('./search-compact');
 
 var _searchCompact2 = _interopRequireDefault(_searchCompact);
@@ -274,29 +278,14 @@ var TopicDashboard = _react2.default.createClass({
             titleTemporal = titleTemporal[0];
           }
 
-          return _react2.default.createElement(
-            'div',
-            { key: i++, className: 'story-item' },
-            _react2.default.createElement(
-              'a',
-              { href: story.url, target: '_blank' },
-              _react2.default.createElement(
-                'h3',
-                null,
-                story.title || titleTemporal || ''
-              )
-            ),
-            _react2.default.createElement(
-              'p',
-              { className: 'url' },
-              story.url || ''
-            ),
-            _react2.default.createElement(
-              'h4',
-              null,
-              story.story || ''
-            )
-          );
+          return _react2.default.createElement(_topicItemNews2.default, {
+            key: i++,
+            data: {
+              title: story.title || titleTemporal || '',
+              url: story.url || '',
+              story: story.story || ''
+            }
+          });
         })
       )
     );
@@ -379,7 +368,8 @@ var TopicDashboard = _react2.default.createClass({
               justifyContent: 'center',
               alignItems: 'center',
               width: '100%',
-              maxWidth: 600
+              maxWidth: 600,
+              overflowWrap: 'break-word'
             }
           },
           _react2.default.createElement(
@@ -387,9 +377,7 @@ var TopicDashboard = _react2.default.createClass({
             { style: { flex: 1 } },
             _react2.default.createElement(
               'div',
-              { onClick: function onClick() {
-                  return _this2.fetchData();
-                } },
+              null,
               topicList
             )
           )

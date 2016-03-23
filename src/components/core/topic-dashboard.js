@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import TopHeaderMenuContainer from './top-header-menu-container'
+import TopicItemNews from './topic-item-news'
 import SearchCompact from './search-compact'
 import PageCommonBottom from './page-common-bottom'
 
@@ -221,11 +222,14 @@ var TopicDashboard = React.createClass({
                 }
 
                 return (
-                  <div key={i++} className={'story-item'}>
-                    <a href={story.url} target={'_blank'}><h3>{ story.title || titleTemporal || '' }</h3></a>
-                    <p className="url">{ story.url || '' }</p>
-                    <h4>{story.story || ''}</h4>
-                  </div>
+                  <TopicItemNews
+                    key={i++}
+                    data={{
+                      title: story.title || titleTemporal || '' ,
+                      url: story.url || '',
+                      story: story.story || '',
+                    }}
+                  />
                 );
               }
             )
@@ -275,10 +279,15 @@ var TopicDashboard = React.createClass({
               alignItems: 'center',
               width: '100%',
               maxWidth: 600,
+              overflowWrap: 'break-word',
             }}
           >
             <div style={{flex: 1}} >
-              <div onClick={ () => this.fetchData() }>
+              <div
+                // onClick={
+                //   () => this.fetchData()
+                // }
+              >
                 { topicList }
               </div>
             </div>
