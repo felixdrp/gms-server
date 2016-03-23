@@ -137,7 +137,7 @@ const queryType = new GraphQLObjectType({
                     {
                       url: urls[i] || null,
                       story: documents[i] || null,
-                      title: 'Untitled',
+                      title: null,
                     }
                   );
                 }

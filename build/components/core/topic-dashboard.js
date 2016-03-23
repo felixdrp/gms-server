@@ -60,12 +60,12 @@ var _actions = require('../../actions/actions');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// globalFetch used to fetch data from server.
+
 // Fetch data.
 
 
 // Used to create the query to fetch data.
-
-
 var fetcher = new _globalFetch2.default();
 
 /**
@@ -97,6 +97,37 @@ var TopicDashboard = _react2.default.createClass({
     }
   },
 
+  getInitialState: function getInitialState() {
+    return {
+      scroll: 'relative'
+    };
+  },
+  componentDidMount: function componentDidMount() {
+    var query = this.props.location.query,
+        offset = 0;
+
+    if ('offset' in query && parseInt(Number(query.offset))) {
+      offset = parseInt(Number(query.offset));
+    }
+
+    // Initial position of the browser menu.
+    // It will help to maintain fixed the menu in the top of the view.
+    this._topicListBrowserMenu._INIT_POSITION = this._topicListBrowserMenu.offsetTop;
+    window.addEventListener('scroll', this.handleOnScroll);
+
+    // The client need to fetch Data?
+    if (
+    // If not exist this.props.topicListPage
+    !this.props.topicListPage || !this.props.topicListPage[offset] ||
+    // Or the timestamp of the topicListPage is out of date.
+    !('timestamp' in this.props.topicListPage[offset]) || Date.now() - this.props.topicListPage[offset].timestamp > 5000) {
+      // Fetch data
+      this.fetchData();
+    }
+  },
+  componentWillUnmount: function componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleOnScroll);
+  },
   fetchData: function () {
     var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee() {
       var _this = this;
@@ -145,37 +176,80 @@ var TopicDashboard = _react2.default.createClass({
 
     return fetchData;
   }(),
-  componentDidMount: function componentDidMount() {
-    var query = this.props.location.query,
-        offset = 0;
-
-    if ('offset' in query && parseInt(Number(query.offset))) {
-      offset = parseInt(Number(query.offset));
-    }
-
-    this._topicListBrowserMenu._INIT_POSITION = this._topicListBrowserMenu.offsetTop;
-    window.addEventListener('scroll', this.handleOnScroll);
-
-    // The client need to fetch Data?
-    if (
-    // If not exist this.props.topicListPage
-    !this.props.topicListPage || !this.props.topicListPage[offset] || !('timestamp' in this.props.topicListPage[offset]) ||
-    // Or the timestamp of the topicListPage is out of date.
-    Date.now() - this.props.topicListPage[offset].timestamp > 5000) {
-      // Fetch data
-      this.fetchData();
-    }
-  },
-  componentWillUnmount: function componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleOnScroll);
-  },
   handleOnScroll: function handleOnScroll() {
-    console.log(window.scrollY);
-    this.setState({ scroll: window.scrollY });
+    // console.log(window.scrollY);
+    if (this.state && 'scroll' in this.state && '_topicListBrowserMenu' in this && '_INIT_POSITION' in this._topicListBrowserMenu) {
+      if (this.state.scroll == 'relative' && window.scrollY >= this._topicListBrowserMenu._INIT_POSITION) {
+        this.setState({ scroll: 'fixed' });
+      }
+
+      if (this.state.scroll == 'fixed' && window.scrollY < this._topicListBrowserMenu._INIT_POSITION) {
+        this.setState({ scroll: 'relative' });
+      }
+    }
+  },
+  topMenu: function topMenu(position) {
+    var show = arguments.length <= 1 || arguments[1] === undefined ? true : arguments[1];
+
+    return _react2.default.createElement(
+      'div',
+      {
+        style: {
+          display: show ? 'flex' : 'none',
+          top: 0,
+          left: 0,
+          position: position || 'relative',
+          width: '100%',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: '#efefef',
+          // paddingBottom: 7,
+          boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.39)',
+          color: '#777',
+          paddingTop: 10
+        }
+      },
+      _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(_topHeaderMenuContainer2.default, this.props)
+      ),
+      _react2.default.createElement(
+        'div',
+        {
+          style: {
+            display: 'flex',
+            position: 'relative',
+            top: 3,
+            width: '100%',
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: '#fafafa',
+            // paddingBottom: 7,
+            boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.39)',
+            color: '#777',
+            padding: 3
+          }
+        },
+        _react2.default.createElement(
+          'b',
+          null,
+          ['<', 1, 2, 3, 4, 5, '>'].map(function (i) {
+            return _react2.default.createElement(
+              'span',
+              { key: i, style: { padding: '0 10px', cursor: 'pointer' } },
+              i
+            );
+          })
+        )
+      )
+    );
   },
   topicItem: function topicItem(topic) {
     var i = 0 | 0,
         news = topic.urlList || [];
+
     return _react2.default.createElement(
       'div',
       { className: 'topic-list-item' },
@@ -194,6 +268,12 @@ var TopicDashboard = _react2.default.createClass({
           _react2.default.createElement('hr', null)
         ),
         news.map(function (story) {
+          var titleTemporal = story.story.match(/(\w+\s){7}\w+/g);
+
+          if (titleTemporal && titleTemporal.length > 0) {
+            titleTemporal = titleTemporal[0];
+          }
+
           return _react2.default.createElement(
             'div',
             { key: i++, className: 'story-item' },
@@ -203,8 +283,13 @@ var TopicDashboard = _react2.default.createClass({
               _react2.default.createElement(
                 'h3',
                 null,
-                story.title || story.url || ''
+                story.title || titleTemporal || ''
               )
+            ),
+            _react2.default.createElement(
+              'p',
+              { className: 'url' },
+              story.url || ''
             ),
             _react2.default.createElement(
               'h4',
@@ -220,6 +305,7 @@ var TopicDashboard = _react2.default.createClass({
     var _this2 = this;
 
     var props = this.props,
+        state = this.state || {},
         offset = props.location.query && 'offset' in props.location.query ? props.location.query.offset : 0,
         topicList = [];
 
@@ -275,63 +361,11 @@ var TopicDashboard = _react2.default.createClass({
             'Glasgow Memories Server'
           )
         ),
-        _react2.default.createElement(
-          'div',
-          {
-            ref: function ref(c) {
-              return _this2._topicListBrowserMenu = c;
-            },
-            style: {
-              display: 'flex',
-              top: 0,
-              left: 0,
-              position: this.state && 'scroll' in this.state && '_topicListBrowserMenu' in this && '_INIT_POSITION' in this._topicListBrowserMenu && this.state.scroll >= this._topicListBrowserMenu._INIT_POSITION ? 'fixed' : 'relative',
-              width: '100%',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: '#efefef',
-              // paddingBottom: 7,
-              boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.39)',
-              color: '#777',
-              paddingTop: 10
-            }
-          },
-          _react2.default.createElement(
-            'div',
-            null,
-            _react2.default.createElement(_topHeaderMenuContainer2.default, this.props)
-          ),
-          _react2.default.createElement(
-            'div',
-            {
-              style: {
-                display: 'flex',
-                position: 'relative',
-                top: 3,
-                width: '100%',
-                alignItems: 'center',
-                justifyContent: 'center',
-                backgroundColor: '#fafafa',
-                // paddingBottom: 7,
-                boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.39)',
-                color: '#777',
-                padding: 3
-              }
-            },
-            _react2.default.createElement(
-              'b',
-              null,
-              ['<', 1, 2, 3, 4, 5, '>'].map(function (i) {
-                return _react2.default.createElement(
-                  'span',
-                  { key: i, style: { padding: '0 10px', cursor: 'pointer' } },
-                  i
-                );
-              })
-            )
-          )
-        )
+        _react2.default.createElement('div', { ref: function ref(c) {
+            return _this2._topicListBrowserMenu = c;
+          } }),
+        this.topMenu('relative'),
+        this.topMenu('fixed', state.scroll == 'fixed' ? true : false)
       ),
       _react2.default.createElement(
         'div',

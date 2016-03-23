@@ -150,7 +150,7 @@ var queryType = new _graphql.GraphQLObjectType({
                     urlList.push({
                       url: urls[i] || null,
                       story: documents[i] || null,
-                      title: 'Untitled'
+                      title: null
                     });
                   }
 

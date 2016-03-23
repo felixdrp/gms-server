@@ -16,6 +16,7 @@ import globalFetch from '../../data-fetch/global-fetch'
 
 import { ADD_TOPIC_LIST } from '../../actions/actions'
 
+// globalFetch used to fetch data from server.
 
 var fetcher = new globalFetch();
 
@@ -64,6 +65,43 @@ var TopicDashboard = React.createClass({
     }
   },
 
+  getInitialState() {
+    return {
+      scroll: 'relative'
+    };
+  },
+
+  componentDidMount() {
+    let query = this.props.location.query,
+        offset = 0;
+
+    if ( 'offset' in query && parseInt( Number( query.offset ) ) ) {
+      offset = parseInt( Number( query.offset ) );
+    }
+
+    // Initial position of the browser menu.
+    // It will help to maintain fixed the menu in the top of the view.
+    this._topicListBrowserMenu._INIT_POSITION = this._topicListBrowserMenu.offsetTop;
+    window.addEventListener('scroll', this.handleOnScroll);
+
+    // The client need to fetch Data?
+    if (
+      // If not exist this.props.topicListPage
+      !( this.props.topicListPage ) ||
+      !( this.props.topicListPage[offset] ) ||
+      // Or the timestamp of the topicListPage is out of date.
+      !( 'timestamp' in this.props.topicListPage[offset] ) ||
+      ( Date.now() - this.props.topicListPage[offset].timestamp ) > 5000
+    ) {
+      // Fetch data
+      this.fetchData();
+    }
+  },
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleOnScroll);
+  },
+
   async fetchData() {
     // Call component own method static: fetchData
     // To retrieve the query to fetch the data needed by the component
@@ -91,43 +129,80 @@ var TopicDashboard = React.createClass({
     console.log( 'async fetchData() ' + JSON.stringify(actionsAndQuery.actions) + JSON.stringify(data) )
   },
 
-  componentDidMount() {
-    let query = this.props.location.query,
-        offset = 0;
-
-    if ( 'offset' in query && parseInt( Number( query.offset ) ) ) {
-      offset = parseInt( Number( query.offset ) );
-    }
-
-    this._topicListBrowserMenu._INIT_POSITION = this._topicListBrowserMenu.offsetTop;
-    window.addEventListener('scroll', this.handleOnScroll);
-
-    // The client need to fetch Data?
-    if (
-      // If not exist this.props.topicListPage
-      !( this.props.topicListPage ) ||
-      !( this.props.topicListPage[offset] ) ||
-      !( 'timestamp' in this.props.topicListPage[offset] ) ||
-      // Or the timestamp of the topicListPage is out of date.
-      ( Date.now() - this.props.topicListPage[offset].timestamp ) > 5000
-    ) {
-      // Fetch data
-      this.fetchData();
-    }
-  },
-
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleOnScroll);
-  },
-
   handleOnScroll() {
-    console.log(window.scrollY);
-    this.setState({scroll: window.scrollY});
+    // console.log(window.scrollY);
+    if (
+      this.state &&
+      'scroll' in this.state &&
+      '_topicListBrowserMenu' in this &&
+      '_INIT_POSITION' in this._topicListBrowserMenu
+    ) {
+      if (
+        this.state.scroll == 'relative' &&
+        window.scrollY >= this._topicListBrowserMenu._INIT_POSITION
+      ) {
+        this.setState({scroll: 'fixed'});
+      }
+
+      if (
+        this.state.scroll == 'fixed' &&
+        window.scrollY < this._topicListBrowserMenu._INIT_POSITION
+      ) {
+        this.setState({scroll: 'relative'});
+      }
+    }
+  },
+
+  topMenu( position, show = true ) {
+    return (
+      <div
+        style={{
+          display: show? 'flex' : 'none',
+          top: 0,
+          left: 0,
+          position: position || 'relative',
+          width: '100%',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: '#efefef',
+          // paddingBottom: 7,
+          boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.39)',
+          color: '#777',
+          paddingTop: 10,
+        }}
+      >
+        <div>
+          <TopHeaderMenuContainer {...this.props} />
+        </div>
+
+        <div
+          style={{
+            display: 'flex',
+            position: 'relative',
+            top: 3,
+            width: '100%',
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: '#fafafa',
+            // paddingBottom: 7,
+            boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.39)',
+            color: '#777',
+            padding: 3,
+          }}
+        >
+          <b>
+            { ['<',1,2,3,4,5,'>'].map( (i) => <span key={i} style={{padding: '0 10px', cursor: 'pointer'}}>{ i }</span> ) }
+          </b>
+        </div>
+      </div>
+    )
   },
 
   topicItem(topic) {
     let i = 0|0,
         news = topic.urlList || [];
+
     return (
       <div className="topic-list-item">
         <h2 className="title">{ topic.title || 'Untitled' }</h2>
@@ -138,12 +213,21 @@ var TopicDashboard = React.createClass({
           </div>
           {
             news.map(
-              (story) => (
-                <div key={i++} className={'story-item'}>
-                  <a href={story.url} target={'_blank'}><h3>{ story.title || story.url || '' }</h3></a>
-                  <h4>{story.story || ''}</h4>
-                </div>
-              )
+              (story) => {
+                let titleTemporal = story.story.match(/(\w+\s){7}\w+/g);
+
+                if ( titleTemporal && titleTemporal.length > 0 ) {
+                  titleTemporal = titleTemporal[0];
+                }
+
+                return (
+                  <div key={i++} className={'story-item'}>
+                    <a href={story.url} target={'_blank'}><h3>{ story.title || titleTemporal || '' }</h3></a>
+                    <p className="url">{ story.url || '' }</p>
+                    <h4>{story.story || ''}</h4>
+                  </div>
+                );
+              }
             )
           }
         </div>
@@ -153,6 +237,7 @@ var TopicDashboard = React.createClass({
 
   render() {
     let props = this.props,
+        state = this.state || {},
         offset = ( props.location.query && 'offset' in props.location.query ) ?
           props.location.query.offset :
           0,
@@ -176,54 +261,9 @@ var TopicDashboard = React.createClass({
           <div>
             <h2 className="title">Glasgow Memories Server</h2>
           </div>
-          <div
-            ref={ (c) => this._topicListBrowserMenu = c }
-            style={{
-              display: 'flex',
-              top: 0,
-              left: 0,
-              position: (
-                this.state &&
-                'scroll' in this.state &&
-                '_topicListBrowserMenu' in this &&
-                '_INIT_POSITION' in this._topicListBrowserMenu &&
-                this.state.scroll >= this._topicListBrowserMenu._INIT_POSITION )?
-                  'fixed': 'relative',
-              width: '100%',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: '#efefef',
-              // paddingBottom: 7,
-              boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.39)',
-              color: '#777',
-              paddingTop: 10,
-            }}
-          >
-            <div>
-              <TopHeaderMenuContainer {...this.props} />
-            </div>
-
-            <div
-              style={{
-                display: 'flex',
-                position: 'relative',
-                top: 3,
-                width: '100%',
-                alignItems: 'center',
-                justifyContent: 'center',
-                backgroundColor: '#fafafa',
-                // paddingBottom: 7,
-                boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.39)',
-                color: '#777',
-                padding: 3,
-              }}
-            >
-              <b>
-                { ['<',1,2,3,4,5,'>'].map( (i) => <span key={i} style={{padding: '0 10px', cursor: 'pointer'}}>{ i }</span> ) }
-              </b>
-            </div>
-          </div>
+          <div ref={ (c) => this._topicListBrowserMenu = c }></div>
+            { this.topMenu( 'relative' ) }
+            { this.topMenu( 'fixed', state.scroll == 'fixed'? true : false ) }
         </div>
 
         <div className="main-viewport">
