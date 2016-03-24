@@ -139,6 +139,14 @@ var queryType = new _graphql.GraphQLObjectType({
                       frequency: value
                     });
                   });
+                  tagWords = tagWords.sort(function (a, b) {
+                    // if Equal freq then sort by word
+                    if (b.frequency - a.frequency == 0) {
+                      return b.word < a.word;
+                    }
+
+                    return b.frequency - a.frequency;
+                  });
                   // console.log(tagWords)
 
                   // Process NEWs

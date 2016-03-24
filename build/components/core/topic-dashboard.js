@@ -251,8 +251,9 @@ var TopicDashboard = _react2.default.createClass({
     );
   },
   topicItem: function topicItem(topic) {
-    var i = 0 | 0,
-        news = topic.urlList || [];
+    var keyIndexStory = 0 | 0,
+        news = topic.urlList || [],
+        wordsByFrequency = topic.tagWords;
 
     return _react2.default.createElement(
       'div',
@@ -268,10 +269,37 @@ var TopicDashboard = _react2.default.createClass({
         _react2.default.createElement(
           'div',
           { className: 'header' },
+          'Words',
+          _react2.default.createElement('hr', null)
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'word-freq' },
+          function () {
+            var wordFreq = [],
+                j = 0;
+            for (j = 0 | 0; j < wordsByFrequency.length; j++) {
+              wordFreq.push(_react2.default.createElement(
+                'span',
+                {
+                  key: j,
+                  title: 'Freq ' + wordsByFrequency[j].frequency,
+                  style: {}
+                },
+                wordsByFrequency[j].word + ' '
+              ));
+            }
+            return wordFreq;
+          }()
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'header' },
           'Stories',
           _react2.default.createElement('hr', null)
         ),
         news.map(function (story) {
+          // Create a title if it is undefined.
           var titleTemporal = story.story.match(/(\w+\s){7}\w+/g);
 
           if (titleTemporal && titleTemporal.length > 0) {
@@ -279,7 +307,7 @@ var TopicDashboard = _react2.default.createClass({
           }
 
           return _react2.default.createElement(_topicItemNews2.default, {
-            key: i++,
+            key: keyIndexStory++,
             data: {
               title: story.title || titleTemporal || '',
               url: story.url || '',

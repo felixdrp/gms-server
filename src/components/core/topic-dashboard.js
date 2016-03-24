@@ -200,14 +200,43 @@ var TopicDashboard = React.createClass({
     )
   },
 
-  topicItem(topic) {
-    let i = 0|0,
-        news = topic.urlList || [];
+  topicItem( topic ) {
+    let keyIndexStory = 0|0,
+        news = topic.urlList || [],
+        wordsByFrequency = topic.tagWords;
 
     return (
       <div className="topic-list-item">
         <h2 className="title">{ topic.title || 'Untitled' }</h2>
+
         <div className="stories-list" style={{}}>
+          <div className="header">
+            Words
+            <hr/>
+          </div>
+
+          <div className={'word-freq'}>
+          {
+            (() => {
+              let wordFreq = [],
+                  j = 0;
+              for (j = 0|0; j < wordsByFrequency.length; j++) {
+                wordFreq.push(
+                  <span
+                    key={j}
+                    title={ 'Freq ' + wordsByFrequency[j].frequency }
+                    style={{
+                    }}
+                  >
+                    { wordsByFrequency[j].word + ' ' }
+                  </span>
+                )
+              }
+              return wordFreq;
+            })()
+          }
+          </div>
+
           <div className="header">
             Stories
             <hr/>
@@ -215,6 +244,7 @@ var TopicDashboard = React.createClass({
           {
             news.map(
               (story) => {
+                // Create a title if it is undefined.
                 let titleTemporal = story.story.match(/(\w+\s){7}\w+/g);
 
                 if ( titleTemporal && titleTemporal.length > 0 ) {
@@ -223,7 +253,7 @@ var TopicDashboard = React.createClass({
 
                 return (
                   <TopicItemNews
-                    key={i++}
+                    key={keyIndexStory++}
                     data={{
                       title: story.title || titleTemporal || '' ,
                       url: story.url || '',

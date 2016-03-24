@@ -34,13 +34,13 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var TopicItemNews = function (_React$Component) {
-  (0, _inherits3.default)(TopicItemNews, _React$Component);
+var TopicItemWords = function (_React$Component) {
+  (0, _inherits3.default)(TopicItemWords, _React$Component);
 
-  function TopicItemNews() {
-    (0, _classCallCheck3.default)(this, TopicItemNews);
+  function TopicItemWords() {
+    (0, _classCallCheck3.default)(this, TopicItemWords);
 
-    var _this = (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(TopicItemNews).call(this));
+    var _this = (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(TopicItemWords).call(this));
 
     _this.state = {
       showAllStory: false
@@ -48,7 +48,7 @@ var TopicItemNews = function (_React$Component) {
     return _this;
   }
 
-  (0, _createClass3.default)(TopicItemNews, [{
+  (0, _createClass3.default)(TopicItemWords, [{
     key: 'onClickShowFullStory',
     value: function onClickShowFullStory(e) {
       this.setState({ showAllStory: !this.state.showAllStory });
@@ -63,10 +63,27 @@ var TopicItemNews = function (_React$Component) {
       if (this.state.showAllStory == false && data.story.length > 0) {
         var temp = data.story.split(' ');
 
-        if (temp.length > 34) {
+        if (temp.length > 13) {
           data.story = data.story.match(/([\w\'\"\%\&]+\s){34}/)[0];
         }
       }
+
+      (function () {
+        var wordFreq = [],
+            j = 0;
+        for (j = 0 | 0; j < wordsByFrequency.length; j++) {
+          wordFreq.push(_react2.default.createElement(
+            'span',
+            {
+              key: j,
+              title: 'Freq ' + wordsByFrequency[j].frequency,
+              style: {}
+            },
+            wordsByFrequency[j].word + ' '
+          ));
+        }
+        return wordFreq;
+      })();
 
       return _react2.default.createElement(
         'div',
@@ -106,8 +123,8 @@ var TopicItemNews = function (_React$Component) {
       );
     }
   }]);
-  return TopicItemNews;
+  return TopicItemWords;
 }(_react2.default.Component);
 
-exports.default = TopicItemNews;
-//# sourceMappingURL=topic-item-news.js.map
+exports.default = TopicItemWords;
+//# sourceMappingURL=topic-item-words.js.map

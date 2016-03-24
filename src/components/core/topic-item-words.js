@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default class TopicItemNews extends React.Component {
+export default class TopicItemWords extends React.Component {
 
   constructor() {
     super()
@@ -19,10 +19,28 @@ export default class TopicItemNews extends React.Component {
     if ( this.state.showAllStory == false && data.story.length > 0 ) {
       let temp = data.story.split(' ');
 
-      if ( temp.length > 34 ) {
+      if ( temp.length > 13 ) {
         data.story = data.story.match(/([\w\'\"\%\&]+\s){34}/)[0];
       }
     }
+
+    (() => {
+      let wordFreq = [],
+          j = 0;
+      for (j = 0|0; j < wordsByFrequency.length; j++) {
+        wordFreq.push(
+          <span
+            key={j}
+            title={ 'Freq ' + wordsByFrequency[j].frequency }
+            style={{
+            }}
+          >
+            { wordsByFrequency[j].word + ' ' }
+          </span>
+        )
+      }
+      return wordFreq;
+    })()
 
     return (
       <div className={'story-item'}>
