@@ -20,7 +20,7 @@ export default class TopicItemNews extends React.Component {
       let temp = data.story.split(' ');
 
       if ( temp.length > 34 ) {
-        data.story = data.story.match(/([\w\'\"\%\&]+\s){34}/);
+        data.story = data.story.match(/([\w\'\"\%\&]+\s){34}/)[0];
       }
     }
 
