@@ -157,20 +157,21 @@ var TopicDashboard = React.createClass({
   topMenu( position, show = true ) {
     return (
       <div
+        className="header-menu-container"
         style={{
           display: show? 'flex' : 'none',
-          top: 0,
-          left: 0,
+          // top: 0,
+          // left: 0,
           position: position || 'relative',
-          width: '100%',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: '#efefef',
-          // paddingBottom: 7,
-          boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.39)',
-          color: '#777',
-          paddingTop: 10,
+          // width: '100%',
+          // flexDirection: 'column',
+          // justifyContent: 'center',
+          // alignItems: 'center',
+          // backgroundColor: '#efefef',
+          // // paddingBottom: 7,
+          // boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.39)',
+          // color: '#777',
+          // paddingTop: 10,
         }}
       >
         <div>

@@ -66,7 +66,13 @@ var CommonViewContainer = _react2.default.createClass({
             'Glasgow Memories Server'
           )
         ),
-        _react2.default.createElement(_topHeaderMenuContainer2.default, this.props)
+        _react2.default.createElement(
+          'div',
+          {
+            className: 'header-menu-container'
+          },
+          _react2.default.createElement(_topHeaderMenuContainer2.default, this.props)
+        )
       ),
       _react2.default.createElement(
         'div',
@@ -80,7 +86,8 @@ var CommonViewContainer = _react2.default.createClass({
               justifyContent: 'center',
               alignItems: 'center',
               width: '100%',
-              maxWidth: 600
+              maxWidth: 600,
+              overflowWrap: 'break-word'
             }
           },
           props.children

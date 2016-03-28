@@ -72,12 +72,9 @@ var ProcessTopicFile = function () {
           }
         }, _callee, this, [[1, 7]]);
       }));
-
-      function getData() {
+      return function getData() {
         return ref.apply(this, arguments);
-      }
-
-      return getData;
+      };
     }()
   }]);
   return ProcessTopicFile;

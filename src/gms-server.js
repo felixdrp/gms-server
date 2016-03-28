@@ -55,10 +55,44 @@ var twitterOAuthClient = new twitterOAuth();
 
 twitterOAuthClient.getData();
 
-
 const app = Express();
 const PORT = 8009;
 const routes = Routes( history );
+
+// This is fired every time the server side receives a request
+// app.use('/static', Express.static('public'));
+app.use(Express.static('public'));
+
+// Used to parse the info in the body of a POST HTTP server call (used in graphql server)
+app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+
+// * GraphQl server. This part could be move to another server (modular and scale the system)
+// ***
+// POST HTTP
+app.post( '/graphql', upload.array(), graphqlHTTP({ schema: schema, pretty: true }) );
+// GET HTTP
+app.use('/graphql', graphqlHTTP({ schema: schema, pretty: true }))
+
+// Login with twitter
+app.use(
+  '/login/twitter',
+  (request, response) => {
+    console.log( request );
+    twitterOAuthClient.getData();
+    response.redirect(302, 'https://google.com');
+    // response.end('user and auth code cookie');
+
+  }
+);
+
+// GMS Server
+app.use( handleRender );
+
+app.listen(PORT, function() {
+    //Callback triggered when server is successfully listening. Hurray!
+    console.log("Server listening on: http://localhost:%s", PORT);
+})
 
 function renderFullPage(html, initialState) {
   return `
@@ -217,26 +251,3 @@ function handleRender(request, response) {
     }
   });
 }
-
-// This is fired every time the server side receives a request
-// app.use('/static', Express.static('public'));
-app.use(Express.static('public'));
-
-// Used to parse the info in the body of a POST HTTP server call (used in graphql server)
-app.use(bodyParser.json()); // for parsing application/json
-app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-
-// * GraphQl server. This part could be move to another server (modular and scale the system)
-// ***
-// POST HTTP
-app.post( '/graphql', upload.array(), graphqlHTTP({ schema: schema, pretty: true }) );
-// GET HTTP
-app.use('/graphql', graphqlHTTP({ schema: schema, pretty: true }))
-
-// GMS Server
-app.use(handleRender)
-
-app.listen(PORT, function() {
-    //Callback triggered when server is successfully listening. Hurray!
-    console.log("Server listening on: http://localhost:%s", PORT);
-})

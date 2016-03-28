@@ -132,10 +132,10 @@ var TopicDashboard = _react2.default.createClass({
   componentWillUnmount: function componentWillUnmount() {
     window.removeEventListener('scroll', this.handleOnScroll);
   },
-  fetchData: function () {
-    var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee() {
-      var _this = this;
+  fetchData: function fetchData() {
+    var _this = this;
 
+    return (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee() {
       var actionsAndQuery, data;
       return _regenerator2.default.wrap(function _callee$(_context) {
         while (1) {
@@ -143,14 +143,14 @@ var TopicDashboard = _react2.default.createClass({
             case 0:
               // Call component own method static: fetchData
               // To retrieve the query to fetch the data needed by the component
-              actionsAndQuery = this.constructor.fetchData({
+              actionsAndQuery = _this.constructor.fetchData({
                 // The location information with the url query.
                 // Ex. if url "/path?query=raspberry" then location.query = raspberry
-                location: this.props.location,
+                location: _this.props.location,
 
                 // Ex. params:
                 // if route "/path/:id" and url "/path/3" then params.id = 3
-                params: this.props.params
+                params: _this.props.params
               });
               _context.next = 3;
               return fetcher.getData(actionsAndQuery.query);
@@ -171,15 +171,9 @@ var TopicDashboard = _react2.default.createClass({
               return _context.stop();
           }
         }
-      }, _callee, this);
-    }));
-
-    function fetchData() {
-      return ref.apply(this, arguments);
-    }
-
-    return fetchData;
-  }(),
+      }, _callee, _this);
+    }))();
+  },
   handleOnScroll: function handleOnScroll() {
     // console.log(window.scrollY);
     if (this.state && 'scroll' in this.state && '_topicListBrowserMenu' in this && '_INIT_POSITION' in this._topicListBrowserMenu) {
@@ -198,20 +192,12 @@ var TopicDashboard = _react2.default.createClass({
     return _react2.default.createElement(
       'div',
       {
+        className: 'header-menu-container',
         style: {
           display: show ? 'flex' : 'none',
-          top: 0,
-          left: 0,
-          position: position || 'relative',
-          width: '100%',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: '#efefef',
-          // paddingBottom: 7,
-          boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.39)',
-          color: '#777',
-          paddingTop: 10
+          // top: 0,
+          // left: 0,
+          position: position || 'relative'
         }
       },
       _react2.default.createElement(

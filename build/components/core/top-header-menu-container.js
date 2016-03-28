@@ -30,7 +30,7 @@ var TopHeaderMenuContainer = _react2.default.createClass({
     var props = this.props;
     return _react2.default.createElement(
       'div',
-      { id: 'top-header-menu-container' },
+      { className: 'top-header-menu-container' },
       _react2.default.createElement(
         'div',
         { className: 'menu' },

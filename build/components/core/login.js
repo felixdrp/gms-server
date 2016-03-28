@@ -70,7 +70,29 @@ var Login = function (_React$Component) {
         _react2.default.createElement(
           'h1',
           null,
-          'Login'
+          'Select a login method'
+        ),
+        _react2.default.createElement(
+          'h2',
+          null,
+          'External Login'
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'a',
+            { href: '' },
+            _react2.default.createElement('img', {
+              src: 'https://g.twimg.com/dev/sites/default/files/images_documentation/sign-in-with-twitter-gray.png',
+              alt: 'Sign in with Twitter', title: 'Sign in with Twitter'
+            })
+          )
+        ),
+        _react2.default.createElement(
+          'h2',
+          null,
+          'Local Login'
         ),
         _react2.default.createElement(
           'form',

@@ -38,8 +38,12 @@ var routes = (history) => (
       </Route>
       <Route path="/topicList" component={TopicDashboard} />
 
-      <Route path="/login" component={Login} />
-      <Route path="/signup" component={Signup} />
+      <Route path="/login" component={CommonViewContainer} >
+        <IndexRoute component={Login} />
+      </Route>
+      <Route path="/signup" component={CommonViewContainer} >
+        <IndexRoute component={Signup} />
+      </Route>
     </Route>
   </Router>
 )

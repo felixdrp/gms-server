@@ -16,7 +16,7 @@ var TopHeaderMenuContainer = React.createClass({
   render() {
     let props = this.props;
     return (
-      <div id="top-header-menu-container">
+      <div className="top-header-menu-container">
         <div className="menu">
           <ul style={{}}>
             <li className="top-header-menu">

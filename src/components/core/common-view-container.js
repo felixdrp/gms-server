@@ -31,7 +31,11 @@ var CommonViewContainer = React.createClass({
           <div>
             <h2 className="title">Glasgow Memories Server</h2>
           </div>
-          <TopHeaderMenuContainer {...this.props} />
+          <div
+            className="header-menu-container"
+          >
+            <TopHeaderMenuContainer {...this.props} />
+          </div>
         </div>
 
         <div className="main-viewport">
@@ -43,6 +47,7 @@ var CommonViewContainer = React.createClass({
               alignItems: 'center',
               width: '100%',
               maxWidth: 600,
+              overflowWrap: 'break-word',
             }}
           >
             {props.children}

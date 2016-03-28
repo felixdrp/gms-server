@@ -11,7 +11,7 @@ export default class Login extends React.Component {
       password: ''
     };
   }
-  
+
   linkState(data) {
 
   }
@@ -28,7 +28,21 @@ export default class Login extends React.Component {
   render() {
     return (
       <div className="login jumbotron center-block">
-        <h1>Login</h1>
+        <h1>Select a login method</h1>
+
+        <h2>External Login</h2>
+
+        <div>
+          <a href="">
+            <img
+              src="https://g.twimg.com/dev/sites/default/files/images_documentation/sign-in-with-twitter-gray.png"
+              alt="Sign in with Twitter" title="Sign in with Twitter"
+            />
+          </a>
+        </div>
+
+        <h2>Local Login</h2>
+
         <form role="form">
         <div className="form-group">
           <label htmlFor="username">Username</label>

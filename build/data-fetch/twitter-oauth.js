@@ -32,7 +32,26 @@ var _https = require('https');
 
 var _https2 = _interopRequireDefault(_https);
 
+var _crypto = require('crypto');
+
+var _crypto2 = _interopRequireDefault(_crypto);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Module to Facade the data fetch from server and client.
+ *
+ *
+ * Example usage:
+ * ```
+ * //Server
+ * var fetcher = new GlobalFetch('server')
+ *
+ * // Client
+ * var fetcher = new GlobalFetch()
+ *
+ * ```
+ */
 
 var TwitterOAuth = function () {
   function TwitterOAuth(type) {
@@ -59,9 +78,9 @@ var TwitterOAuth = function () {
     var signComponents1 = {
       oauth_consumer_key: "AntPzHq9fsnTPbbaP0nrwngJt",
       oauth_nonce: "69e3594f96e53f1a23bd8e5cea3cb0fc",
-      // oauth_signature:"puHy3%2BFnuOJqRTveYcv8pQWzn%2BM%3D",
+      // oauth_signature: "puHy3%2BFnuOJqRTveYcv8pQWzn%2BM%3D",
       oauth_signature_method: "HMAC-SHA1",
-      oauth_timestamp: "1458429951",
+      oauth_timestamp: Date.now().toString().slice(0, -3),
       oauth_version: "1.0"
     };
     var parameterString = (0, _keys2.default)(signComponents1).sort().reduce(function (prev, curr) {
@@ -78,10 +97,9 @@ var TwitterOAuth = function () {
 
     // Tweet token 3 step
 
-    var crypto = require('crypto');
     var customerSecret = 'z3cbkta9cgkzTOmxREHcoGa8NRaaDXsSk5TfHVpOLkXEEYzmbU';
     var keySecret = encodeURIComponent(customerSecret) + '&';
-    var hash = crypto.createHmac('SHA1', keySecret).update(signatureBase).digest('base64');
+    var hash = _crypto2.default.createHmac('SHA1', keySecret).update(signatureBase).digest('base64');
 
     console.log('oauth_signature:"' + encodeURIComponent(hash) + '"');
     console.log('oauth_signature:"puHy3%2BFnuOJqRTveYcv8pQWzn%2BM%3D"');
@@ -143,29 +161,13 @@ var TwitterOAuth = function () {
           }
         }, _callee, this, [[1, 7]]);
       }));
-
-      function getData(_x) {
+      return function getData(_x) {
         return ref.apply(this, arguments);
-      }
-
-      return getData;
+      };
     }()
   }]);
   return TwitterOAuth;
-}(); /**
-      * Module to Facade the data fetch from server and client.
-      *
-      *
-      * Example usage:
-      * ```
-      * //Server
-      * var fetcher = new GlobalFetch('server')
-      *
-      * // Client
-      * var fetcher = new GlobalFetch()
-      *
-      * ```
-      */
+}();
 
 exports.default = TwitterOAuth;
 //# sourceMappingURL=twitter-oauth.js.map

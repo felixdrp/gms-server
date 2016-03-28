@@ -121,6 +121,37 @@ var app = (0, _express2.default)();
 var PORT = 8009;
 var routes = (0, _routes2.default)(history);
 
+// This is fired every time the server side receives a request
+// app.use('/static', Express.static('public'));
+app.use(_express2.default.static('public'));
+
+// Used to parse the info in the body of a POST HTTP server call (used in graphql server)
+app.use(_bodyParser2.default.json()); // for parsing application/json
+app.use(_bodyParser2.default.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+
+// * GraphQl server. This part could be move to another server (modular and scale the system)
+// ***
+// POST HTTP
+app.post('/graphql', upload.array(), (0, _expressGraphql2.default)({ schema: _schema2.default, pretty: true }));
+// GET HTTP
+app.use('/graphql', (0, _expressGraphql2.default)({ schema: _schema2.default, pretty: true }));
+
+// Login with twitter
+app.use('/login/twitter', function (request, response) {
+  console.log(request);
+  twitterOAuthClient.getData();
+  response.redirect(302, 'https://google.com');
+  // response.end('user and auth code cookie');
+});
+
+// GMS Server
+app.use(handleRender);
+
+app.listen(PORT, function () {
+  //Callback triggered when server is successfully listening. Hurray!
+  console.log("Server listening on: http://localhost:%s", PORT);
+});
+
 function renderFullPage(html, initialState) {
   return '\n    <!doctype html>\n    <html>\n      <head>\n        <meta charset="UTF-8">\n        <title>Glasgow Memories Server</title>\n        <link rel="stylesheet" type="text/css" href="/css/app.css">\n      </head>\n      <body>\n        <div id="root">' + html + '</div>\n        <script>\n          window.__INITIAL_STATE__ = ' + (0, _stringify2.default)(initialState) + '\n        </script>\n        <script src="/lib/bundle.js"></script>\n      </body>\n    </html>\n  ';
 }
@@ -258,27 +289,4 @@ function handleRender(request, response) {
       }
   });
 }
-
-// This is fired every time the server side receives a request
-// app.use('/static', Express.static('public'));
-app.use(_express2.default.static('public'));
-
-// Used to parse the info in the body of a POST HTTP server call (used in graphql server)
-app.use(_bodyParser2.default.json()); // for parsing application/json
-app.use(_bodyParser2.default.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-
-// * GraphQl server. This part could be move to another server (modular and scale the system)
-// ***
-// POST HTTP
-app.post('/graphql', upload.array(), (0, _expressGraphql2.default)({ schema: _schema2.default, pretty: true }));
-// GET HTTP
-app.use('/graphql', (0, _expressGraphql2.default)({ schema: _schema2.default, pretty: true }));
-
-// GMS Server
-app.use(handleRender);
-
-app.listen(PORT, function () {
-  //Callback triggered when server is successfully listening. Hurray!
-  console.log("Server listening on: http://localhost:%s", PORT);
-});
 //# sourceMappingURL=gms-server.js.map

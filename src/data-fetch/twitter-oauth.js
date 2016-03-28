@@ -14,6 +14,7 @@
  */
 
 import https from 'https'
+import crypto from 'crypto'
 
 export default class TwitterOAuth {
   constructor(type) {
@@ -34,12 +35,12 @@ export default class TwitterOAuth {
 //
 
     var signComponents1 = {
-      oauth_consumer_key:"AntPzHq9fsnTPbbaP0nrwngJt",
-      oauth_nonce:"69e3594f96e53f1a23bd8e5cea3cb0fc",
-      // oauth_signature:"puHy3%2BFnuOJqRTveYcv8pQWzn%2BM%3D",
-      oauth_signature_method:"HMAC-SHA1",
-      oauth_timestamp:"1458429951",
-      oauth_version:"1.0"
+      oauth_consumer_key: "AntPzHq9fsnTPbbaP0nrwngJt",
+      oauth_nonce: "69e3594f96e53f1a23bd8e5cea3cb0fc",
+      // oauth_signature: "puHy3%2BFnuOJqRTveYcv8pQWzn%2BM%3D",
+      oauth_signature_method: "HMAC-SHA1",
+      oauth_timestamp: Date.now().toString().slice(0, -3),
+      oauth_version: "1.0",
     }
     var parameterString = Object.keys(signComponents1).sort().reduce(
       (prev, curr) => { return prev  + '&' + encodeURIComponent(curr) + '=' + encodeURIComponent(signComponents1[curr]) }, ''
@@ -55,7 +56,6 @@ export default class TwitterOAuth {
 
     // Tweet token 3 step
 
-    var crypto = require('crypto');
     var customerSecret = 'z3cbkta9cgkzTOmxREHcoGa8NRaaDXsSk5TfHVpOLkXEEYzmbU';
     var keySecret = encodeURIComponent( customerSecret ) + '&';
     var hash = crypto.createHmac('SHA1', keySecret).update(signatureBase).digest('base64')
@@ -68,7 +68,6 @@ export default class TwitterOAuth {
       method: 'POST',
 
     }
-
 
     this.client = (query) => {
       return new Promise(
