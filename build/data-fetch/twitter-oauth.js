@@ -20,6 +20,10 @@ var _keys = require('babel-runtime/core-js/object/keys');
 
 var _keys2 = _interopRequireDefault(_keys);
 
+var _extends2 = require('babel-runtime/helpers/extends');
+
+var _extends3 = _interopRequireDefault(_extends2);
+
 var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
@@ -59,16 +63,42 @@ var TwitterOAuth = function () {
 
     (0, _classCallCheck3.default)(this, TwitterOAuth);
 
-    this.options = function (query) {
-      return {
-        host: 'api.twitter.com',
-        port: 443,
-        method: 'POST',
+    this.optionsBase = {
+      host: 'api.twitter.com',
+      port: 443,
+      method: 'POST'
+    };
+
+    this.optionsRequest = function (authorization) {
+      var auth = authorization || 'OAuth oauth_consumer_key="AntPzHq9fsnTPbbaP0nrwngJt", oauth_nonce="69e3594f96e53f1a23bd8e5cea3cb0fc", oauth_signature="puHy3%2BFnuOJqRTveYcv8pQWzn%2BM%3D", oauth_signature_method="HMAC-SHA1", oauth_timestamp="1458429951", oauth_version="1.0"';
+      return (0, _extends3.default)({}, _this.optionsBase, {
         path: '/oauth/request_token',
         headers: {
-          'Authorization': 'OAuth oauth_consumer_key="AntPzHq9fsnTPbbaP0nrwngJt", oauth_nonce="69e3594f96e53f1a23bd8e5cea3cb0fc", oauth_signature="puHy3%2BFnuOJqRTveYcv8pQWzn%2BM%3D", oauth_signature_method="HMAC-SHA1", oauth_timestamp="1458429951", oauth_version="1.0"'
+          'Authorization': auth
         }
-      };
+      });
+    };
+
+    this.optionsAuthenticate = function (authorization) {
+      var auth = authorization || 'OAuth oauth_consumer_key="AntPzHq9fsnTPbbaP0nrwngJt", oauth_nonce="69e3594f96e53f1a23bd8e5cea3cb0fc", oauth_signature="puHy3%2BFnuOJqRTveYcv8pQWzn%2BM%3D", oauth_signature_method="HMAC-SHA1", oauth_timestamp="1458429951", oauth_version="1.0"';
+      return (0, _extends3.default)({}, _this.optionsBase, {
+        method: 'GET',
+        path: '/oauth/authenticate',
+        headers: {
+          'Authorization': auth
+        }
+      });
+    };
+
+    this.options_other = function (authorization) {
+      var auth = authorization || 'OAuth oauth_consumer_key="AntPzHq9fsnTPbbaP0nrwngJt", oauth_nonce="69e3594f96e53f1a23bd8e5cea3cb0fc", oauth_signature="puHy3%2BFnuOJqRTveYcv8pQWzn%2BM%3D", oauth_signature_method="HMAC-SHA1", oauth_timestamp="1458429951", oauth_version="1.0"';
+      return (0, _extends3.default)({}, _this.optionsBase, {
+        method: 'GET',
+        path: '/oauth/authenticate',
+        headers: {
+          'Authorization': auth
+        }
+      });
     };
 
     // https://dev.twitter.com/oauth/overview/creating-signatures
@@ -109,9 +139,9 @@ var TwitterOAuth = function () {
 
     };
 
-    this.client = function (query) {
+    this.client = function (authorization) {
       return new _promise2.default(function (resolve, reject) {
-        _https2.default.request(_this.options(query), function (response) {
+        _https2.default.request(_this.optionsRequest(authorization), function (response) {
           var data = '';
           response.on('data', function (chunk) {
             data += chunk;
@@ -168,6 +198,25 @@ var TwitterOAuth = function () {
 
       return getData;
     }()
+
+    // Return a random code to use in the oauth_nonce
+    // More info:
+    // https://dev.twitter.com/oauth/overview/authorizing-requests
+
+  }, {
+    key: 'getOAuthNonce',
+    value: function getOAuthNonce() {
+      var data = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
+      // The size of the response.
+      var size = data.size || 42,
+
+      // The codification: 2 binary, 8 octal, 16 hex, 36 number and alphabet
+      codification = data.codification || 36;
+      return Array(size).fill(0).reduce(function (prev) {
+        return prev + Math.floor(Math.random() * codification).toString(codification);
+      });
+    }
   }]);
   return TwitterOAuth;
 }();

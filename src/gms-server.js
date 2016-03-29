@@ -78,7 +78,8 @@ app.use('/graphql', graphqlHTTP({ schema: schema, pretty: true }))
 app.use(
   '/login/twitter',
   (request, response) => {
-    console.log( request );
+    // console.log( request );
+    console.log( 'oAuth nonce>>>> ' + twitterOAuthClient.getOAuthNonce() );
     twitterOAuthClient.getData();
     response.redirect(302, 'https://google.com');
     // response.end('user and auth code cookie');

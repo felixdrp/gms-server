@@ -82,7 +82,7 @@ var Login = function (_React$Component) {
           null,
           _react2.default.createElement(
             'a',
-            { href: '' },
+            { href: '/login/twitter' },
             _react2.default.createElement('img', {
               src: 'https://g.twimg.com/dev/sites/default/files/images_documentation/sign-in-with-twitter-gray.png',
               alt: 'Sign in with Twitter', title: 'Sign in with Twitter'

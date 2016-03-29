@@ -33,7 +33,7 @@ export default class Login extends React.Component {
         <h2>External Login</h2>
 
         <div>
-          <a href="">
+          <a href="/login/twitter">
             <img
               src="https://g.twimg.com/dev/sites/default/files/images_documentation/sign-in-with-twitter-gray.png"
               alt="Sign in with Twitter" title="Sign in with Twitter"
