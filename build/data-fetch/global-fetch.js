@@ -116,9 +116,12 @@ var GlobalFetch = function () {
           }
         }, _callee, this, [[1, 7]]);
       }));
-      return function getData(_x) {
+
+      function getData(_x) {
         return ref.apply(this, arguments);
-      };
+      }
+
+      return getData;
     }()
   }]);
   return GlobalFetch;

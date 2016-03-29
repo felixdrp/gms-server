@@ -43,7 +43,7 @@ var TopicItemWords = function (_React$Component) {
     var _this = (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(TopicItemWords).call(this));
 
     _this.state = {
-      showAllStory: false
+      showAllWords: false
     };
     return _this;
   }
@@ -51,74 +51,52 @@ var TopicItemWords = function (_React$Component) {
   (0, _createClass3.default)(TopicItemWords, [{
     key: 'onClickShowFullStory',
     value: function onClickShowFullStory(e) {
-      this.setState({ showAllStory: !this.state.showAllStory });
+      this.setState({ showAllWords: !this.state.showAllWords });
     }
   }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
 
-      var data = JSON.parse((0, _stringify2.default)(this.props.data));
+      // Create a data copy
+      var data = JSON.parse((0, _stringify2.default)(this.props.data)),
+          words = data.wordsByFrequency,
+          wordFreq = [],
+          max = words.length,
+          j = 0;
 
-      if (this.state.showAllStory == false && data.story.length > 0) {
-        var temp = data.story.split(' ');
+      var numberWords = 21;
 
-        if (temp.length > 13) {
-          data.story = data.story.match(/([\w\'\"\%\&]+\s){34}/)[0];
-        }
+      if (this.state.showAllWords == false && words.length > numberWords) {
+        max = numberWords;
       }
 
-      (function () {
-        var wordFreq = [],
-            j = 0;
-        for (j = 0 | 0; j < wordsByFrequency.length; j++) {
-          wordFreq.push(_react2.default.createElement(
-            'span',
-            {
-              key: j,
-              title: 'Freq ' + wordsByFrequency[j].frequency,
-              style: {}
-            },
-            wordsByFrequency[j].word + ' '
-          ));
-        }
-        return wordFreq;
-      })();
+      for (j = 0 | 0; j < max; j++) {
+        wordFreq.push(_react2.default.createElement(
+          'span',
+          {
+            key: j,
+            title: 'Freq ' + words[j].frequency,
+            style: {}
+          },
+          words[j].word + ' '
+        ));
+      }
 
       return _react2.default.createElement(
         'div',
-        { className: 'story-item' },
+        { className: 'word-freq' },
+        wordFreq,
         _react2.default.createElement(
-          'a',
-          { href: data.url, target: '_blank' },
-          _react2.default.createElement(
-            'h3',
-            null,
-            data.title
-          )
-        ),
-        _react2.default.createElement(
-          'p',
-          { className: 'url' },
-          data.url
-        ),
-        _react2.default.createElement(
-          'h4',
-          null,
-          data.story,
-          _react2.default.createElement(
-            'span',
-            {
-              onClick: function onClick() {
-                return _this2.onClickShowFullStory();
-              },
-              style: {
-                color: '#BABAFD',
-                cursor: 'pointer'
-              }
+          'span',
+          {
+            onClick: function onClick() {
+              return _this2.onClickShowFullStory();
             },
-            this.state.showAllStory ? ' ...less' : ' ...more'
-          )
+            className: 'show-more',
+            style: {}
+          },
+          this.state.showAllWords ? ' ...less' : ' ...more'
         )
       );
     }

@@ -58,13 +58,16 @@ var TopicItemNews = function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      var data = JSON.parse((0, _stringify2.default)(this.props.data));
+      // Create a data copy
+      var data = JSON.parse((0, _stringify2.default)(this.props.data)),
+          phraseNumberWords = 34;
 
+      // Show a maximun number of words of each news.
       if (this.state.showAllStory == false && data.story.length > 0) {
         var temp = data.story.split(' ');
 
-        if (temp.length > 34) {
-          data.story = data.story.match(/([\w\'\"\%\&]+\s){34}/)[0];
+        if (temp.length > phraseNumberWords) {
+          data.story = data.story.match(RegExp('([\\w' + "\\'" + '\\"\\%\\&]+\\s){' + phraseNumberWords + '}'))[0];
         }
       }
 
@@ -95,10 +98,8 @@ var TopicItemNews = function (_React$Component) {
               onClick: function onClick() {
                 return _this2.onClickShowFullStory();
               },
-              style: {
-                color: '#BABAFD',
-                cursor: 'pointer'
-              }
+              className: 'show-more',
+              style: {}
             },
             this.state.showAllStory ? ' ...less' : ' ...more'
           )

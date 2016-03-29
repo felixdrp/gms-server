@@ -2,8 +2,10 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import TopHeaderMenuContainer from './top-header-menu-container'
-import TopicItemNews from './topic-item-news'
-import SearchCompact from './search-compact'
+import  {
+  TopicItemNews,
+  TopicItemWords,
+} from './'
 import PageCommonBottom from './page-common-bottom'
 
 // Used to create the query to fetch data.
@@ -204,7 +206,7 @@ var TopicDashboard = React.createClass({
   topicItem( topic ) {
     let keyIndexStory = 0|0,
         news = topic.urlList || [],
-        wordsByFrequency = topic.tagWords;
+        wordsByFrequency = topic.tagWords || [];
 
     return (
       <div className="topic-list-item">
@@ -216,33 +218,15 @@ var TopicDashboard = React.createClass({
             <hr/>
           </div>
 
-          <div className={'word-freq'}>
-          {
-            (() => {
-              let wordFreq = [],
-                  j = 0;
-              for (j = 0|0; j < wordsByFrequency.length; j++) {
-                wordFreq.push(
-                  <span
-                    key={j}
-                    title={ 'Freq ' + wordsByFrequency[j].frequency }
-                    style={{
-                    }}
-                  >
-                    { wordsByFrequency[j].word + ' ' }
-                  </span>
-                )
-              }
-              return wordFreq;
-            })()
-          }
-          </div>
+          <TopicItemWords data={{ wordsByFrequency }} />
 
           <div className="header">
             Stories
             <hr/>
           </div>
+
           {
+            // Show stories.
             news.map(
               (story) => {
                 // Create a title if it is undefined.

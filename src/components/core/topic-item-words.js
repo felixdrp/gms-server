@@ -5,59 +5,55 @@ export default class TopicItemWords extends React.Component {
   constructor() {
     super()
     this.state = {
-      showAllStory: false,
+      showAllWords: false,
     };
   }
 
   onClickShowFullStory(e) {
-    this.setState({ showAllStory: !this.state.showAllStory });
+    this.setState({ showAllWords: !this.state.showAllWords });
   }
 
   render() {
-    let data = JSON.parse(JSON.stringify( this.props.data ));
+    // Create a data copy
+    let data = JSON.parse(JSON.stringify( this.props.data )),
+        words = data.wordsByFrequency,
+        wordFreq = [],
+        max = words.length,
+        j = 0;
 
-    if ( this.state.showAllStory == false && data.story.length > 0 ) {
-      let temp = data.story.split(' ');
+    const numberWords = 21;
 
-      if ( temp.length > 13 ) {
-        data.story = data.story.match(/([\w\'\"\%\&]+\s){34}/)[0];
-      }
+    if (
+      this.state.showAllWords == false &&
+      words.length > numberWords
+    ) {
+      max = numberWords;
     }
 
-    (() => {
-      let wordFreq = [],
-          j = 0;
-      for (j = 0|0; j < wordsByFrequency.length; j++) {
-        wordFreq.push(
-          <span
-            key={j}
-            title={ 'Freq ' + wordsByFrequency[j].frequency }
-            style={{
-            }}
-          >
-            { wordsByFrequency[j].word + ' ' }
-          </span>
-        )
-      }
-      return wordFreq;
-    })()
+    for (j = 0|0; j < max; j++) {
+      wordFreq.push(
+        <span
+          key={j}
+          title={ 'Freq ' + words[j].frequency }
+          style={{
+          }}
+        >
+          { words[j].word + ' ' }
+        </span>
+      );
+    }
 
     return (
-      <div className={'story-item'}>
-        <a href={ data.url } target={'_blank'}><h3>{ data.title }</h3></a>
-        <p className="url">{ data.url }</p>
-        <h4>
-          { data.story }
-          <span
-            onClick={ () => this.onClickShowFullStory() }
-            style={{
-              color: '#BABAFD',
-              cursor: 'pointer',
-            }}
-          >
-            { ( this.state.showAllStory )? ' ...less' : ' ...more' }
-          </span>
-        </h4>
+      <div className={'word-freq'}>
+        { wordFreq }
+        <span
+          onClick={ () => this.onClickShowFullStory() }
+          className="show-more"
+          style={{
+          }}
+        >
+          { ( this.state.showAllWords )? ' ...less' : ' ...more' }
+        </span>
       </div>
     );
   }

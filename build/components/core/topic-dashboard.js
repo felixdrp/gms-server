@@ -36,13 +36,7 @@ var _topHeaderMenuContainer = require('./top-header-menu-container');
 
 var _topHeaderMenuContainer2 = _interopRequireDefault(_topHeaderMenuContainer);
 
-var _topicItemNews = require('./topic-item-news');
-
-var _topicItemNews2 = _interopRequireDefault(_topicItemNews);
-
-var _searchCompact = require('./search-compact');
-
-var _searchCompact2 = _interopRequireDefault(_searchCompact);
+var _ = require('./');
 
 var _pageCommonBottom = require('./page-common-bottom');
 
@@ -132,10 +126,10 @@ var TopicDashboard = _react2.default.createClass({
   componentWillUnmount: function componentWillUnmount() {
     window.removeEventListener('scroll', this.handleOnScroll);
   },
-  fetchData: function fetchData() {
-    var _this = this;
+  fetchData: function () {
+    var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee() {
+      var _this = this;
 
-    return (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee() {
       var actionsAndQuery, data;
       return _regenerator2.default.wrap(function _callee$(_context) {
         while (1) {
@@ -143,14 +137,14 @@ var TopicDashboard = _react2.default.createClass({
             case 0:
               // Call component own method static: fetchData
               // To retrieve the query to fetch the data needed by the component
-              actionsAndQuery = _this.constructor.fetchData({
+              actionsAndQuery = this.constructor.fetchData({
                 // The location information with the url query.
                 // Ex. if url "/path?query=raspberry" then location.query = raspberry
-                location: _this.props.location,
+                location: this.props.location,
 
                 // Ex. params:
                 // if route "/path/:id" and url "/path/3" then params.id = 3
-                params: _this.props.params
+                params: this.props.params
               });
               _context.next = 3;
               return fetcher.getData(actionsAndQuery.query);
@@ -171,9 +165,15 @@ var TopicDashboard = _react2.default.createClass({
               return _context.stop();
           }
         }
-      }, _callee, _this);
-    }))();
-  },
+      }, _callee, this);
+    }));
+
+    function fetchData() {
+      return ref.apply(this, arguments);
+    }
+
+    return fetchData;
+  }(),
   handleOnScroll: function handleOnScroll() {
     // console.log(window.scrollY);
     if (this.state && 'scroll' in this.state && '_topicListBrowserMenu' in this && '_INIT_POSITION' in this._topicListBrowserMenu) {
@@ -239,7 +239,7 @@ var TopicDashboard = _react2.default.createClass({
   topicItem: function topicItem(topic) {
     var keyIndexStory = 0 | 0,
         news = topic.urlList || [],
-        wordsByFrequency = topic.tagWords;
+        wordsByFrequency = topic.tagWords || [];
 
     return _react2.default.createElement(
       'div',
@@ -258,32 +258,15 @@ var TopicDashboard = _react2.default.createClass({
           'Words',
           _react2.default.createElement('hr', null)
         ),
-        _react2.default.createElement(
-          'div',
-          { className: 'word-freq' },
-          function () {
-            var wordFreq = [],
-                j = 0;
-            for (j = 0 | 0; j < wordsByFrequency.length; j++) {
-              wordFreq.push(_react2.default.createElement(
-                'span',
-                {
-                  key: j,
-                  title: 'Freq ' + wordsByFrequency[j].frequency,
-                  style: {}
-                },
-                wordsByFrequency[j].word + ' '
-              ));
-            }
-            return wordFreq;
-          }()
-        ),
+        _react2.default.createElement(_.TopicItemWords, { data: { wordsByFrequency: wordsByFrequency } }),
         _react2.default.createElement(
           'div',
           { className: 'header' },
           'Stories',
           _react2.default.createElement('hr', null)
         ),
+
+        // Show stories.
         news.map(function (story) {
           // Create a title if it is undefined.
           var titleTemporal = story.story.match(/(\w+\s){7}\w+/g);
@@ -292,7 +275,7 @@ var TopicDashboard = _react2.default.createClass({
             titleTemporal = titleTemporal[0];
           }
 
-          return _react2.default.createElement(_topicItemNews2.default, {
+          return _react2.default.createElement(_.TopicItemNews, {
             key: keyIndexStory++,
             data: {
               title: story.title || titleTemporal || '',

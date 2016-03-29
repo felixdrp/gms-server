@@ -14,13 +14,16 @@ export default class TopicItemNews extends React.Component {
   }
 
   render() {
-    let data = JSON.parse(JSON.stringify( this.props.data ));
+    // Create a data copy
+    let data = JSON.parse(JSON.stringify( this.props.data )),
+        phraseNumberWords = 34;
 
+    // Show a maximun number of words of each news.
     if ( this.state.showAllStory == false && data.story.length > 0 ) {
       let temp = data.story.split(' ');
 
-      if ( temp.length > 34 ) {
-        data.story = data.story.match(/([\w\'\"\%\&]+\s){34}/)[0];
+      if ( temp.length > phraseNumberWords ) {
+        data.story = data.story.match( RegExp( '([\\w' + "\\'" + '\\"\\%\\&]+\\s){' + phraseNumberWords + '}' ) )[0];
       }
     }
 
@@ -32,9 +35,8 @@ export default class TopicItemNews extends React.Component {
           { data.story }
           <span
             onClick={ () => this.onClickShowFullStory() }
+            className="show-more"
             style={{
-              color: '#BABAFD',
-              cursor: 'pointer',
             }}
           >
             { ( this.state.showAllStory )? ' ...less' : ' ...more' }
