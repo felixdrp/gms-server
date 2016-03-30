@@ -48,11 +48,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  * Example usage:
  * ```
- * //Server
- * var fetcher = new GlobalFetch('server')
- *
- * // Client
- * var fetcher = new GlobalFetch()
+
  *
  * ```
  */
@@ -191,12 +187,9 @@ var TwitterOAuth = function () {
           }
         }, _callee, this, [[1, 7]]);
       }));
-
-      function getData(_x) {
+      return function getData(_x) {
         return ref.apply(this, arguments);
-      }
-
-      return getData;
+      };
     }()
 
     // Return a random code to use in the oauth_nonce
