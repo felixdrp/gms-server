@@ -19,6 +19,8 @@ export default class OAuth {
             .reduce( prev => prev + codec() );
   }
 
+
+  // Sign for the oauth protocol.
   sign( data = {} ) {
     // https://dev.twitter.com/oauth/overview/creating-signatures
     // Tweet token 1 step
@@ -33,6 +35,7 @@ export default class OAuth {
       oauth_version: data.version || "1.0",
     }
 
+    // If it has the token, to add token.
     if ( data.token ) {
       signComponents1 = {
         ...signComponents1,
@@ -40,15 +43,28 @@ export default class OAuth {
       }
     }
 
+    // If it has a query, to add query.
     if ( data.query ) {
       signComponents1 = {
         ...signComponents1,
-        oauth_token: data.token,
+        ...data.query,
       }
     }
 
+    // If it has a body, to add body.
+    if ( data.query ) {
+      signComponents1 = {
+        ...signComponents1,
+        ...data.body,
+      }
+    }
+
+    // If it has a
+
     var parameterString = Object.keys(signComponents1).sort().reduce(
-      (prev, curr) => { return prev  + '&' + encodeURIComponent(curr) + '=' + encodeURIComponent(signComponents1[curr]) }, ''
+      (prev, curr) => {
+        return prev  + '&' + encodeURIComponent(curr) + '=' + encodeURIComponent(signComponents1[curr])
+      }, ''
     )
     // parameterString = 'include_entities=true' + parameterString;
     parameterString = parameterString.substring(1);
@@ -68,6 +84,7 @@ export default class OAuth {
     console.log('oauth_signature:"' + encodeURIComponent( hash ) + '"')
     console.log('oauth_signature:"puHy3%2BFnuOJqRTveYcv8pQWzn%2BM%3D"')
 
+    return encodeURIComponent( hash );
   }
 
 }

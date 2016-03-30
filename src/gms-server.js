@@ -79,7 +79,7 @@ app.use(
   '/login/twitter',
   (request, response) => {
     // console.log( request );
-    console.log( 'oAuth nonce>>>> ' + twitterOAuthClient.getOAuthNonce() );
+    console.log( 'oAuth nonce>>>> ' );
     twitterOAuthClient.getData();
     response.redirect(302, 'https://google.com');
     // response.end('user and auth code cookie');

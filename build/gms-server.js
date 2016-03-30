@@ -139,7 +139,7 @@ app.use('/graphql', (0, _expressGraphql2.default)({ schema: _schema2.default, pr
 // Login with twitter
 app.use('/login/twitter', function (request, response) {
   // console.log( request );
-  console.log('oAuth nonce>>>> ' + twitterOAuthClient.getOAuthNonce());
+  console.log('oAuth nonce>>>> ');
   twitterOAuthClient.getData();
   response.redirect(302, 'https://google.com');
   // response.end('user and auth code cookie');
