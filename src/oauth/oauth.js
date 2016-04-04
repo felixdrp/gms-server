@@ -1,4 +1,4 @@
-
+import crypto from 'crypto'
 
 export default class OAuth {
   constructor(type) {
@@ -22,17 +22,28 @@ export default class OAuth {
 
   // Sign for the oauth protocol.
   sign( data = {} ) {
+    let header = data.header || {},
+        customerSecret = data.customerSecret || '',
+        accessTokenSecret = data.accessTokenSecret || '';
+
     // https://dev.twitter.com/oauth/overview/creating-signatures
     // Tweet token 1 step
     //
 
     var signComponents1 = {
-      oauth_consumer_key: data.consumerKey || "AntPzHq9fsnTPbbaP0nrwngJt",
-      oauth_nonce: data.nonce || "69e3594f96e53f1a23bd8e5cea3cb0fc",
-      // oauth_signature: "puHy3%2BFnuOJqRTveYcv8pQWzn%2BM%3D",
-      oauth_signature_method: data.signatureMethod || "HMAC-SHA1",
-      oauth_timestamp: data.oauth_timestamp || Date.now().toString().slice(0, -3),
-      oauth_version: data.version || "1.0",
+      oauth_consumer_key: header.oauth_consumer_key || '',
+      oauth_nonce: header.oauth_nonce || '',
+      oauth_signature_method: header.oauth_signature_method || "HMAC-SHA1",
+      oauth_timestamp: header.oauth_timestamp || Date.now().toString().slice(0, -3),
+      oauth_version: header.oauth_version || "1.0",
+    }
+
+    // If it has the callback, to add callback.
+    if ( header.oauth_callback ) {
+      signComponents1 = {
+        ...signComponents1,
+        oauth_callback: header.oauth_callback,
+      }
     }
 
     // If it has the token, to add token.
@@ -52,37 +63,37 @@ export default class OAuth {
     }
 
     // If it has a body, to add body.
-    if ( data.query ) {
+    if ( data.body ) {
       signComponents1 = {
         ...signComponents1,
         ...data.body,
       }
     }
 
-    // If it has a
+    // console.log(signComponents1)
 
-    var parameterString = Object.keys(signComponents1).sort().reduce(
+    var parameterString = Object.keys( signComponents1 ).sort().reduce(
       (prev, curr) => {
         return prev  + '&' + encodeURIComponent(curr) + '=' + encodeURIComponent(signComponents1[curr])
       }, ''
     )
     // parameterString = 'include_entities=true' + parameterString;
+    // Remove the first char &
     parameterString = parameterString.substring(1);
-    console.log(parameterString)
+    // console.log(parameterString)
 
     // Tweet token 2 step
-    var signatureBase = 'POST&' + encodeURIComponent('https://api.twitter.com/oauth/request_token') + '&' + encodeURIComponent(parameterString);
-    var test2 = 'POST&https%3A%2F%2Fapi.twitter.com%2Foauth%2Frequest_token&oauth_consumer_key%3DAntPzHq9fsnTPbbaP0nrwngJt%26oauth_nonce%3D69e3594f96e53f1a23bd8e5cea3cb0fc%26oauth_signature_method%3DHMAC-SHA1%26oauth_timestamp%3D1458429951%26oauth_version%3D1.0'
-    console.log(signatureBase == test2)
+    var signatureBase = data.http_method + '&' + encodeURIComponent( data.url ) + '&' + encodeURIComponent(parameterString);
+    // var test2 = 'POST&https%3A%2F%2Fapi.twitter.com%2Foauth%2Frequest_token&oauth_consumer_key%3DAntPzHq9fsnTPbbaP0nrwngJt%26oauth_nonce%3D69e3594f96e53f1a23bd8e5cea3cb0fc%26oauth_signature_method%3DHMAC-SHA1%26oauth_timestamp%3D1458429951%26oauth_version%3D1.0'
+    // console.log(signatureBase == test2)
 
     // Tweet token 3 step
 
-    var customerSecret = 'z3cbkta9cgkzTOmxREHcoGa8NRaaDXsSk5TfHVpOLkXEEYzmbU';
-    var keySecret = encodeURIComponent( customerSecret ) + '&';
+    var keySecret = encodeURIComponent( customerSecret ) + '&' + encodeURIComponent( accessTokenSecret );
     var hash = crypto.createHmac('SHA1', keySecret).update(signatureBase).digest('base64')
 
-    console.log('oauth_signature:"' + encodeURIComponent( hash ) + '"')
-    console.log('oauth_signature:"puHy3%2BFnuOJqRTveYcv8pQWzn%2BM%3D"')
+    // console.log('oauth_signature:"' + encodeURIComponent( hash ) + '"')
+    // console.log('oauth_signature:"puHy3%2BFnuOJqRTveYcv8pQWzn%2BM%3D"')
 
     return encodeURIComponent( hash );
   }

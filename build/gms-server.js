@@ -12,6 +12,14 @@ var _stringify = require('babel-runtime/core-js/json/stringify');
 
 var _stringify2 = _interopRequireDefault(_stringify);
 
+var _regenerator = require('babel-runtime/regenerator');
+
+var _regenerator2 = _interopRequireDefault(_regenerator);
+
+var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
+
+var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
+
 var _express = require('express');
 
 var _express2 = _interopRequireDefault(_express);
@@ -113,15 +121,20 @@ var history = (0, _createMemoryHistory2.default)();
 var fetcher = new _globalFetch2.default('server');
 // var fetcher = new globalFetch();
 
-var twitterOAuthClient = new _twitterOauth2.default();
+var twitter = new _twitterOauth2.default({
+  customerSecret: 'z3cbkta9cgkzTOmxREHcoGa8NRaaDXsSk5TfHVpOLkXEEYzmbU',
+  consumerKey: 'AntPzHq9fsnTPbbaP0nrwngJt'
+});
 
-twitterOAuthClient.getData();
+twitter.requestToken();
 
 var app = (0, _express2.default)();
 var PORT = 8009;
 var routes = (0, _routes2.default)(history);
 
 // This is fired every time the server side receives a request
+
+// To share the public folder.
 // app.use('/static', Express.static('public'));
 app.use(_express2.default.static('public'));
 
@@ -137,13 +150,68 @@ app.post('/graphql', upload.array(), (0, _expressGraphql2.default)({ schema: _sc
 app.use('/graphql', (0, _expressGraphql2.default)({ schema: _schema2.default, pretty: true }));
 
 // Login with twitter
-app.use('/login/twitter', function (request, response) {
-  // console.log( request );
-  console.log('oAuth nonce>>>> ');
-  twitterOAuthClient.getData();
-  response.redirect(302, 'https://google.com');
-  // response.end('user and auth code cookie');
-});
+app.use('/login/twitter', function () {
+  var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(request, response) {
+    var twitterOAuthClient, _ref,
+    // console.log('oAuth nonce>>>>111 ' + await twitterOAuthClient.authenticate())
+    requestToken, authenticateHeadersSigned;
+
+    return _regenerator2.default.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            twitterOAuthClient = new _twitterOauth2.default({
+              customerSecret: 'z3cbkta9cgkzTOmxREHcoGa8NRaaDXsSk5TfHVpOLkXEEYzmbU',
+              consumerKey: 'AntPzHq9fsnTPbbaP0nrwngJt'
+            });
+            _context.prev = 1;
+            _context.next = 4;
+            return twitterOAuthClient.authenticate();
+
+          case 4:
+            _ref = _context.sent;
+            requestToken = _ref.requestToken;
+            authenticateHeadersSigned = _ref.authenticateHeadersSigned;
+            _context.next = 12;
+            break;
+
+          case 9:
+            _context.prev = 9;
+            _context.t0 = _context['catch'](1);
+            console.error(_context.t0);
+
+          case 12:
+
+            // console.log( request );
+            console.log('oAuth nonce>>>> ' + requestToken);
+
+            response.set(authenticateHeadersSigned);
+            // response.set( {OAuth: 'mlk'} );
+
+            response.redirect(
+            // http code: redirect
+            // more info:
+            // https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html?#sec10.3.3
+            // https://en.wikipedia.org/wiki/HTTP_302
+            302,
+
+            // url to redirect
+            // more info:
+            // https://dev.twitter.com/web/sign-in/implementing
+            'https://api.twitter.com/oauth/authenticate?oauth_token=' + requestToken);
+            // response.end('user and auth code cookie');
+
+          case 15:
+          case 'end':
+            return _context.stop();
+        }
+      }
+    }, _callee, undefined, [[1, 9]]);
+  }));
+  return function (_x, _x2) {
+    return ref.apply(this, arguments);
+  };
+}());
 
 // GMS Server
 app.use(handleRender);

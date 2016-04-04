@@ -51,15 +51,20 @@ var fetcher = new globalFetch('server');
 
 import twitterOAuth from './data-fetch/twitter-oauth'
 
-var twitterOAuthClient = new twitterOAuth();
+var twitter = new twitterOAuth({
+  customerSecret: 'z3cbkta9cgkzTOmxREHcoGa8NRaaDXsSk5TfHVpOLkXEEYzmbU',
+  consumerKey: 'AntPzHq9fsnTPbbaP0nrwngJt',
+});
 
-twitterOAuthClient.getData();
+twitter.requestToken();
 
 const app = Express();
 const PORT = 8009;
 const routes = Routes( history );
 
 // This is fired every time the server side receives a request
+
+// To share the public folder.
 // app.use('/static', Express.static('public'));
 app.use(Express.static('public'));
 
@@ -77,11 +82,36 @@ app.use('/graphql', graphqlHTTP({ schema: schema, pretty: true }))
 // Login with twitter
 app.use(
   '/login/twitter',
-  (request, response) => {
+  async (request, response) => {
+    let twitterOAuthClient = new twitterOAuth({
+      customerSecret: 'z3cbkta9cgkzTOmxREHcoGa8NRaaDXsSk5TfHVpOLkXEEYzmbU',
+      consumerKey: 'AntPzHq9fsnTPbbaP0nrwngJt',
+    });
+
+    try {
+      // console.log('oAuth nonce>>>>111 ' + await twitterOAuthClient.authenticate())
+      var { requestToken, authenticateHeadersSigned } = await twitterOAuthClient.authenticate();
+    }
+    catch (e) { console.error(e); }
+
     // console.log( request );
-    console.log( 'oAuth nonce>>>> ' );
-    twitterOAuthClient.getData();
-    response.redirect(302, 'https://google.com');
+    console.log( 'oAuth nonce>>>> ' + requestToken );
+
+    response.set( authenticateHeadersSigned );
+    // response.set( {OAuth: 'mlk'} );
+
+    response.redirect(
+      // http code: redirect
+      // more info:
+      // https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html?#sec10.3.3
+      // https://en.wikipedia.org/wiki/HTTP_302
+      302,
+
+      // url to redirect
+      // more info:
+      // https://dev.twitter.com/web/sign-in/implementing
+      'https://api.twitter.com/oauth/authenticate?oauth_token=' + requestToken
+    );
     // response.end('user and auth code cookie');
 
   }
